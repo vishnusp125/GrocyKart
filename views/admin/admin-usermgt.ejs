@@ -1,0 +1,31 @@
+
+<section style="margin-top: 200px;background-color:rgb(218, 208, 208); padding: 5rem; height: 100%; margin-top: 2rem;">
+  <div class="container mt-5">
+    <h2 class="text-center">User Management</h2>
+    <table class="table mt-5">
+      <thead>
+        <tr>
+          <th scope="col">No</th>
+          <th scope="col">Username</th>
+          <th scope="col">Email</th>
+          <th scope="col">Phone No</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% user.forEach(function(user,index) { %>
+          <tr>
+            <th scope="row"><%= index+1 %></th>
+            <td><%=user.username %></td>
+            <td><%=user.email %></td>
+            <td><%=user.phoneNo %></td>
+            <% if(user.isBlocked ===false) { %>}
+            <td><a href="/unblockuser/<%= user._id %>"class="btn btn-danger mr-1"onclick="return confirm('Do you want to block <%=user.username %>')">Block</a></td>
+           <% } else {%>
+           <td><a href="/blockuser/<%= user._id %>"class="btn btn-primary" onclick="return confirm('Do you want to Unblock <%=user.username %>')">Unblock</a></td>
+            <% } %>
+          </tr>
+          <% }) %>
+      </tbody>
+    </table>
+  </div>
+</section>

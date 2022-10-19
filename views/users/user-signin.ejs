@@ -1,0 +1,97 @@
+<!-- login -->
+<div class="w3_login">
+  <h3>Sign In</h3>
+  <div class="w3_login_module">
+    <div class="module form-module">
+      <div class=""><i class=""></i>
+        <div class="tooltip">Click Me</div>
+      </div>
+      <div class="form">
+        <h2>Login to your account</h2>
+        <form id="signinform">
+          <input type="text" name="username" placeholder="Username">
+          <div class="usernameError" style="color: red;"></div>
+          <input type="password" name="password" placeholder="Password">
+          <div class="passwordError" style="color: red;"></div>
+          <input type="submit" value="Login">
+        </form>
+      </div>
+      <!-- <div class="form">
+            <h2>Create an account</h2>
+            <form action="#" method="post">
+              <input type="text" name="Username" placeholder="Username" required=" ">
+              <input type="password" name="Password" placeholder="Password" required=" ">
+              <input type="email" name="Email" placeholder="Email Address" required=" ">
+              <input type="text" name="Phone" placeholder="Phone Number" required=" ">
+              <input type="submit" value="Register">
+            </form>
+          </div> -->
+      <div class="cta"><a href="/usersignup">Create an account</a></div>
+    </div>
+  </div>
+  <!-- <script>
+        $('.toggle').click(function(){
+          // Switches the Icon
+          $(this).children('i').toggleClass('fa-pencil');
+          // Switches the forms  
+          $('.form').animate({
+            height: "toggle",
+            'padding-top': 'toggle',
+            'padding-bottom': 'toggle',
+            opacity: "toggle"
+          }, "slow");
+        });
+    </script> -->
+</div>
+<!-- //login -->
+
+<script>
+  const form = document.querySelector('#signinform');
+  const usernameError = document.querySelector('.usernameError');
+  const passwordError = document.querySelector('.passwordError');
+
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    console.log('form submitted');
+
+    // reset errors
+
+    console.log('at reset');
+    usernameError.textContent = '';
+    passwordError.textContent = '';
+
+    //get the values
+    const username = form.username.value;
+    const password = form.password.value;
+
+
+    console.log("in signin view");
+
+
+
+    try {
+      const res = await fetch('/userlogin', {
+        method: 'POST',
+        body: JSON.stringify({ username, password }),
+        headers: { 'Content-Type': 'application/json' }
+
+      });
+      console.log(res);
+      const data = await res.json();
+      console.log(data)
+      if (data.errorHandler) {
+        usernameError.textContent = data.errorHandler.username;
+        passwordError.textContent = data.errorHandler.password;
+      }
+
+      if (data.user) {
+        location.assign('/')
+      }
+
+    }
+    catch (err) {
+      console.log(err);
+    }
+  })
+</script>

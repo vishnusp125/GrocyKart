@@ -1,0 +1,30 @@
+<section style="background-color:rgb(218, 208, 208); padding: 5rem; height: 100%; margin-top: 2rem;">
+  <div class="container ">
+    <div class="row justify-content-center align-items-center">
+      <div class="col-md-6">
+        <h2 class="text-center">Edit Product</h2>
+        <form action="/admineditproduct/<%=products._id%>" method="post">
+          <label for="">Name</label>
+          <input type="text" name="name" class="form-control" value="<%=products.name%>" />
+
+          <label for="">Category</label>
+          <input type="text" name="category" class="form-control" value="<%=products.category%>" />
+
+          <label for="">Price</label>
+          <input type="text" name="price" class="form-control" value="<%=products.price%>" />
+
+          <label for="">Description</label>
+          <input type="text" name="description" class="form-control" value="<%=products.description%>" />
+
+          <label for="">Stock</label>
+          <input type="text" name="stock" class="form-control" value="<%=products.stock%>" />
+
+          <label for="">Image</label>
+          <input type="text" name="image" class="form-control" value="<%=products.image%>" />
+
+          <button type="submit" class="btn btn-success mt-4" style="background-color:green;">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
