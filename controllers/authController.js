@@ -52,9 +52,8 @@ module.exports.usersignup_post = async (req, res) => {
 module.exports.userlogin_post = async (req, res) => {
 
 
-    const { username, password } = req.body;
-
     try {
+        const { username, password } = req.body;
         const user = await User.login(username, password)
         const token = createToken(user._id);
         console.log('token passed');

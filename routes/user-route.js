@@ -4,13 +4,6 @@ const requireAuth = require('../middleware/authMiddleware')
 const checkUser = require('../middleware/authMiddleware')
 
 
-// router.get('/',(req,res)=>{
-//     res.render('./users/index',{layout:'./layout/layout.ejs'})
-// })
-// router.get('/',(req,res)=>{
-//     res.render('./users/index',{layout:'./layout/layout.ejs'})
-// })
-
 router.get('/',checkUser.checkUser,authController.homepage_get)
 router.get('/usersignup',authController.usersignup_get)
 router.post('/usersignup',authController.usersignup_post)

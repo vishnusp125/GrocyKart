@@ -5,9 +5,9 @@ const bodyParser = require('body-parser');
 const userRoutes = require('./routes/user-route')
 const adminRoutes = require('./routes/admin-route')
 const cookieParser = require('cookie-parser')
-// const { requireAuth, checkUser } = require('./middleware/authMiddleware')
 const nocache = require('nocache')
-const fileUpload = require('express-fileupload')
+// const { requireAuth, checkUser } = require('./middleware/authMiddleware')
+// const fileUpload = require('express-fileupload')
 
 
 
@@ -24,7 +24,7 @@ app.use(express.json())
 app.use('/', userRoutes);
 app.use('/', adminRoutes);
 
-app.use(fileUpload())
+// app.use(fileUpload())
 
 
 app.use(function (req, res, next) {

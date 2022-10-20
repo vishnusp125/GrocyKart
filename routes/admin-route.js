@@ -16,8 +16,6 @@ const createToken = (id) => {
     });
 }
 
-
-
 router.get('/admindash',(req,res)=>{
     console.log('in login page');
     res.render('admin/admin-index',{layout:'./layout/admin-layout.ejs',admin:true})

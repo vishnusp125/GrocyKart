@@ -161,8 +161,8 @@ ul.dropdown-menu.drp-mnu li a i {
 	margin-right: 7em;
 }
 .w3ls_logo_products_left h1 a{
-	font-size: 1.5em;
-    color:#FA1818  ;
+	font-size: 1.2em;
+    color:#FA1818;
     text-decoration: none;
     text-transform: uppercase;
     display: block;
@@ -177,7 +177,7 @@ ul.dropdown-menu.drp-mnu li a i {
 	color:#fff;
 }
 .w3ls_logo_products_left h1 a span {
-    font-size: .3em;
+    font-size: .4em;
     display: block;
     color:   #84C639;
 }

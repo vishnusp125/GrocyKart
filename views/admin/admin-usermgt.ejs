@@ -18,7 +18,7 @@
             <td><%=user.username %></td>
             <td><%=user.email %></td>
             <td><%=user.phoneNo %></td>
-            <% if(user.isBlocked ===false) { %>}
+            <% if(user.isBlocked ===false) { %>
             <td><a href="/unblockuser/<%= user._id %>"class="btn btn-danger mr-1"onclick="return confirm('Do you want to block <%=user.username %>')">Block</a></td>
            <% } else {%>
            <td><a href="/blockuser/<%= user._id %>"class="btn btn-primary" onclick="return confirm('Do you want to Unblock <%=user.username %>')">Unblock</a></td>
