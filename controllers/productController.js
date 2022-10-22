@@ -1,5 +1,6 @@
 const { json } = require('express')
 const Product = require('../models/product')
+const fs = require('fs')
 
 
 
@@ -10,18 +11,41 @@ module.exports.addproductform_get = (req, res) => {
 
 
 
-//add product
+// module.exports.addproduct_post = async (req, res) => {
+//     try {
+//         const product = await Product.create(req.body)
+//         console.log(product);
+//         res.redirect('/adminproduct')
+//     }
+//     catch (err) {
+//         console.log(err);
+
+//     }
+
+// }
 
 module.exports.addproduct_post = async (req, res) => {
-    try {
-        const product = await Product.create(req.body)
-        console.log(product);
-        res.redirect('/adminproduct')
-    }
-    catch (err) {
-        console.log(err);
+    
+    console.log(req.body);
+    const name = req.body.name;
+    const category = req.body.category;
+    const price = req.body.price;
+    const description = req.body.description;
+    const stock = req.body.stock;
 
+    const product = await Product.create({name,category,price,description,stock})
+    console.log(product);
+    try {
+
+        console.log('in try block');
+        let image = req.files.image;
+        image.mv('./public/image/' + product._id + ".jpeg")
+        res.redirect('/adminproduct')
+    } catch (err) {
+        console.log(err);
     }
+
+
 
 }
 

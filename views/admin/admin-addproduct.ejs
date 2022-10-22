@@ -6,8 +6,10 @@
         <form
           action="/adminproduct"
           method="post"
+          enctype="multipart/form-data"
           
         >
+
           <label for="">Name</label>
           <input type="text" name="name" class="form-control" required/>
 
@@ -24,7 +26,7 @@
           <input type="text" name="stock" class="form-control" required/>
 
           <label for="">Image</label>
-          <input type="text" name="image" class="form-control" required/>
+          <input type="file" name="image" class="form-control" required/>
 
           <button type="submit" class="btn btn-success mt-4" style="background-color: rgb(0, 186, 28);">Submit</button>
         </form>

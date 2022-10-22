@@ -152,6 +152,7 @@
 		<div class="container">
 			<h3>Hot Offers</h3>
 			<div class="agile_top_brands_grids">
+				<% product.forEach(function(product) { %>
 				<div class="col-md-3 top_brand_left">
 					<div class="hover14 column">
 						<div class="agile_top_brand_left_grid">
@@ -160,28 +161,29 @@
 								<figure>
 									<div class="snipcart-item block">
 										<div class="snipcart-thumb">
-											<a href="single.html"><img title=" " alt=" " src="images/1.png" /></a>
-											<p>fortune sunflower oil</p>
-											<h4>$7.99 <span>$10.00</span></h4>
+											<a href="single.html"><img title=" " alt=" " src="./image/<%=product._id %>.jpeg" height="140px" width="140px"/></a>
+											<p><%=product.name %></p>
+											<h4>Rs. <%=product.price %></h4>
 										</div>
+										<!-- <button <a href="/checkout" ></a>class=" mx-5">More Products</button> -->
 										<div class="snipcart-details top_brand_home_details">
-											<form action="checkout.html" method="post">
-												<fieldset>
-													<input type="hidden" name="cmd" value="_cart" />
+											<!-- <form action="/checkout" method="post"> -->
+												<!-- <fieldset> -->
+													<!-- <input type="hidden" name="cmd" value="_cart" />
 													<input type="hidden" name="add" value="1" />
 													<input type="hidden" name="business" value=" " />
 													<input type="hidden" name="item_name"
-														value="Fortune Sunflower Oil" />
+														value="<%=product.name %>" />
 													<input type="hidden" name="amount" value="7.99" />
 													<input type="hidden" name="discount_amount" value="1.00" />
 													<input type="hidden" name="currency_code" value="USD" />
 													<input type="hidden" name="return" value=" " />
-													<input type="hidden" name="cancel_return" value=" " />
-													<input type="submit" name="submit" value="Add to cart"
-														class="button" />
-												</fieldset>
+													<input type="hidden" name="cancel_return" value=" " /> -->
+													<a href="/products"> <input type="submit" name="submit" value="Shop Now"
+														class="button" /> </a>
+												<!-- </fieldset> -->
 
-											</form>
+											<!-- </form> -->
 
 										</div>
 									</div>
@@ -190,16 +192,18 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-3 top_brand_left">
+				<% }) %>
+
+				<!-- <div class="col-md-3 top_brand_left">
 					<div class="hover14 column">
 						<div class="agile_top_brand_left_grid">
 							<div class="agile_top_brand_left_grid1">
 								<figure>
 									<div class="snipcart-item block">
 										<div class="snipcart-thumb">
-											<a href="single.html"><img title=" " alt=" " src="images/3.png" /></a>
-											<p>basmati rise (5 Kg)</p>
-											<h4>$11.99 <span>$15.00</span></h4>
+											<a href="single.html"><img title=" " alt=" " src="" /></a>
+											<p></p>
+											<h4>Rs.700 <span></span></h4>
 										</div>
 										<div class="snipcart-details top_brand_home_details">
 											<form action="#" method="post">
@@ -299,7 +303,8 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> -->
+				
 				<div class="clearfix"> </div>
 			</div>
 		</div>
@@ -380,24 +385,7 @@
 		</div>
 	</div>
 	<!-- //fresh-vegetables -->
-	<!-- newsletter -->
-	<div class="newsletter">
-		<div class="container">
-			<div class="w3agile_newsletter_left">
-				<h3>sign up for our newsletter</h3>
-			</div>
-			<div class="w3agile_newsletter_right">
-				<form action="#" method="post">
-					<input type="email" name="Email" value="Email" onfocus="this.value = '';"
-						onblur="if (this.value == '') {this.value = 'Email';}" required="">
-					<input type="submit" value="subscribe now">
-				</form>
-			</div>
-			<div class="clearfix"> </div>
-		</div>
-	</div>
-	<!-- //newsletter -->
-
+	
 	<!-- Bootstrap Core JavaScript -->
 	<script src="js/bootstrap.min.js"></script>
 	<script>

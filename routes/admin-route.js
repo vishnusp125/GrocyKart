@@ -9,6 +9,7 @@ const userController = require('../controllers/usercontroller')
 
 
 
+
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
     return jwt.sign({ id }, 'secretforhashing',
@@ -27,6 +28,7 @@ router.get('/adminsignup',adminauthController.adminsignup_get)
 router.get('/adminsignin',adminauthController.adminlogin_get)
 router.post('/adminsignup',adminauthController.adminsignup_post)
 router.post('/adminsignin',adminauthController.adminsignin_post)
+router.get('/adminLogout',adminauthController.adminLogout_get)
 
 //productmgt
 router.get('/adminproduct',productController.addproductform_get)

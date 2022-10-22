@@ -6,31 +6,30 @@ mongoose.connect('mongodb://0.0.0.0:27017/store', {
 
 })
 
-const productSchema = new mongoose.Schema({
+const productSchema =  mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    required: [true,'Please add all product details']
   },
   price: {
     type: String,
-    required: true,
+    required: true
   },
   description: {
     type: String,
-    required: true,
+    required: true
   },
   category: {
     type: String,
-    // ref: "Category",
+    required:true
   },
   image: {
     type: String,
-    required: true,
   },
 
   stock: {
     type: String,
-    required: true,
+    required: true
   },
 });
 

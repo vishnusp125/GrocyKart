@@ -39,6 +39,23 @@ const userSchema = new mongoose.Schema({
     isBlocked: {
         type: Boolean,
         default: false
+    },
+    address:[{
+        name : {type:String},
+        mobile : {type:Number},
+        address1: {type:String},
+        address2 :{type:String},
+        city : {type:String},
+        state : {type:String},
+        zip :{type:String}
+    }],
+    profileImage : {
+        type : String,
+        default : 'null'
+    },
+    isVerified: {
+        type: Boolean,
+        default:false
     }
 })
 
