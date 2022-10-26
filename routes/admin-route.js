@@ -38,8 +38,13 @@ router.get('/deleteproduct/:id',productController.productdelete_get)
 router.get('/admineditproduct/:id',productController.editproduct_get)
 router.post('/admineditproduct/:id',productController.editproduct_post)
 
+//category
+router.get('/categoryMgt',productController.categoryMgt)
+router.post('/categoryMgtpost',productController.categoryMgtpost)
+router.post('/categoryDelete',productController.categoryDelete)
+
 //usermgt
-router.get('/adminuser',userController.usermgt_get)
+router.get('/adminuser',userController.usermgt_get) 
 router.get('/blockuser/:id',userController.blockuser)
 router.get('/unblockuser/:id',userController.unblockuser)
 

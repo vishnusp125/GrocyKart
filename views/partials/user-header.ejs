@@ -11,9 +11,6 @@
         </form>
     </div>
     <div class="product_list_header">
-        <form action="#" method="post" class="last">
-                <input type="hidden" name="cmd" value="_cart" />
-                <input type="hidden" name="display" value="1" />
                 <a name="submit" href="/checkout" style="color: white;"> View Cart </a> 
         </form>
     </div>
@@ -27,7 +24,7 @@
                         <ul class="dropdown-menu drp-mnu">
                             <% if(locals.user) { %>
 
-                                <li><a href="#">My Wishlist</a></li>
+                                <li><a href="/wishlist">My Wishlist</a></li>
                                 <li><a href="/logout">Log Out</a></li>
 
 
@@ -35,7 +32,6 @@
                                 <% } else { %>
                                     <li><a href="/userlogin">Login</a></li>
                                     <li><a href="/usersignup">Sign Up</a></li>
-
 
 
                                     <% } %>
@@ -52,6 +48,8 @@
     </div>
     <div class="clearfix"> </div>
 </div>
+
+
 <!-- script-for sticky-nav -->
 <script>
     $(document).ready(function () {

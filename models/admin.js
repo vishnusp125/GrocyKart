@@ -22,7 +22,7 @@ const adminSchema = mongoose.Schema({
         minlength: [4, "password must be minimum 4 char"]
 
     }
-})
+},{timestamps:true})
 
 // fire a function before doc saved to db
 

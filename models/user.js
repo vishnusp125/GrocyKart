@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const Product = require('./product')
 const bcrypt = require('bcrypt')
 const { isEmail } = require('validator')
 
@@ -6,6 +7,26 @@ mongoose.connect('mongodb://0.0.0.0:27017/store', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 
+})
+
+const cartSchema = new mongoose.Schema({
+    name: {type: String},
+    price: {type: String},
+    description: {type: String},
+    category: {type: String},
+    image: {type: String},
+    stock: {type: String},
+    count:{type:Number}
+})
+
+const wishlistSchema = new mongoose.Schema({
+    name: {type: String},
+    price: {type: String},
+    description: {type: String},
+    category: {type: String},
+    image: {type: String},
+    stock: {type: String},
+    count:{type:Number}
 })
 
 const userSchema = new mongoose.Schema({
@@ -56,8 +77,18 @@ const userSchema = new mongoose.Schema({
     isVerified: {
         type: Boolean,
         default:false
-    }
-})
+    },
+    cart:{
+        type: [cartSchema],
+        default:[]
+    },
+    wishlist:{
+        type: [wishlistSchema],
+        default:[]
+
+    }  
+},{timestamps:true})
+
 
 // fire a function before doc saved to db
 

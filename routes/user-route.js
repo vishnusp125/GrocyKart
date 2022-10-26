@@ -15,8 +15,26 @@ router.post('/sendnotification',authController.sendOtp)
 router.post('/verify-otp',authController.otpVerification)
 
 router.get('/checkout',authController.checkout_get)
+// router.post('/checkout',authController.checkout_post)
 router.get('/payment',authController.payment_get)
-router.get('/products',authController.products_get)
+router.get('/cooking',authController.cooking_get)
+router.post('/cooking',authController.cooking_post)
+router.get('/dryfruits',authController.dryfruits_get)
+router.get('/beverages',authController.beverages_get)
+
+//wishlist
+router.get('/wishlist/:id',authController.wishlistGet)
+router.get('/wishlist',authController.wishlistView)
+
+//cart
+router.get('/removeFromcart/:id',authController.removeFromCart)
+router.get('/addtoCart/:id',authController.addtoCart)
+
+//single product view
+
+router.get('/singleProduct/:prodId',authController.singleProduct)
+
+
 
 
 

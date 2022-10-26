@@ -15,6 +15,10 @@ const productSchema =  mongoose.Schema({
     type: String,
     required: true
   },
+  bprice:{
+    type:String,
+    required:true
+  },
   description: {
     type: String,
     required: true
@@ -31,7 +35,10 @@ const productSchema =  mongoose.Schema({
     type: String,
     required: true
   },
-});
+  offer:{
+    type:String
+  }
+},{timestamps:true});
 
 const productModel = mongoose.model('product', productSchema);
 module.exports = productModel;
