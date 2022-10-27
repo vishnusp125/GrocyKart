@@ -36,8 +36,6 @@ module.exports.adminsignup_post = async (req, res) => {
         console.log('token passed');
         res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 })
         res.status(201).json({ admin });
-
-
     }
 
 
@@ -63,7 +61,7 @@ module.exports.adminsignin_post = async (req, res) => {
         console.log('in try');
         const token = createToken(admin._id);
         console.log('token passed');
-        res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 })
+        res.cookie('jwt2', token, { httpOnly: true, maxAge: maxAge * 1000 })
         res.status(200).json({ admin })
 
     }

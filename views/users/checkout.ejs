@@ -33,6 +33,7 @@
 					<% if(locals.user) { %>
 						<li><a href="/wishlist">My wishlist</a></li>
 						<li><a href="/checkout">My Cart</a></li>
+						<li><a href="/userProfile">My Profile</a></li>
 						<% } %>
 						</ul>
 					 </div><!-- /.navbar-collapse -->
@@ -83,7 +84,7 @@
 							<% user.forEach(function(user,index) { %>
 							<li>Product <%= index+1 %> <i>-</i> <span> &#x20B9; <%= (user.price * user.count) %></span></li>
 							<!-- <li>Product2 <i>-</i> <span>$25.00 </span></li>
-							<li>Product3 <i>-</i> <span>$29.00 </span></li>
+							<li>Product3 <i>-</i> <span>$29.00 </span></li> 
 							<li>Total Service Charges <i>-</i> <span>$15.00</span></li> -->
 							<% }) %>
 							<li>Total <i>-</i> <span>&#x20B9; <%=totals%></span></li>

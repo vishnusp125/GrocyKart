@@ -154,8 +154,10 @@ module.exports.cooking_get = async (req, res) => {
     try {
         //   let User = req.user.id
         //    console.log(User);
+        // const dry = await Product.find({$match:{$category}})
         const products = await Product.find({})
-        res.render('./users/cooking', { product: products, layout: './layout/layout.ejs' })
+        
+        res.render('./users/cooking', { products: products, layout: './layout/layout.ejs' })
 
     } catch (err) {
         console.log(err);
@@ -178,7 +180,7 @@ module.exports.cooking_post = async (req, res) => {
     const userid = await User.findById({ _id: req.user.id })
     const checks = userid.cart;
     // console.log(checks);
-    
+
     let n = 0;
     for (const check of checks) {
         if (check._id == id) {
@@ -272,6 +274,23 @@ module.exports.wishlistView = async (req, res) => {
 
 }
 
+module.exports.wishlistDelete = async (req, res) => {
+
+    try {
+        let user = req.user.id
+        const wishlistId = req.params.id
+      
+        await User.deleteOne({ _id: wishlistId })
+        await User.findOneAndUpdate({ _id:user }, { $pull: { wishlist: { _id: wishlistId } } })
+        res.redirect('/wishlist')
+
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+
+
 module.exports.removeFromCart = async (req, res) => {
 
     let prodId = req.params.id
@@ -310,7 +329,7 @@ module.exports.addtoCart = async (req, res) => {
     const prodId = req.params.id
     let product = await Product.findById(prodId)
     
-    let userr = req.user.id
+    const userr = req.user.id
     const userid = await User.findById({ _id: userr })
 
     const checks = userid.cart;
@@ -349,9 +368,101 @@ module.exports.singleProduct = async (req, res) =>{
         console.log(err);
     }
 
+}
+
+module.exports.userProfile = (req, res) =>{
+
+    let user = req.user.id
+//     console.log(user);
+//    let user1 = user.username
+//    console.log(user1);
+
+    User.findOne({user}).then((profile) => {
+        res.render('./users/profile', {profile,layout:'./layout/layout.ejs'})
+    })
+}
+
+module.exports.userProfileEdit = async (req, res) =>{
+
+    const user = req.user.id;
+    const profile = await User.findById({ _id:user })
+
+    res.render('./users/edit_profile', {profile,layout:'./layout/layout.ejs'})
+
+}
+
+module.exports.userProfilePost = async (req, res) =>{
+
+  
+    // console.log(user);
+    // let userdetails = req.body;
+    // console.log(userdetails);
+
+    try {
+        const user = req.user.id;
+        const checks = req.body;
+    
+        const userid = await User.findById({ _id: user })
+    
+            await User.updateOne({ _id: user },
+                 { $set: {address:{
+                    address:checks.address,
+                    city:checks.city,
+                    country:checks.country,
+                    state:checks.state,
+                    zip : checks.zip,
+                },username:checks.username,
+                email:checks.email,
+                phoneNo:checks.phoneNo,
+                   }
+                })
+            res.redirect('back')
+
+    } catch (err) {
+        console.log(err);
+
+    }
+
+
+    // module.exports.wishlistGet = async (req, res) => {
+
+        // const prodId = req.params.id
+        // // console.log(prodId);
+        // let product = await Product.findById(prodId)
+        // product = product.toJSON()
+        // product.count = 1;
+    
+    
+      
+    
+        // const userid = await User.findById({ _id: user })
+    
+        // const checks = userid.address;
+        // console.log(checks);
+    
+    //         await User.updateOne({ _id: req.user.id }, { $push: { address:checks } })
+    //         // console.log('in else block');
+    //         res.redirect('back')
+        
+    
+    
+    // }
+
+
+    
+
 
 
 }
+
+
+
+
+
+
+   
+
+
 
 
 

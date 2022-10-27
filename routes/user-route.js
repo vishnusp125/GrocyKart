@@ -25,14 +25,21 @@ router.get('/beverages',authController.beverages_get)
 //wishlist
 router.get('/wishlist/:id',authController.wishlistGet)
 router.get('/wishlist',authController.wishlistView)
+router.get('/wishlistdelete/:id',authController.wishlistDelete)
+
 
 //cart
 router.get('/removeFromcart/:id',authController.removeFromCart)
 router.get('/addtoCart/:id',authController.addtoCart)
 
 //single product view
-
 router.get('/singleProduct/:prodId',authController.singleProduct)
+
+//user profile
+router.get('/userProfile',authController.userProfile)
+router.get('/userProfileEdit',authController.userProfileEdit)
+router.post('/userProfileEdit/:id',authController.userProfilePost)
+
 
 
 

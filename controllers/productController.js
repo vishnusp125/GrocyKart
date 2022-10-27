@@ -104,6 +104,10 @@ module.exports.editproduct_post = async (req, res) => {
     const prodId = req.params.id
     // console.log(prodId);
 
+    const userid = await User.findById({ _id: userr })
+
+    const checks = userid.wishlist;
+
 
     try {
         await Product.updateOne({ _id: prodId }, {

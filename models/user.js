@@ -29,6 +29,18 @@ const wishlistSchema = new mongoose.Schema({
     count:{type:Number}
 })
 
+const addressSchema = new mongoose.Schema({
+        username : {type:String},
+        email:{type:String},
+        phoneNo : {type:Number},
+        address: {type:String},
+        city : {type:String},
+        state : {type:String},
+        country:{type:String},
+        zip :{type:String}
+
+})
+
 const userSchema = new mongoose.Schema({
     username: {
         type: String,
@@ -61,15 +73,11 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    address:[{
-        name : {type:String},
-        mobile : {type:Number},
-        address1: {type:String},
-        address2 :{type:String},
-        city : {type:String},
-        state : {type:String},
-        zip :{type:String}
-    }],
+    address:{
+        type:[addressSchema],
+        default:[]
+        
+    },
     profileImage : {
         type : String,
         default : 'null'

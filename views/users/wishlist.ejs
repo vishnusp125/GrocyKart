@@ -6,7 +6,7 @@
 			<div class="container">
 				<ul>
 					<li><i class="fa fa-home" aria-hidden="true"></i><a href="index.html">Home</a><span>|</span></li>
-					<li>Checkout</li>
+					<li>Wishlist</li>
 				</ul>
 			</div>
 		</div>
@@ -34,6 +34,7 @@
 							<% if(locals.user) { %>
 								<li><a href="/wishlist">My wishlist</a></li>
 								<li><a href="/checkout">My Cart</a></li>
+								<li><a href="/userProfile">My Profile</a></li>
 								<% } %>
 	
 						</ul>
@@ -69,9 +70,12 @@
 							
 							<td class="invert"><%=user.price %></td>
 							<td class="invert">
-								<div class="rem">
+								<!-- <div class="rem">
 									<div class="close1"> </div>
-								</div>
+								</div> -->
+
+								<a href="/wishlistdelete/<%=user._id %>" class="btn btn-danger"
+									onclick="return confirm('Do you want to delete <%=user.name%> ?')">Delete</a>
 	
 							</td>
 						</tr>
