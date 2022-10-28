@@ -17,7 +17,7 @@ const cartSchema = new mongoose.Schema({
     image: {type: String},
     stock: {type: String},
     count:{type:Number}
-})
+},{timestamps:true})
 
 const wishlistSchema = new mongoose.Schema({
     name: {type: String},
@@ -27,7 +27,7 @@ const wishlistSchema = new mongoose.Schema({
     image: {type: String},
     stock: {type: String},
     count:{type:Number}
-})
+},{timestamps:true})
 
 const addressSchema = new mongoose.Schema({
         username : {type:String},
@@ -39,7 +39,22 @@ const addressSchema = new mongoose.Schema({
         country:{type:String},
         zip :{type:String}
 
-})
+},{timestamps:true})
+
+const orderSchema = new mongoose.Schema({
+    name: {type: String},
+    price: {type: String},
+    description: {type: String},
+    category: {type: String},
+    image: {type: String},
+    stock: {type: String},
+    count:{type:Number},
+    offer:{type:String},
+    paymentOption:{type:String},
+    address:{type:String},
+    unique:{type:String},
+    orderStatus:{type:String, default:'Under Process'}
+},{timestamps:true})
 
 const userSchema = new mongoose.Schema({
     username: {
@@ -94,6 +109,11 @@ const userSchema = new mongoose.Schema({
         type: [wishlistSchema],
         default:[]
 
+    },
+    order:{
+        type: [orderSchema],
+        default:[]
+
     }  
 },{timestamps:true})
 
@@ -101,7 +121,6 @@ const userSchema = new mongoose.Schema({
 // fire a function before doc saved to db
 
 userSchema.pre('save', async function (next) {
-    // console.log('user about to be created and saved',this);
     const salt = await bcrypt.genSalt();
     this.password = await bcrypt.hash(this.password, salt)
     next();

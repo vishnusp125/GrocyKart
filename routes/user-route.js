@@ -14,7 +14,7 @@ router.get('/logout',authController.logout_get)
 router.post('/sendnotification',authController.sendOtp)
 router.post('/verify-otp',authController.otpVerification)
 
-router.get('/checkout',authController.checkout_get)
+router.get('/cart',authController.cart_get)
 // router.post('/checkout',authController.checkout_post)
 router.get('/payment',authController.payment_get)
 router.get('/cooking',authController.cooking_get)
@@ -40,9 +40,9 @@ router.get('/userProfile',authController.userProfile)
 router.get('/userProfileEdit',authController.userProfileEdit)
 router.post('/userProfileEdit/:id',authController.userProfilePost)
 
-
-
-
+//checkout
+router.get('/checkout',authController.checkoutGet)
+router.get('/checkoutcontinue/:id',authController.checkoutContinue)
 
 
 module.exports = router;

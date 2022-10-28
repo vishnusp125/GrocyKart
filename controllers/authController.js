@@ -200,7 +200,7 @@ module.exports.cooking_post = async (req, res) => {
 
 }
 
-module.exports.checkout_get = async (req, res) => {
+module.exports.cart_get = async (req, res) => {
 
 
     try {
@@ -216,7 +216,7 @@ module.exports.checkout_get = async (req, res) => {
         }
         const total = sum(users.cart,'price','count')
 
-        res.render('./users/checkout', { user: users.cart,totals:total,layout: './layout/layout.ejs' })
+        res.render('./users/cart', { user: users.cart,totals:total,layout: './layout/layout.ejs' })
 
     } catch (err) {
         console.log(err);
@@ -391,7 +391,7 @@ module.exports.userProfileEdit = async (req, res) =>{
 
 }
 
-module.exports.userProfilePost = async (req, res) =>{
+module.exports.userProfilePost = async (req, res) => {
 
   
     // console.log(user);
@@ -423,37 +423,58 @@ module.exports.userProfilePost = async (req, res) =>{
 
     }
 
-
-    // module.exports.wishlistGet = async (req, res) => {
-
-        // const prodId = req.params.id
-        // // console.log(prodId);
-        // let product = await Product.findById(prodId)
-        // product = product.toJSON()
-        // product.count = 1;
-    
-    
-      
-    
-        // const userid = await User.findById({ _id: user })
-    
-        // const checks = userid.address;
-        // console.log(checks);
-    
-    //         await User.updateOne({ _id: req.user.id }, { $push: { address:checks } })
-    //         // console.log('in else block');
-    //         res.redirect('back')
-        
-    
-    
-    // }
-
-
-    
-
-
-
 }
+
+module.exports.checkoutGet = async (req, res) => {
+
+    try{
+
+        const user = req.user.id;
+        console.log(user);
+        const Curuser = await User.findById({_id:user})
+
+        const sum = function(items,p1,p2){
+            return items.reduce(function(a,b){
+                return parseInt(a)+parseInt(b[p1]*parseInt(b[p2]))
+            },0)
+
+        }
+        const total = sum(Curuser.cart,'price','count')
+            const thisuser = Curuser;
+            // console.log(thisuser.username);
+        
+        res.render('./users/checkout', {user:Curuser.cart, totals: total, profile:thisuser, layout:'./layout/layout.ejs'})
+
+    }catch (err){
+        console.log(err);
+    }
+
+
+    
+}
+let orderAddress;
+let orderPayment;
+
+module.exports.checkoutContinue = async (req, res) => {
+
+    const user = req.user.id;
+    console.log(req.body);
+    orderAddress = req.body.address
+    orderPayment = req.body.payment
+    if(req.body.payment =='COD'){
+        res.redirect('/checkout')
+    }
+}
+
+module.exports.checkoutContinue = async (req, res) => {
+    
+}
+
+
+
+
+
+
 
 
 
