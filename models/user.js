@@ -15,7 +15,7 @@ const cartSchema = new mongoose.Schema({
     description: {type: String},
     category: {type: String},
     image: {type: String},
-    stock: {type: String},
+    stock: {type: Number},
     count:{type:Number}
 },{timestamps:true})
 
@@ -25,7 +25,7 @@ const wishlistSchema = new mongoose.Schema({
     description: {type: String},
     category: {type: String},
     image: {type: String},
-    stock: {type: String},
+    stock: {type: Number},
     count:{type:Number}
 },{timestamps:true})
 
@@ -47,7 +47,7 @@ const orderSchema = new mongoose.Schema({
     description: {type: String},
     category: {type: String},
     image: {type: String},
-    stock: {type: String},
+    stock: {type: Number},
     count:{type:Number},
     offer:{type:String},
     paymentOption:{type:String},
@@ -124,7 +124,7 @@ userSchema.pre('save', async function (next) {
     const salt = await bcrypt.genSalt();
     this.password = await bcrypt.hash(this.password, salt)
     next();
-
+ 
 });
 
 

@@ -60,7 +60,7 @@
                                         <figure>
                                             <div class="snipcart-item block">
                                                 <div class="snipcart-thumb">
-                                                    <a href="/singleProduct/<%=product._id%>"><img
+                                                    <a href="/singleProduct?id=<%=product._id%>"><img
                                                             src="./image/<%=product._id %>.jpeg" height="120px"
                                                             width="120px" alt=" " class="img-responsive" /></a>
                                                     <p>
@@ -124,7 +124,7 @@
                                         <figure>
                                             <div class="snipcart-item block">
                                                 <div class="snipcart-thumb">
-                                                    <a href="/singleProduct/<%=product._id%>"><img
+                                                    <a href="/singleProduct?id=<%=product._id%>"><img
                                                             src="./image/<%=product._id %>.jpeg" height="120px"
                                                             width="120px" alt=" " class="img-responsive" /></a>
                                                     <p>
@@ -137,7 +137,7 @@
                                                     <form action="/cooking" method="post">
                                                         <fieldset>
                                                             <input type="hidden" name="id"
-                                                                value="<%=product._id %>">
+                                                                value="<%=product._id %>"> 
                                                             <!-- <input type="hidden" name="add" value="1" />
                                             <input type="hidden" name="business" value=" " />
                                             <input type="hidden" name="item_name" value="knorr instant soup" />

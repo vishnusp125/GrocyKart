@@ -33,7 +33,8 @@ router.get('/removeFromcart/:id',authController.removeFromCart)
 router.get('/addtoCart/:id',authController.addtoCart)
 
 //single product view
-router.get('/singleProduct/:prodId',authController.singleProduct)
+router.get('/singleProduct',authController.singleProduct)
+
 
 //user profile
 router.get('/userProfile',authController.userProfile)
@@ -42,7 +43,23 @@ router.post('/userProfileEdit/:id',authController.userProfilePost)
 
 //checkout
 router.get('/checkout',authController.checkoutGet)
-router.get('/checkoutcontinue/:id',authController.checkoutContinue)
+router.post('/checkout',authController.checkoutPost)
+router.get('/ordersuccess',authController.successGet)
+router.get('/verifyPaymentRazorPay',authController.verifyPaymentRazorPay)
+router.get('/saveOrder',authController.saveOrder)
+router.get('/orderDetails',authController.orderDetails)
+
+
+
+
+
+
+
+router.get('/sample2',authController.sample2)
+
+
+
+
 
 
 module.exports = router;

@@ -1,67 +1,66 @@
-
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
 <div class="container">
 	<div class="py-5 text-center">
-	  
-	  <h1 class="mx-5 my-5" style="color:orangered;">Checkout</h1>
+
+		<h1 class="mx-5 my-5" style="color:orangered;">Checkout</h1>
 	</div>
-  
+
 	<div class="row">
-	  <div class="col-md-4 order-md-2 mb-4">
-		<h4 class="d-flex justify-content-between align-items-center mb-3">
-		  <span class="text-muted">Your cart</span>
-		  <!-- <span class="badge badge-secondary badge-pill">3</span> -->
-		</h4>
-		<ul class="list-group mb-3">
-		  <li class="list-group-item d-flex justify-content-between lh-condensed">
-			<div>
-			  <h6 class="my-0">Cart total</h6>
-			  <small class="text-muted">Brief description</small>
-			</div>
-			<span class="text-muted">Rs. <%= totals%></span>2
-		  </li>
-		   <!-- <li class="list-group-item d-flex justify-content-between lh-condensed"> -->
-			<!-- <div>
+		<div class="col-md-4 order-md-2 mb-4">
+			<h4 class="d-flex justify-content-between align-items-center mb-3">
+				<span class="text-muted">Your cart</span>
+				<!-- <span class="badge badge-secondary badge-pill">3</span> -->
+			</h4>
+			<ul class="list-group mb-3">
+				<li class="list-group-item d-flex justify-content-between lh-condensed">
+					<div>
+						<h6 class="my-0">Cart total</h6>
+						<small class="text-muted">Brief description</small>
+					</div>
+					<span class="text-muted">Rs. <%= totals%></span>
+				</li>
+				<!-- <li class="list-group-item d-flex justify-content-between lh-condensed"> -->
+				<!-- <div>
 			  <h6 class="my-0">Second product</h6>
 			  <small class="text-muted">Brief description</small>
 			</div> -->
-			<!-- <span class="text-muted">Rs.8</span>
+				<!-- <span class="text-muted">Rs.8</span>
 		  </li> -->
-		  <!-- <li class="list-group-item d-flex justify-content-between lh-condensed"> -->
-			<!-- <div>
+				<!-- <li class="list-group-item d-flex justify-content-between lh-condensed"> -->
+				<!-- <div>
 			  <h6 class="my-0">Third item</h6>
 			  <small class="text-muted">Brief description</small>
 			</div> -->
-			<!-- <span class="text-muted">RS.5</span>
+				<!-- <span class="text-muted">RS.5</span>
 		  </li>  -->
-		  <li class="list-group-item d-flex justify-content-between bg-light">
-			<div class="text-success">
-			  <h6 class="my-0">Promo code</h6>
-			  <small>EXAMPLECODE</small>
-			</div>
-			<span class="text-success">-Rs.0</span>
-		  </li>
-		  <li class="list-group-item d-flex justify-content-between">
-			<span>Total (Rs)</span>
-			<strong>Rs. <%= totals%></strong>
-		  </li>
-		</ul>
-  
-		<form class="card p-2">
-		  <div class="input-group">
-			<input type="text" class="form-control" placeholder="Promo code">
-			<div class="input-group-append">
-			  <button type="submit" class="btn btn-secondary">Redeem</button>
-			</div>
-		  </div>
-		</form>
-	  </div>
-	  <div class="col-md-8 order-md-1">
-		<h4 class="mb-3">Billing address</h4>
-		<form id="" class="needs-validation" novalidate>
-		  <!-- <div class="row">
+				<li class="list-group-item d-flex justify-content-between bg-light">
+					<div class="text-success">
+						<h6 class="my-0">Promo code</h6>
+						<small>EXAMPLECODE</small>
+					</div>
+					<span class="text-success">-Rs.0</span>
+				</li>
+				<li class="list-group-item d-flex justify-content-between">
+					<span>Total (Rs)</span>
+					<strong>Rs. <%= totals%></strong>
+				</li>
+			</ul>
+
+			<form class="card p-2">
+				<div class="input-group">
+					<input type="text" class="form-control" placeholder="Promo code">
+					<div class="input-group-append">
+						<button type="submit" class="btn btn-secondary">Redeem</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="col-md-8 order-md-1">
+			<h4 class="mb-3">Billing address</h4>
+			<form id="form" class="needs-validation" novalidate>
+				<!-- <div class="row">
 			<div class="col-md-6 mb-3">
 			  <label for="firstName"></label>
 			  <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
@@ -77,83 +76,92 @@
 			  </div>
 			</div>
 		  </div> -->
-  
-		  <div class="mb-3">
-			<label for="username">Name</label>
-			<div class="input-group">
-			  <!-- <div class="input-group-prepend">
+
+				<div class="mb-3">
+					<label for="name">Name</label>
+					<div class="input-group">
+						<!-- <div class="input-group-prepend">
 				<span class="input-group-text">@</span>
 			  </div> -->
-			  <input type="text" class="form-control" name="username" placeholder="Username" value="<%=profile.username%>">
-			  <!-- <div class="invalid-feedback" style="width: 100%;">
+						<input type="text" class="form-control" name="name" placeholder="Username"
+							value="<%=profile.username%>">
+						<!-- <div class="invalid-feedback" style="width: 100%;">
 				Your username is required.
 			  </div> -->
-			</div>
-		  </div> 
-  
-		  <div class="mb-3">
-			<label for="email">Email <span class="text-muted"></span></label>
-			<input type="email" class="form-control" name="email"  value="<%=profile.email%>"placeholder="you@example.com">
-			<!-- <div class="invalid-feedback">
+					</div>
+				</div>
+
+				<div class="mb-3">
+					<label for="email">Email <span class="text-muted"></span></label>
+					<input type="email" class="form-control" name="email" value="<%=profile.email%>"
+						placeholder="you@example.com">
+					<!-- <div class="invalid-feedback">
 			  Please enter a valid email address for shipping updates.
 			</div> -->
-  
-		  </div>
-			 <div class="mb-3">
-			<label for="email">Phone Number <span class="text-muted"></span></label>
-			<input type="text" class="form-control"  value="<%=profile.phoneNo%>" name="phonenumber" placeholder="123...">
-			<div class="invalid-feedback">
-			  Please enter a valid phone number for shipping updates.
-			</div>
-		  </div>
-  
-		  <div class="mb-3">
-			<label for="address">Address</label>
-			<input type="text" class="form-control" name="address" value="<%=profile.address[0].address%>" placeholder="1234 Main St">
-			<div class="invalid-feedback">
-			  Please enter your shipping address.
-			</div>
-		  </div>
-  
-		  <!-- <div class="mb-3">
+
+				</div>
+				<div class="mb-3">
+					<label for="email">Phone Number <span class="text-muted"></span></label>
+					<input type="text" class="form-control" value="<%=profile.phoneNo%>" name="phoneNo"
+						placeholder="123...">
+					<div class="invalid-feedback">
+						Please enter a valid phone number for shipping updates.
+					</div>
+				</div>
+
+				<div class="mb-3">
+					<label for="address">Address</label>
+					<input type="text" class="form-control" name="address" value="<%=profile.address[0].address%>"
+						placeholder="1234 Main St">
+					<div class="invalid-feedback">
+						Please enter your shipping address.
+					</div>
+				</div>
+
+				<!-- <div class="mb-3">
 			<label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
 			<input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
 		  </div> -->
-  
-		  <div class="row">
-			<div class="col-md-5 mb-3">
-			  <label for="country">Country</label>
-			  <input type="text" class="form-control" name="country" value="<%=profile.address[0].country %>" placeholder="" required>
 
-			  <!-- <select class="custom-select d-block w-100" id="country" required>  
+				<div class="row">
+					<div class="col-md-5 mb-3">
+						<label for="country">Country</label>
+						<input type="text" class="form-control" name="country" value="<%=profile.address[0].country %>"
+							placeholder="" required>
+
+						<!-- <select class="custom-select d-block w-100" id="country" required>  
 				<option value="">Choose...</option>
 				<option>India</option>
 			  </select> -->
-			  <div class="invalid-feedback">
-				Please select a valid country.
-			  </div>
-			</div>
-			<div class="col-md-4 mb-3">
-			  <label for="state">State</label>
-			  <!-- <select class="custom-select d-block w-100" id="state" required>
+						<div class="invalid-feedback">
+							Please select a valid country.
+						</div>
+					</div>
+					<div class="col-md-4 mb-3">
+						<label for="state">State</label>
+						<!-- <select class="custom-select d-block w-100" id="state" required>
 				<option value="">Choose...</option>
 				<option>Kerala</option>
 			  </select> -->
-			  <input type="text" class="form-control" name="state" value="<%=profile.address[0].state %>" placeholder="" required>
-			  <div class="invalid-feedback">
-				Please provide a valid state.
-			  </div>
-			</div>
-			<div class="col-md-3 mb-3">
-			  <label for="zip">Zip</label>
-			  <input type="text" class="form-control" name="zip" value="<%=profile.address[0].zip %>"  placeholder="" required>
-			  <div class="invalid-feedback">
-				Zip code required.
-			  </div>
-			</div>
-		  </div>
-		  <!-- <hr class="mb-4"> -->
-		  <!-- <div class="custom-control custom-checkbox">
+						<input type="text" class="form-control" name="state" value="<%=profile.address[0].state %>"
+							placeholder="" required>
+						<div class="invalid-feedback">
+							Please provide a valid state.
+						</div>
+					</div>
+					<div class="col-md-3 mb-3">
+						<label for="zip">Zip</label>
+						<input type="text" class="form-control" name="zip" value="<%=profile.address[0].zip %>"
+							placeholder="" required>
+						<div class="invalid-feedback">
+							Zip code required.
+						</div>
+					</div>
+					<input type="hidden" class="form-control" name="currency" value="INR">
+					<input type="hidden" class="form-control" name="amount" value="<%= totals%>">
+				</div>
+				<!-- <hr class="mb-4"> -->
+				<!-- <div class="custom-control custom-checkbox">
 			<input type="checkbox" class="custom-control-input" id="same-address">
 			<label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
 		  </div>
@@ -161,17 +169,17 @@
 			<input type="checkbox" class="custom-control-input" id="save-info">
 			<label class="custom-control-label" for="save-info">Save this information for next time</label>
 		  </div> -->
-		  <hr class="mb-4">
-  
-		  <h4 class="mb-3">Payment</h4>
-  
-		  <!-- <div class="d-block my-3"> -->
-			<select class="form-select" name="payment" aria-label="Default select example">
-				<option value="COD">Cash On Delivery</option>
-				<option value="Razorpay">Razorpay</option>
-				<option value="PayPal">PayPal</option>
-			  </select>
-			  <!-- <div class="custom-control custom-radio">
+				<hr class="mb-4">
+
+				<h4 class="mb-3">Payment</h4>
+
+				<!-- <div class="d-block my-3"> -->
+				<select class="form-select" name="payment" aria-label="Default select example">
+					<option value="COD">Cash On Delivery</option>
+					<option value="Razorpay">Razorpay</option>
+					<option value="PayPal">PayPal</option>
+				</select>
+				<!-- <div class="custom-control custom-radio">
 			  <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
 			  <label class="custom-control-label" for="credit">Cash On Delivery</label>
 			</div>
@@ -183,8 +191,8 @@
 			  <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
 			  <label class="custom-control-label" for="paypal">PayPal</label>
 			</div> -->
-		  <!-- </div> -->
-		  <!-- <div class="row">
+				<!-- </div> -->
+				<!-- <div class="row">
 			<div class="col-md-6 mb-3">
 			  <label for="cc-name">Name on card</label>
 			  <input type="text" class="form-control" id="cc-name" placeholder="" required>
@@ -198,7 +206,7 @@
 			  <input type="text" class="form-control" id="cc-number" placeholder="" required>
 			  <div class="invalid-feedback">
 				Credit card number is required
-			  </div>
+			  </div> 
 			</div>
 		  </div>
 		  <div class="row">
@@ -217,36 +225,127 @@
 			  </div>
 			</div>
 		  </div> -->
-		  <hr class="mb-4">
-		  <button class="btn btn-success btn-lg btn-block" >Continue</button>
-		</form>
-	  </div>
+				<hr class="mb-4">
+				<button class="btn btn-success btn-lg btn-block" type="submit">Continue</button>
+			</form>
+		</div>
 	</div>
-<br>
-  </div>
+	<br>
+</div>
 
-  <script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
 
-async ()=> {
-	let order = await fetch('/checkout',{
-		method:'POST',
-		headers:{
-		'Content-Type':'application/json',
-		},
+	const form = document.querySelector('#form')
+
+	form.addEventListener('submit', async (e) => {
+		e.preventDefault()
+		console.log(11111);
+		const name = form.name.value
+		const email = form.email.value
+		const phoneNo = form.phoneNo.value
+		const address = form.address.value
+		const country = form.country.value
+		const zip = form.zip.value
+		const payment = form.payment.value
+		const currency = form.currency.value
+		const amount = form.amount.value
+
 		
-		// body:JSON.stringify({amount,currency,address,paymentOption})
+		console.log(country);
+		console.log(currency);
+		console.log(amount);
+
+
+
+		try {
+			let order = await fetch('/checkout', {
+				method: 'post',
+				body: JSON.stringify({ name, email, phoneNo, address, country, zip, payment, currency, amount }),
+				headers: { 'Content-Type': 'application/json' }
+
+			})
+
+
+			order = await order.json()
+			console.log(order);
+
+			if (order.success) {
+
+				location.assign('/ordersuccess')
+
+			} else if (order.id) {
+				console.log(order);
+
+				const options = {
+					"key": "rzp_test_BBlNJOeGGPkzYf",
+					"amount": order.amount,
+					"currency": "INR",
+					"name": "Grocy Kart",
+					"description": "Test",
+					"order_id": order.id, //sample orderid
+					"handler": async function (response) {
+						console.log(response)
+						const res = await fetch('/verifyPaymentRazorPay', {
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json',
+							},
+							body: JSON.stringify(response),
+
+						})
+						console.log(11111111);
+						console.log(res + "res");
+
+						if (res) {
+
+							const saveRes = await fetch('/saveorder', {
+								method: 'GET',
+								headers: {
+									'Content-Type': 'application/json'
+								},
+							})
+							console.log(2222222222);
+
+							console.log(saveRes + "saveRes");
+							if (saveRes) {
+								console.log('completed');
+								location.assign('/ordersuccess')
+							}
+						}
+					},
+					"prefill": {
+						"name": "Gaurav Kumar",
+						"email": "gaurav.kumar@example.com",
+						"contact": "9999999999"
+					},
+					"notes": {
+						"address": "Razorpay Corporate Office"
+					},
+					"theme": {
+						"color": "#3399cc"
+					}
+				}
+				var rzp1 = new Razorpay(options);
+				rzp1.on('payment.failed', function (response) {
+					alert(response.error.code);
+					alert(response.error.description);
+					alert(response.error.source);
+					alert(response.error.step);
+					alert(response.error.reason);
+					alert(response.error.metadata.order_id);
+					alert(response.error.metadata.payment_id);
+				});
+				rzp1.open()
+			}
+
+
+		} catch (err) {
+			console.log(err);
+		}
+
 	})
-	let body = req.body;
-		console.log(body);
 
-	// order = await order.json()
-	// console.log(order);
-	// if(order.success){
-	// 	window.location.href = '/order'
-	}
 
-// }
 
-	
-
-  </script>
+</script>

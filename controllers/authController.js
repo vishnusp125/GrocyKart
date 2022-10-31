@@ -4,10 +4,17 @@ const Product = require('../models/product')
 const Cart = require('../models/cart')
 require('dotenv').config()
 const client = require('twilio')(process.env.accountSid, process.env.authToken)
+const {v4 : uuidv4} = require('uuid')
+const Razorpay = require('razorpay')
 
 const { handleErrors } = require('../middleware/errHandlingMiddleware')
 const { loginhandleErrors } = require('../middleware/errHandlingMiddleware');
 const { checkUser } = require('../middleware/authMiddleware');
+
+var instance = new Razorpay({
+    key_id: process.env.KEY_ID,
+    key_secret: process.env.KEY_SECRET,
+  });
 
 
 const maxAge = 3 * 24 * 60 * 60;
@@ -318,7 +325,7 @@ module.exports.removeFromCart = async (req, res) => {
     }
     else {
         await User.findOneAndUpdate({ _id: userr }, { $pull: { cart: { _id: prodId } } })
-        res.redirect('/checkout')
+        res.redirect('/cart')
 
     }
 
@@ -354,21 +361,26 @@ module.exports.addtoCart = async (req, res) => {
 module.exports.singleProduct = async (req, res) =>{
 
     try{
-        let prodId = req.params.prodId;
+        let prodId = req.query.id;
         console.log(prodId);
     
 
-        const products = await Product.findById({ _id: prodId})
+        const products = await Product.findById(prodId)
         console.log(products);
       
     
-        res.render('./users/single', {product: products, layout:'./layout/layout.ejs'})
+        res.render('./users/single', {products, layout:'./layout/layout.ejs'})
 
     } catch (err) {
         console.log(err);
     }
 
 }
+
+
+
+
+
 
 module.exports.userProfile = (req, res) =>{
 
@@ -441,32 +453,173 @@ module.exports.checkoutGet = async (req, res) => {
         }
         const total = sum(Curuser.cart,'price','count')
             const thisuser = Curuser;
-            // console.log(thisuser.username);
         
         res.render('./users/checkout', {user:Curuser.cart, totals: total, profile:thisuser, layout:'./layout/layout.ejs'})
 
     }catch (err){
         console.log(err);
     }
-
-
-    
+  
 }
+
 let orderAddress;
 let orderPayment;
+module.exports.checkoutPost = async (req, res) => {
+    console.log(1111);
+   
+    
+    try{
+        const user = req.user.id;
+      
+        const result = await User.findOne({_id:user})
+        const cartItems = result.cart
+        console.log(cartItems);
+        
+        let address = req.body.address
+        let payment = req.body.payment
+        let amount = req.body.amount
+        let currency = req.body.currency
+        // console.log(amount);
+        // console.log(currency);
 
-module.exports.checkoutContinue = async (req, res) => {
+        if(payment == 'Razorpay'){
 
-    const user = req.user.id;
-    console.log(req.body);
-    orderAddress = req.body.address
-    orderPayment = req.body.payment
-    if(req.body.payment =='COD'){
-        res.redirect('/checkout')
-    }
+            //step 1
+
+            let {amount, currency } = req.body;
+            amount = amount * 100;
+            console.log(amount);
+            console.log(currency);
+
+            //step 2
+            instance.orders.create({amount,currency},(err,order) =>{
+           // step 3&4
+
+                console.log(order);
+                console.log(order.amount)
+                console.log(order.id)
+                console.log(typeof order.id);
+                res.json(order)
+            })
+
+        }else{
+
+            res.redirect('/saveOrder')
+        }
+
+        //     for (let cartItem of cartItems){
+        //         cartItem = cartItem.toJSON()
+        //         address = cartItem.address
+        //         payment = cartItem.paymentOption
+        //         cartItem.unique = uuidv4() 
+        //         cartItem.orderStatus = 'Order is under process'
+        //         stockId = cartItem._id
+        //         salesCount = cartItem.count
+        //         removeCount = cartItem.count * -1
+
+        //         await User.findOneAndUpdate({_id:user},{$push:{ order: cartItem }})  
+
+        //         //empty cart
+        //         await User.findOneAndUpdate({ _id:user },{$set:{cart:[]}})
+
+        //         //update stock
+
+        //         await Product.updateOne({"_id": stockId},{$inc:{"stock":removeCount,"sales": salesCount}})
+
+        //         res.json({success:'done'})
+            
+
+    }catch(err) {
+        console.log(err);
+} 
 }
 
-module.exports.checkoutContinue = async (req, res) => {
+module.exports.verifyPaymentRazorPay = async (req,res) => {
+console.log(111111111);
+    console.log(req.body)
+    console.log(req.body.razorpay_payment_id);
+    console.log(req.body.razorpay_order_id);
+    console.log(req.body.razorpay_signature);
+    console.log('before creating hmac object');
+    const crypto = require('crypto')
+
+// Creating hmac object
+    let hmac = crypto.createHmac('sha256', process.env.KEY_SECRET)
+
+  //passing the data to be hashed
+  hmac.update(req.body.razorpay_order_id +"|" + req.body.razorpay_payment_id)
+
+  //creating the hmac in the required format
+  const generated_signature = hmac.digest('hex')
+  console.log('after creating hmac');
+
+  var response = { signatureIsValid: "false" }
+  if (generated_signature === req.body.razorpay_signature) {
+    response = { signatureIsValid : "true" }
+    console.log('signatureIsValid');
+    res.json(response)
+  }else {
+    res.send(response)
+  }
+
+}
+
+module.exports.saveOrder = async (req, res) => {
+
+    const user = req.user.id;
+
+    let address = req.body.address
+    let payment = req.body.payment
+    
+     try{
+
+    
+    const result = await User.findOne({_id:user})
+    const cartItems = result.cart
+
+
+          for (let cartItem of cartItems){
+                cartItem = cartItem.toJSON()
+                address = cartItem.address
+                payment = cartItem.paymentOption
+                cartItem.unique = uuidv4() 
+                cartItem.orderStatus = 'Order is under process'
+                stockId = cartItem._id
+                salesCount = cartItem.count
+                removeCount = cartItem.count * -1
+
+                await User.findOneAndUpdate({_id:user},{$push:{ order: cartItem }})  
+
+                //empty cart
+                await User.findOneAndUpdate({ _id:user },{$set:{cart:[]}})
+
+                //update stock
+
+                await Product.updateOne({"_id": stockId},{$inc:{"stock":removeCount,"sales": salesCount}})
+
+                res.status(200).json({ success:'true'})
+          }
+          }catch (err){
+            console.log(err);
+          }
+            
+
+
+}
+
+
+
+
+
+module.exports.successGet = async (req, res) => {
+
+    res.render('./users/orderSuccess', { layout:'./layout/layout.ejs'})
+    
+}
+
+module.exports.orderDetails = async (req, res) => {
+
+    res.render('./users/orderDetails', { layout:'./layout/layout.ejs'})
     
 }
 
@@ -474,16 +627,8 @@ module.exports.checkoutContinue = async (req, res) => {
 
 
 
-
-
-
-
-
-
-
-   
-
-
-
+module.exports.sample2 = async (req, res) => {
+    res.render('./users/sample2',{ layout:'./layout/layout.ejs'})
+}
 
 

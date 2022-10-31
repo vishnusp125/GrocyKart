@@ -9,6 +9,7 @@ mongoose.connect('mongodb://0.0.0.0:27017/store', {
 const categorySchema = new mongoose.Schema ({
     category :{
         type:String,
+        trim:true,
         required : true
     }
 },{timestamps:true})
