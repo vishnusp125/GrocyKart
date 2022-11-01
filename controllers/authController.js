@@ -7,6 +7,12 @@ const client = require('twilio')(process.env.accountSid, process.env.authToken)
 const {v4 : uuidv4} = require('uuid')
 const Razorpay = require('razorpay')
 
+//paypal
+const fetch = require('node-fetch')
+const base = "https://api-m.sandbox.paypal.com";
+
+
+
 const { handleErrors } = require('../middleware/errHandlingMiddleware')
 const { loginhandleErrors } = require('../middleware/errHandlingMiddleware');
 const { checkUser } = require('../middleware/authMiddleware');
@@ -334,6 +340,7 @@ module.exports.removeFromCart = async (req, res) => {
 module.exports.addtoCart = async (req, res) => {
 
     const prodId = req.params.id
+    console.log(prodId);
     let product = await Product.findById(prodId)
     
     const userr = req.user.id
@@ -351,12 +358,38 @@ module.exports.addtoCart = async (req, res) => {
     if (n > 0) {
         res.redirect('back')
     }
-    else {
+    else { 
+
+        product = product.toJSON()
+        product.count = 1;
         const neww = await User.updateOne({ _id: req.user.id }, { $push: { cart: product } })
         res.redirect('back')
     }
 
 }
+
+module.exports.removeCart = async (req, res) => {
+
+    const prodId = req.params.id
+    console.log(prodId);
+    let product = await Product.findById(prodId)
+    
+    const userr = req.user.id
+    const userid = await User.findById({ _id: userr })
+
+    await User.findOneAndUpdate({ _id: userr }, { $pull: { cart: { _id: prodId } } })
+     res.redirect('back')
+
+
+
+
+}
+
+
+
+
+
+
 
 module.exports.singleProduct = async (req, res) =>{
 
@@ -365,11 +398,11 @@ module.exports.singleProduct = async (req, res) =>{
         console.log(prodId);
     
 
-        const products = await Product.findById(prodId)
-        console.log(products);
+        const product = await Product.findById(prodId)
+        console.log(product);
       
     
-        res.render('./users/single', {products, layout:'./layout/layout.ejs'})
+        res.render('./users/single', {product, layout:'./layout/layout.ejs'})
 
     } catch (err) {
         console.log(err);
@@ -426,6 +459,7 @@ module.exports.userProfilePost = async (req, res) => {
                 },username:checks.username,
                 email:checks.email,
                 phoneNo:checks.phoneNo,
+
                    }
                 })
             res.redirect('back')
@@ -456,19 +490,18 @@ module.exports.checkoutGet = async (req, res) => {
         
         res.render('./users/checkout', {user:Curuser.cart, totals: total, profile:thisuser, layout:'./layout/layout.ejs'})
 
-    }catch (err){
+    }catch (err){  
         console.log(err);
     }
   
 }
 
-let orderAddress;
-let orderPayment;
+
 module.exports.checkoutPost = async (req, res) => {
     console.log(1111);
    
     
-    try{
+    
         const user = req.user.id;
       
         const result = await User.findOne({_id:user})
@@ -502,36 +535,23 @@ module.exports.checkoutPost = async (req, res) => {
                 res.json(order)
             })
 
-        }else{
+        }else if(payment == 'Paypal'){
+            console.log('in paypal');
+            const order = {id:'Paypal'}
+            console.log(order);
+            res.json(order)
+
+        }
+         
+        else{
 
             res.redirect('/saveOrder')
         }
 
-        //     for (let cartItem of cartItems){
-        //         cartItem = cartItem.toJSON()
-        //         address = cartItem.address
-        //         payment = cartItem.paymentOption
-        //         cartItem.unique = uuidv4() 
-        //         cartItem.orderStatus = 'Order is under process'
-        //         stockId = cartItem._id
-        //         salesCount = cartItem.count
-        //         removeCount = cartItem.count * -1
-
-        //         await User.findOneAndUpdate({_id:user},{$push:{ order: cartItem }})  
-
-        //         //empty cart
-        //         await User.findOneAndUpdate({ _id:user },{$set:{cart:[]}})
-
-        //         //update stock
-
-        //         await Product.updateOne({"_id": stockId},{$inc:{"stock":removeCount,"sales": salesCount}})
-
-        //         res.json({success:'done'})
             
 
-    }catch(err) {
-        console.log(err);
-} 
+    
+ 
 }
 
 module.exports.verifyPaymentRazorPay = async (req,res) => {
@@ -609,8 +629,6 @@ module.exports.saveOrder = async (req, res) => {
 
 
 
-
-
 module.exports.successGet = async (req, res) => {
 
     res.render('./users/orderSuccess', { layout:'./layout/layout.ejs'})
@@ -619,16 +637,132 @@ module.exports.successGet = async (req, res) => {
 
 module.exports.orderDetails = async (req, res) => {
 
-    res.render('./users/orderDetails', { layout:'./layout/layout.ejs'})
+    const user = req.user.id;
+    console.log(user);
+
+    try{
+        const orderDetails =  await User.findById({_id:user})
+        res.render('./users/orderDetails', { orderDetails,layout:'./layout/layout.ejs'})
+
+    }catch (err){
+        console.log(err);
+    }  
     
 }
 
 
 
+module.exports.paymentPaypal = async (req, res) => {
 
+    console.log('in payment paypal');
 
-module.exports.sample2 = async (req, res) => {
-    res.render('./users/sample2',{ layout:'./layout/layout.ejs'})
+    console.log(req.body);
+    const { amount, currency } = req.body;
+    console.log(amount)
+    
+    let orderAmt = amount / 80
+    let orderAmount = (Math.round(orderAmt * 100) / 100).toFixed(2);
+    console.log(orderAmount)
+    console.log(typeof orderAmount)
+
+    const order = await createOrder(orderAmount);
+    console.log(order);
+    console.log(order.id);
+    console.log('in return data1');
+    res.json(order);
+    console.log('in return data2');
+
 }
+
+
+// capture payment & store order information or fullfill order
+module.exports.verifyPaymentPaypal = async (req, res) => {
+    console.log('in verify payment paypal');
+
+    console.log(req.params)
+    const orderID = req.params.id;
+    console.log(orderID)
+    const captureData = await capturePayment(orderID);
+    // TODO: store payment information such as the transaction ID
+    res.json(captureData);
+
+}
+
+/////////////////////
+// PayPal API helpers
+//////////////////////
+
+// use the orders api to create an order
+async function createOrder(orderAmount) {
+    console.log('in paypal create order');
+    console.log(1111111111);
+    console.log(orderAmount)
+    console.log(typeof orderAmount)
+    const accessToken = await generateAccessToken();
+    const url = `${base}/v2/checkout/orders`;
+    const response = await fetch(url, {
+        method: "post",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({
+            intent: "CAPTURE",
+            purchase_units: [
+                {
+                    amount: {
+                        currency_code: "USD",
+                        value: orderAmount,
+                    },
+                },
+            ],
+        }),
+    });
+    console.log(2222222222);
+    const data = await response.json();
+    // console.log(data)
+    console.log(3333333);
+    return data;
+}
+
+// use the orders api to capture payment for an order
+async function capturePayment(orderId) {
+    console.log('in .... capture payment');
+    const accessToken = await generateAccessToken();
+    const url = `${base}/v2/checkout/orders/${orderId}/capture`;
+    const response = await fetch(url, {
+        method: "post",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+        },
+    });
+    const data = await response.json();
+    return data;
+} 
+
+// generate an access token using client id and app secret
+async function generateAccessToken() {
+    console.log('in generateAccesstoken');
+    const auth = Buffer.from(process.env.paypalClientid + ":" + process.env.paypalClientsecret).toString("base64")
+    const response = await fetch(`${base}/v1/oauth2/token`, {
+        method: "post",
+        body: "grant_type=client_credentials",
+        headers: {
+            Authorization: `Basic ${auth}`,
+        },
+    });
+    const data = await response.json();
+    return data.access_token;
+}
+// -------------------------------------------
+
+
+
+
+
+
+
+
 
 

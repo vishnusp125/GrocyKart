@@ -1,21 +1,27 @@
 
 
-<table style="margin-top: 100px; margin-bottom: 400px;" class="timetable_sub">
+<table style="margin-top: 100px; margin-bottom: 400px; margin: auto;" class="timetable_sub">
     <thead>
         <tr>
             <th>SL No.</th>	
             <th>Product</th>
-            <th>Product Name</th>
             <th>Order Status</th>
+            <th>Date & time</th>
+          
             <th>Cancel</th>
         </tr>
     </thead>
     <tbody>
-         <tr class="rem1"> 
-        <td class="invert">1</td>
-        <td class="invert"></td>
-        <td class="invert"></td>
-        <td class="invert"></td>
+       <% for(i=0; i<orderDetails.order.length; i++) { %>
+   
+        <tr class="rem1"> 
+        <td class="invert"><%= i+1 %></td>
+        <td class="invert"><%=orderDetails.order[i].name%></td>
+        <td class="invert"><%=orderDetails.order[i].orderStatus%></td>
+        <td class="invert"><%=orderDetails.order[i].createdAt%></td>
+       
         <td class="invert"><button class="btn btn-danger">Cancel</button></td>
+
+        <% } %>
 
 </tbody></table>

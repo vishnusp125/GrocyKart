@@ -38,17 +38,17 @@
 
 
 <div class="container mt-5 mb-5">
-	<div class="card">
+	<div class="card"> 
 		<div class="row g-0">
 			<div class="col-md-6 border-end">
 				<div class="d-flex flex-column justify-content-center">
-					<div class="main_image"> <img src="/image/<%=products._id %>.jpeg" data-imagezoom="true"
+					<div class="main_image"> <img src="/image/<%=product._id %>.jpeg" data-imagezoom="true"
 							id="main_product_image" width="280" height="320"> </div>
 					<div class="thumbnail_images">
 						<ul id="thumbnail">
-							<li><img onclick="changeImage(this)" src="/image/<%=products._id %>.jpeg"
+							<li><img onclick="changeImage(this)" src="/image/<%=product._id %>.jpeg"
 									 width="60"></li>
-							<li><img onclick="changeImage(this)" src="/image/<%=products._id %>.jpeg"
+							<li><img onclick="changeImage(this)" src="/images/4.jpg"
 									 width="60"></li>
 							<!-- <li><img onclick="changeImage(this)" src=""
 									 width="60"></li>
@@ -62,16 +62,16 @@
 				<div class="p-3 right-side">
 					<div class="d-flex justify-content-between align-items-center">
 						<h3>
-							<%=products.name%>
+							<%=product.name%>
 						</h3> <span class="heart"><i class='bx bx-heart'></i></span>
 					</div>
 					<div class="description mt-2">
 						<h5>Description</h5>
 						<p>
-							<%=products.description%>
+							<%=product.description%>
 						</p>
 					</div>
-					<h3>Rs. <%=products.price%>
+					<h3>Rs. <%=product.price%>
 					</h3>
 					<div class="ratings d-flex flex-row align-items-center">
 						<div class="d-flex flex-row"> <i class='bx bxs-star'></i> <i class='bx bxs-star'></i> <i
@@ -92,15 +92,15 @@
 					</div> -->
 					<div class="buttons d-flex flex-row mt-5 gap-3">
 						<form action="/cooking" method="post">
-							<input type="hidden" name="id" value="<%=products._id%>">
-							<a class="btn btn-white btn-sm" style="color:red" href="/wishlist/<%=products._id %>">
+							<input type="hidden" name="id" value="<%=product._id%>">
+							<a class="btn btn-white btn-sm" style="color:red" href="/wishlist/<%=product._id %>">
 								ADD TO WISHLIST <span class="glyphicon glyphicon-heart"></span>  </a>
 						</form> 
-						<form action="/cooking" method="post">
-							<input type="hidden" name="id" value="<%=products._id%>">
-							<a class="btn btn-white btn-sm" style="color:black" href="/addtoCart/<%=products._id %>">
+						<!-- <form action="/cooking" method="post"> -->
+							<input type="hidden" name="id" value="<%=product._id%>">
+							<a class="btn btn-white btn-sm" style="color:black" href="/addtoCart/<%=product._id %>">
 								ADD TO CART <span class="glyphicon glyphicon-shopping-cart"></span>  </a>
-						</form>
+						<!-- </form> -->
 					</div>
 					<!-- <div class="search-option"> <i class='bx bx-search-alt-2 first-search'></i>
 						<div class="inputs"> <input type="text" name=""> </div> <i class='bx bx-share-alt share'></i> -->

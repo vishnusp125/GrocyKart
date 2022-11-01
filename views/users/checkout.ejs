@@ -177,7 +177,7 @@
 				<select class="form-select" name="payment" aria-label="Default select example">
 					<option value="COD">Cash On Delivery</option>
 					<option value="Razorpay">Razorpay</option>
-					<option value="PayPal">PayPal</option>
+					<option value="Paypal">PayPal</option>
 				</select>
 				<!-- <div class="custom-control custom-radio">
 			  <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
@@ -232,7 +232,7 @@
 	</div>
 	<br>
 </div>
-
+<script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
 
@@ -251,7 +251,7 @@
 		const currency = form.currency.value
 		const amount = form.amount.value
 
-		
+
 		console.log(country);
 		console.log(currency);
 		console.log(amount);
@@ -274,7 +274,7 @@
 
 				location.assign('/ordersuccess')
 
-			} else if (order.id) {
+			} else if (order.id === 'Razorpay') {
 				console.log(order);
 
 				const options = {
@@ -337,7 +337,69 @@
 					alert(response.error.metadata.payment_id);
 				});
 				rzp1.open()
+			} else if (order.id === 'Paypal') {
+
+				paypal.Buttons({
+					// Order is created on the server and the order id is returned
+					createOrder: (data, actions) => {
+						return fetch('/paymentPaypal', {
+							method: "post",
+							headers: {
+								'Content-Type': 'application/json',
+							},
+							body: JSON.stringify({ amount, currency, address, payment }),
+							// use the "body" param to optionally pass additional order information
+							// like product ids or amount
+						})
+							.then((response) => response.json())
+						
+							.then((order) => order.id);
+							console.log(order);
+							console.log(order.id);
+							// console.log('orderid');
+					},
+
+					// Finalize the transaction on the server after payer approval
+					onApprove: (data, actions) => {
+						console.log('on approve and finalise on the server');
+						console.log(data.orderID);
+						return fetch(`/verifyPaymentPaypal/${data.orderID}/capture`, {
+							method: "post",
+						})
+							.then((response) => response.json())
+							.then((orderData) => {
+								// Successful capture! For dev/demo purposes:
+								console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+
+								const transaction = orderData.purchase_units[0].payments.captures[0];
+								alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
+								// When ready to go live, remove the alert and show a success message within this page. For example:
+								const element = document.getElementById('paypal-button-container');
+								element.innerHTML = '<h3>Thank you for your payment!</h3>';
+								// Or go to another URL:  actions.redirect('thank_you.html');
+								async function g() {
+									if (transaction.id) {
+										const saveRes = await fetch('/saveOrder', {
+											method: 'GET', // or 'PUT'
+											headers: {
+												'Content-Type': 'application/json',
+											},
+										})
+
+										console.log(saveRes + "saveRes")
+										if (saveRes) {
+											window.location.href = ("/ordersuccess");
+										}
+									}
+								}
+								g();
+							});
+					}
+				}).render('#paypal-button-container');
+
 			}
+
+
 
 
 		} catch (err) {
@@ -349,3 +411,5 @@
 
 
 </script>
+
+<div id="paypal-button-container"></div>

@@ -55,13 +55,14 @@
 								<th>Product Name</th>
 							
 								<th>Price</th>
+								<th>Remove</th>
 							</tr>
 						</thead>
 						<tbody>
 							<% user.forEach(function(user,index) { %>
 						<tr class="rem1"> 
 							<td class="invert"><%= index+1 %></td>
-							<td class="invert-image"><a href="single.html"><img src="./image/<%=user._id %>.jpeg" width="300px" height="80px"  alt=" " ></a></td>
+							<td class="invert-image"><a href="/singleProduct?id=<%=user._id%>"><img src="./image/<%=user._id %>.jpeg" width="300px" height="80px"  alt=" " ></a></td>
 							<td class="invert">
 								 <div class="quantity"> 
 									<div class="quantity-select">                           
@@ -74,6 +75,15 @@
 							<td class="invert"><%=user.name %></td>
 							
 							<td class="invert">&#x20B9; <%= (user.price * user.count) %></td>
+									
+							<td class="invert">
+								
+								<a href="/removecart/<%=user._id %>" class="btn btn-danger"
+								onclick="return confirm('Are you sure to remove <%=user.name %>?')">Remove</a>
+							
+							</td>
+
+							
 					<% }) %>
 					</tbody></table>
 				</div>

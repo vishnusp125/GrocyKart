@@ -31,6 +31,9 @@ router.get('/wishlistdelete/:id',authController.wishlistDelete)
 //cart
 router.get('/removeFromcart/:id',authController.removeFromCart)
 router.get('/addtoCart/:id',authController.addtoCart)
+router.get('/removecart/:id',authController.removeCart)
+
+
 
 //single product view
 router.get('/singleProduct',authController.singleProduct)
@@ -45,17 +48,29 @@ router.post('/userProfileEdit/:id',authController.userProfilePost)
 router.get('/checkout',authController.checkoutGet)
 router.post('/checkout',authController.checkoutPost)
 router.get('/ordersuccess',authController.successGet)
+ 
+//razorpay
 router.get('/verifyPaymentRazorPay',authController.verifyPaymentRazorPay)
 router.get('/saveOrder',authController.saveOrder)
 router.get('/orderDetails',authController.orderDetails)
 
+//paypal
+router.post('/paymentPaypal',authController.paymentPaypal)
+router.post('/verifyPaymentPaypal/:id/capture',authController.verifyPaymentPaypal)
 
 
 
 
 
 
-router.get('/sample2',authController.sample2)
+
+
+
+
+
+
+
+
 
 
 
