@@ -274,69 +274,6 @@
 
 				location.assign('/ordersuccess')
 
-			} else if (order.id === 'Razorpay') {
-				console.log(order);
-
-				const options = {
-					"key": "rzp_test_BBlNJOeGGPkzYf",
-					"amount": order.amount,
-					"currency": "INR",
-					"name": "Grocy Kart",
-					"description": "Test",
-					"order_id": order.id, //sample orderid
-					"handler": async function (response) {
-						console.log(response)
-						const res = await fetch('/verifyPaymentRazorPay', {
-							method: 'POST',
-							headers: {
-								'Content-Type': 'application/json',
-							},
-							body: JSON.stringify(response),
-
-						})
-						console.log(11111111);
-						console.log(res + "res");
-
-						if (res) {
-
-							const saveRes = await fetch('/saveorder', {
-								method: 'GET',
-								headers: {
-									'Content-Type': 'application/json'
-								},
-							})
-							console.log(2222222222);
-
-							console.log(saveRes + "saveRes");
-							if (saveRes) {
-								console.log('completed');
-								location.assign('/ordersuccess')
-							}
-						}
-					},
-					"prefill": {
-						"name": "Gaurav Kumar",
-						"email": "gaurav.kumar@example.com",
-						"contact": "9999999999"
-					},
-					"notes": {
-						"address": "Razorpay Corporate Office"
-					},
-					"theme": {
-						"color": "#3399cc"
-					}
-				}
-				var rzp1 = new Razorpay(options);
-				rzp1.on('payment.failed', function (response) {
-					alert(response.error.code);
-					alert(response.error.description);
-					alert(response.error.source);
-					alert(response.error.step);
-					alert(response.error.reason);
-					alert(response.error.metadata.order_id);
-					alert(response.error.metadata.payment_id);
-				});
-				rzp1.open()
 			} else if (order.id === 'Paypal') {
 
 				paypal.Buttons({
@@ -352,11 +289,11 @@
 							// like product ids or amount
 						})
 							.then((response) => response.json())
-						
+
 							.then((order) => order.id);
-							console.log(order);
-							console.log(order.id);
-							// console.log('orderid');
+						console.log(order);
+						console.log(order.id);
+						// console.log('orderid');
 					},
 
 					// Finalize the transaction on the server after payer approval
@@ -374,8 +311,8 @@
 								const transaction = orderData.purchase_units[0].payments.captures[0];
 								alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
 								// When ready to go live, remove the alert and show a success message within this page. For example:
-								const element = document.getElementById('paypal-button-container');
-								element.innerHTML = '<h3>Thank you for your payment!</h3>';
+								// const element = document.getElementById('paypal-button-container');
+								// element.innerHTML = '<h3>Thank you for your payment!</h3>';
 								// Or go to another URL:  actions.redirect('thank_you.html');
 								async function g() {
 									if (transaction.id) {
@@ -399,12 +336,77 @@
 
 			}
 
+		 else if (order.id) {
+			console.log(order);
 
+			const options = {
+				"key": "rzp_test_BBlNJOeGGPkzYf",
+				"amount": order.amount,
+				"currency": "INR",
+				"name": "Grocy Kart",
+				"description": "Test",
+				"order_id": order.id, //sample orderid
+				"handler": async function (response) {
+					console.log(response)
+					const res = await fetch('/verifyPaymentRazorPay', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify(response),
 
+					})
+					console.log(11111111);
+					console.log(res + "res");
 
-		} catch (err) {
-			console.log(err);
+					if (res) {
+
+						const saveRes = await fetch('/saveorder', {
+							method: 'GET',
+							headers: {
+								'Content-Type': 'application/json'
+							},
+						})
+						console.log(2222222222);
+
+						console.log(saveRes + "saveRes");
+						if (saveRes) {
+							console.log('completed');
+							location.assign('/ordersuccess')
+						}
+					}
+				},
+				"prefill": {
+					"name": "Gaurav Kumar",
+					"email": "gaurav.kumar@example.com",
+					"contact": "9999999999"
+				},
+				"notes": {
+					"address": "Razorpay Corporate Office"
+				},
+				"theme": {
+					"color": "#3399cc"
+				}
+			}
+			var rzp1 = new Razorpay(options);
+			rzp1.on('payment.failed', function (response) {
+				alert(response.error.code);
+				alert(response.error.description);
+				alert(response.error.source);
+				alert(response.error.step);
+				alert(response.error.reason);
+				alert(response.error.metadata.order_id);
+				alert(response.error.metadata.payment_id);
+			});
+			rzp1.open()
 		}
+
+
+
+
+	} catch (err) {
+		console.log(err);
+	}
 
 	})
 

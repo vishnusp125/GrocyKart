@@ -53,6 +53,8 @@ router.get('/ordersuccess',authController.successGet)
 router.get('/verifyPaymentRazorPay',authController.verifyPaymentRazorPay)
 router.get('/saveOrder',authController.saveOrder)
 router.get('/orderDetails',authController.orderDetails)
+router.get('/cancelOrder/:id',authController.cancelOrder)
+
 
 //paypal
 router.post('/paymentPaypal',authController.paymentPaypal)

@@ -37,7 +37,10 @@ const productSchema =  mongoose.Schema({
   },
   offer:{
     type:String
-  }
+  },
+  sales:{
+    type:Number
+  },
 },{timestamps:true});
 
 const productModel = mongoose.model('product', productSchema);

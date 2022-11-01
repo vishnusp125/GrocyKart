@@ -19,9 +19,10 @@
         <td class="invert"><%=orderDetails.order[i].name%></td>
         <td class="invert"><%=orderDetails.order[i].orderStatus%></td>
         <td class="invert"><%=orderDetails.order[i].createdAt%></td>
+    
        
-        <td class="invert"><button class="btn btn-danger">Cancel</button></td>
-
+     <td><a class="btn btn-danger" href="/cancelOrder/<%=orderDetails.order[i].unique%>">Cancel</td></a> 
+     
         <% } %>
 
 </tbody></table>

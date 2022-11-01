@@ -40,12 +40,22 @@
 				</nav>
 			</div>
 			<div class="w3l_banner_nav_right">
-	<!-- about -->
+	<!-- about -->	
 			<div class="privacy about">
+				<% if (cartUser.cart == 0) { %>
+					
+				<div><h1 style="margin-left: 200px; color: #fa1818 ;">Your cart is Empty ...... !!!!!!</h1></div>
+
+					<% } else { %>
+					
+						
 				<h3>My <span>Cart</span></h3>
 				
 			  <div class="checkout-right">
 						<h4>Your shopping cart contains: <span></span></h4>
+						
+						
+						
 					<table class="timetable_sub">
 						<thead>
 							<tr>
@@ -85,8 +95,11 @@
 
 							
 					<% }) %>
+					
 					</tbody></table>
 				</div>
+				
+				
 				<div class="checkout-left">	
 					<div class="col-md-4 checkout-left-basket">
 						<h4>Items in basket</h4>
@@ -100,6 +113,7 @@
 							<li>Total <i>-</i> <span>&#x20B9; <%=totals%></span></li>
 						</ul>
 					</div>
+				
 					<div class="col-md-8 address_form_agile">
 						  <!-- <h4>Add a new Details</h4>
 					<form action="payment.html" method="post" class="creditly-card-form agileinfo_form">
@@ -151,6 +165,7 @@
 					<div class="clearfix"> </div>
 					
 				</div>
+				<% } %>
 	
 			</div>
 	<!-- //about -->

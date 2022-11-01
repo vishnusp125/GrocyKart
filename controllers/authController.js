@@ -222,6 +222,7 @@ module.exports.cart_get = async (req, res) => {
 
         const users = await User.findById({ _id: Curuser })
         // console.log(users);
+        let cart = users
         const sum = function(items,p1,p2){
             return items.reduce(function (a,b){
                 return parseInt(a)+(parseInt(b[p1])*parseInt(b[p2]))
@@ -229,7 +230,7 @@ module.exports.cart_get = async (req, res) => {
         }
         const total = sum(users.cart,'price','count')
 
-        res.render('./users/cart', { user: users.cart,totals:total,layout: './layout/layout.ejs' })
+        res.render('./users/cart', { user: users.cart,totals:total,cartUser:cart, layout: './layout/layout.ejs' })
 
     } catch (err) {
         console.log(err);
@@ -386,11 +387,6 @@ module.exports.removeCart = async (req, res) => {
 }
 
 
-
-
-
-
-
 module.exports.singleProduct = async (req, res) =>{
 
     try{
@@ -409,8 +405,6 @@ module.exports.singleProduct = async (req, res) =>{
     }
 
 }
-
-
 
 
 
@@ -556,7 +550,7 @@ module.exports.checkoutPost = async (req, res) => {
 
 module.exports.verifyPaymentRazorPay = async (req,res) => {
 console.log(111111111);
-    console.log(req.body)
+    console.log(req.body) 
     console.log(req.body.razorpay_payment_id);
     console.log(req.body.razorpay_order_id);
     console.log(req.body.razorpay_signature);
@@ -589,7 +583,7 @@ module.exports.saveOrder = async (req, res) => {
     const user = req.user.id;
 
     let address = req.body.address
-    let payment = req.body.payment
+    let payment = req.body.paymentOption
     
      try{
 
@@ -649,6 +643,76 @@ module.exports.orderDetails = async (req, res) => {
     }  
     
 }
+
+module.exports.cancelOrder =  (req, res) => {
+
+    const user = req.user.id
+    // console.log(user);
+  
+
+    uniqueid = req.params.id
+    // console.log(uniqueid);
+    if (user) {
+        User.findOne({user:uniqueid})
+        .then((result) =>{
+            // console.log(result);
+
+            const orders = result.order
+
+            // console.log(orders);  
+
+                    for (let order of orders) {
+                    order = order.toJSON();
+                    if (order.unique === uniqueid) {
+                        Promise.all([(User.updateOne({ "_id":user, "order.unique": uniqueid }, { $set: { "order.$.orderStatus": "Order cancelled" } })), (Product.updateOne({ "_id": order._id }, { $inc: { "stock": order.count } }))])
+                            .then((result) => {
+                                res.redirect('/orderDetails')
+                            })
+                            .catch((err) => {
+                                console.log(err)
+                            })
+                    }
+                }
+
+        })
+
+    }else{
+
+    }
+}
+
+
+// const cancelOrderGet = (req, res) => {
+//     session = req.session;
+//     uniqueId = req.params.id;
+//     if (session.userId) {
+//         User.findOne({ _id: session.uid })
+//             .then((result) => {
+//                 // console.log(result)
+
+//                 const orders = result.order
+
+//                 console.log(orders)
+
+//                 for (let order of orders) {
+//                     order = order.toJSON();
+//                     if (order.unique === uniqueId) {
+//                         Promise.all([(User.updateOne({ "name": session.userId, "order.unique": uniqueId }, { $set: { "order.$.orderStatus": "Order cancelled" } })), (Product.updateOne({ "_id": order._id }, { $inc: { "stock": order.count, "sales": (order.count * -1) } }))])
+//                             .then((result) => {
+//                                 res.redirect('/order')
+//                             })
+//                             .catch((err) => {
+//                                 console.log(err)
+//                             })
+//                     }
+//                 }
+//             })
+//     } else {
+//         res.redirect('/login')
+//     }
+// }
+
+
 
 
 
@@ -755,7 +819,7 @@ async function generateAccessToken() {
     const data = await response.json();
     return data.access_token;
 }
-// -------------------------------------------
+
 
 
 
