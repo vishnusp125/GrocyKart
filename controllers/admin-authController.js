@@ -76,7 +76,7 @@ module.exports.adminsignin_post = async (req, res) => {
 }
 
 module.exports.adminLogout_get = (req,res)=>{
-    res.cookie('jwt','',{maxAge:1})
+    res.cookie('jwt2','',{maxAge:1})
     res.redirect('/adminsignin');
 }
 

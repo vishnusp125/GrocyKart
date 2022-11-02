@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken')
 const adminauthController = require('../controllers/admin-authController')
 const productController = require('../controllers/productController')
 const userController = require('../controllers/usercontroller')
+const adminAuthmiddleware = require('../middleware/adminAuthmiddleware')
 
 
 
@@ -25,7 +26,7 @@ router.get('/admindash',(req,res)=>{
 
 //admin sigup get and post
 router.get('/adminsignup',adminauthController.adminsignup_get)
-router.get('/adminsignin',adminauthController.adminlogin_get)
+router.get('/adminsignin',adminAuthmiddleware.requireAuth,adminauthController.adminlogin_get)
 router.post('/adminsignup',adminauthController.adminsignup_post)
 router.post('/adminsignin',adminauthController.adminsignin_post)
 router.get('/adminLogout',adminauthController.adminLogout_get)
@@ -47,6 +48,11 @@ router.post('/categoryDelete',productController.categoryDelete)
 router.get('/adminuser',userController.usermgt_get) 
 router.get('/blockuser/:id',userController.blockuser)
 router.get('/unblockuser/:id',userController.unblockuser)
+
+//orderdetails
+router.get('/adminOrder',userController.orderDetails) 
+router.get('/adminCancelorder/:id',userController.adminCancelorder)
+
 
 
 module.exports = router;

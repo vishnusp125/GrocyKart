@@ -304,7 +304,6 @@ module.exports.wishlistDelete = async (req, res) => {
 }
 
 
-
 module.exports.removeFromCart = async (req, res) => {
 
     let prodId = req.params.id
@@ -490,7 +489,8 @@ module.exports.checkoutGet = async (req, res) => {
   
 }
 
-
+let payment;
+let address;
 module.exports.checkoutPost = async (req, res) => {
     console.log(1111);
    
@@ -502,10 +502,11 @@ module.exports.checkoutPost = async (req, res) => {
         const cartItems = result.cart
         console.log(cartItems);
         
-        let address = req.body.address
-        let payment = req.body.payment
+        address = req.body.address
+        payment = req.body.payment
         let amount = req.body.amount
         let currency = req.body.currency
+        console.log(payment);
         // console.log(amount);
         // console.log(currency);
 
@@ -582,8 +583,9 @@ module.exports.saveOrder = async (req, res) => {
 
     const user = req.user.id;
 
-    let address = req.body.address
-    let payment = req.body.paymentOption
+    // address = req.body.address
+    // payment = req.body.payment
+    console.log(address);
     
      try{
 
@@ -594,15 +596,16 @@ module.exports.saveOrder = async (req, res) => {
 
           for (let cartItem of cartItems){
                 cartItem = cartItem.toJSON()
-                address = cartItem.address
-                payment = cartItem.paymentOption
+                cartItem.address = address  
+                cartItem.paymentOption =  payment
                 cartItem.unique = uuidv4() 
                 cartItem.orderStatus = 'Order is under process'
                 stockId = cartItem._id
                 salesCount = cartItem.count
-                removeCount = cartItem.count * -1
+                removeCount = cartItem.count * -1 
 
-                await User.findOneAndUpdate({_id:user},{$push:{ order: cartItem }})  
+                await User.findOneAndUpdate({_id:user},{$push:{ order: cartItem}},{$set:{ paymentOption: payment}})  
+             
 
                 //empty cart
                 await User.findOneAndUpdate({ _id:user },{$set:{cart:[]}})

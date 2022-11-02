@@ -1,0 +1,83 @@
+
+
+<body>
+    <div >
+        <div style="margin-left:350px; margin-top: 50px;">
+            <h1 >Order Details</h1>
+
+        </div>
+      
+      <div class="row" style="margin-top: 150px;">
+        <table id="example" class="display nowrap" style="width:100%">
+          <thead>
+            <tr>
+              <th>Product Name</th>
+              <th>Quantity</th>
+              <th>Order Status</th>
+              <th>Time and Date</th>
+              <th>Price</th>
+              <th>Payment Mode</th>
+              <th>Total</th>
+              <th>Cancel</th>
+            </tr>
+          </thead>
+          <tbody>	
+            <% orders.forEach(function(orders) { %>
+            <tr>
+              <td><%=orders.name%></td>
+              <td><%=orders.count%></td>
+              <td><%=orders.orderStatus%></td>
+              <td><%=orders.createdAt.toLocaleString()%></td>
+              <td><%=orders.price%></td>
+              <td><%=orders.paymentOption%></td>
+              <td><%=(orders.price * orders.count)%></td>
+              <td>
+              <% if(orders.orderStatus =='Order cancelled') {%>
+                <p style="color: red;">Cancelled</p>
+                <% }else{ %>
+                    <a href=" /adminCancelorder/<%=orders.unique%>" class="btn btn-danger" onclick="return confirm('Do you want to cancel ?')">Cancel</a>
+             <!-- <button class="btn btn-danger">Cancel</button></td> -->
+            
+            </tr>
+            <%}%>
+               <% }) %>
+            <!-- <tr>
+                <td>giger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>63</td>
+                <td>2011-04-25</td>
+                <td>$320,800</td>
+              </tr> -->
+          </tbody>
+            <!-- <tfoot>
+                <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Age</th>
+                <th>Start date</th>
+                <th>Salary</th>
+                </tr>
+            </tfoot> -->
+        </table>
+      </div>
+    </div>
+    <script src="../js/data-table.js"></script>
+  
+  </body>
+
+  <script>
+
+
+
+  $(document).ready(function() {
+    $('#example').DataTable( {
+        // dom: 'Bfrtip',
+        // buttons: [
+        //     'copy', 'csv', 'excel', 'pdf', 'print'
+        // ]
+    } );
+} );
+
+</script>

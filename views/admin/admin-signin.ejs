@@ -1,116 +1,10 @@
-<!-- 
-    <div class="container col-4 justify-content-center">
-      <form action="/admin"  method="post">
-        
-    
-          <h1 class="text-center my-5 fs-1 fw-bold">Admin Sign In</h1>
-         
-          Email input
-           <div class="form-outline mb-4">
-            <input type="text" name="username" id="loginName" class="form-control" />
-            <label class="form-label" for="loginName">Username</label>
-          </div>
-    
-           Password input -->
-          <!-- <div class="form-outline mb-4">
-            <input type="password" name="password" id="loginPassword" class="form-control" />
-            <label class="form-label" for="loginPassword">Password</label>
-          </div> -->
-    
-    
-          <!-- Submit button -->
-          <!-- <div>
-              <button type="submit" class="btn btn-success btn-block mb-4">Sign In</button>
-
-          </div>
-          <div>
-            <span>Not an admin</span>  <a href="/adminsignup" style="text-decoration: none;">Register here</a>
-          </div>
-  </form>
-</div>
-</div>  -->
-
-<!-- <div class="login">
-  <h3>Sign In</h3>
-  <div class="w3ogin_module">
-      <div class="module form-module">
-        <div class=""><i class=""></i>
-          <div class="tooltip">Click Me</div>
-        </div>
-        <div class="form">
-          <form id="signinform">
-            <input type="text" name="adminname" placeholder="Username">
-            <div class="adminnameError" style="color: red;"></div>
-            <input type="password" name="password" placeholder="Password">
-            <div class="passwordError" style="color: red;"></div>
-            <input type="submit" value="Login">
-          </form>
-        </div>
-        </div>
-        </div>
 
 
-        <script>
-          const form = document.querySelector('#signinform');
-          const adminnameError = document.querySelector('.adminnameError');
-          const passwordError = document.querySelector('.passwordError');
-        
-        console.log(566768);
-          form.addEventListener('submit', async(e) =>{
-            e.preventDefault();
-            console.log(1111111);
-            console.log('form submitted');
-        
-            // reset errors
-            console.log('at reset');
-            adminnameError.textContent ='';
-            passwordError.textContent ='';
-        
-            //get the values
-            const adminname = form.adminname.value;
-            const password = form.password.value;
-           
-            
-         
-            console.log("in signin view");
-            
-            
-        
-            try{
-              const res = await fetch('/adminsignin',{
-                method:'POST',
-                body:JSON.stringify({adminname,password}),
-                headers:{'Content-Type':'application/json'}
-        
-              });
-              console.log(res);
-              const data = await res.json();
-              console.log(data)
-              if(data.errorHandler){
-                adminnameError.textContent = data.errorHandler.adminname;
-                passwordError.textContent = data.errorHandler.password;
-              }
-        
-              if(data.admin){
-                res.redirect('/admin',{layout:'/views/layout/admin-layout.ejs'})
-              }
-        
-            }
-            catch(err){
-              console.log(err);
-            }
-          })
-        </script>
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
 
-
-
- -->
-
-
-
-
- <div class="container col-4 justify-content-center">
+ <!-- <div class="container col-4 justify-content-center">
   <div class="w3_login">
     <h3>Sign In</h3>
     <div class="_login_module">
@@ -130,68 +24,135 @@
       </div>
       </div>
   </div>
-</div>
+</div> -->
 
 
 
 
-      <script>
-        const form = document.querySelector('#adminsignupform');
-        const adminnameError = document.querySelector('.adminnameError');
-        const passwordError = document.querySelector('.passwordError');
-
-        console.log(11111);
-        form.addEventListener('submit', async (e) => {
-          e.preventDefault();
-          console.log('form submitted');
-
-          // reset errors
-
-          console.log('at reset');
-          adminnameError.textContent = '';
-          passwordError.textContent = '';
-
-
-          //get the values
-          const adminname = form.adminname.value;
-          const password = form.password.value;
-
-          console.log(222222);
 
 
 
-          try {
-            const res = await fetch('/adminsignin', {
-              method: 'POST',
-              body: JSON.stringify({ adminname, password }),
-              headers: { 'Content-Type': 'application/json' }
-           
-              
+<!-- Section: Design Block  -->
+<section class=" text-center text-lg-start">
+  <style>
+    .rounded-t-5 {
+      border-top-left-radius: 0.5rem;
+      border-top-right-radius: 0.5rem;
+    }
 
-            });
-            console.log(res);
-            const data = await res.json();
-            console.log(data);
-            if (data.errorHandler) {
-              adminnameError.textContent = data.errorHandler.adminname;
-              passwordError.textContent = data.errorHandler.password;
-              console.log('in try ');
+    @media (min-width: 992px) {
+      .rounded-tr-lg-0 {
+        border-top-right-radius: 0;
+      }
+
+      .rounded-bl-lg-5 {
+        border-bottom-left-radius: 0.5rem;
+      }
+    }
+  </style>
+  <div class="card mb-3">
+    <div class="row g-0 d-flex text-center">
+     
+      <div class="col-lg-4 d-none d-lg-flex">
+        <img src="https://mdbootstrap.com/img/new/ecommerce/vertical/004.jpg" alt="Trendy Pants and Shoes"
+          class="w-100 rounded-t-5 rounded-tr-lg-0 rounded-bl-lg-5" />
+      </div>
+   
+      <div class="col-lg-8 align-items-center mt-5">
+        <h3>Admin Sign In</h3>
+       
+        <div class="card-body py-5 px-md-5">
+    
+
+          <form id="adminsignupform">
+            <!-- Email input -->
+            <div class="form-outline mb-4">
+              <input type="text" id="form2Example1" class="form-control" name="adminname" />
+              <div class="adminnameError" style="color: red;"></div>
+              <label class="form-label" for="form2Example1">Admin name</label>
+            </div>
+
+            <!-- Password input -->
+            <div class="form-outline mb-4">
+              <input type="password" id="form2Example2" class="form-control" name="password" />
+              <div class="passwordError" style="color: red;"></div>
+              <label class="form-label" for="form2Example2">Password</label>
+            </div>
+
+            <!-- 2 column grid layout for inline styling -->
+       
+
+            <!-- Submit button -->
+            <input type="submit" class="btn btn-primary btn-block mb-4" value="Sign In">
+            <!-- <button type="button" class="btn btn-primary btn-block mb-4">Sign in</button> -->
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 
-            }
-            if (data.admin) {
-              console.log(3333333);
-              location.assign('/admindash')
-            }
+<script>
+  const form = document.querySelector('#adminsignupform');
+  const adminnameError = document.querySelector('.adminnameError');
+  const passwordError = document.querySelector('.passwordError');
 
-          }
-          catch (err) {
-            console.log('in catch');
-            console.log(err);
-            
-          }
-        })
-      </script>
+  console.log(11111);
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    console.log('form submitted');
+
+    // reset errors
+
+    console.log('at reset');
+    adminnameError.textContent = '';
+    passwordError.textContent = '';
+
+
+    //get the values
+    const adminname = form.adminname.value;
+    const password = form.password.value;
+
+    console.log(222222);
+
+
+
+    try {
+      const res = await fetch('/adminsignin', {
+        method: 'POST',
+        body: JSON.stringify({ adminname, password }),
+        headers: { 'Content-Type': 'application/json' }
+     
+        
+
+      });
+      console.log(res);
+      const data = await res.json();
+      console.log(data);
+      if (data.errorHandler) {
+        adminnameError.textContent = data.errorHandler.adminname;
+        passwordError.textContent = data.errorHandler.password;
+        console.log('in try ');
+
+
+      }
+      if (data.admin) {
+        console.log(3333333);
+        location.assign('/admindash')
+      }
+
+    }
+    catch (err) {
+      console.log('in catch');
+      console.log(err);
+      
+    }
+  })
+</script> 
+
 
 
 

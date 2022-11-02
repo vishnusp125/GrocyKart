@@ -5,8 +5,10 @@
         <tr>
             <th>SL No.</th>	
             <th>Product</th>
+            <th>Quantity</th>
             <th>Order Status</th>
             <th>Date & time</th>
+      
           
             <th>Cancel</th>
         </tr>
@@ -17,12 +19,20 @@
         <tr class="rem1"> 
         <td class="invert"><%= i+1 %></td>
         <td class="invert"><%=orderDetails.order[i].name%></td>
+        <td class="invert"><%=orderDetails.order[i].count%></td>
         <td class="invert"><%=orderDetails.order[i].orderStatus%></td>
-        <td class="invert"><%=orderDetails.order[i].createdAt%></td>
+        <td class="invert"><%=orderDetails.order[i].createdAt.toLocaleString()%></td>
+        <td>
+
+        <% if(orderDetails.order[i].orderStatus == 'Order cancelled') { %>
+            <p class="btn btn-white" style="color: red;">Cancelled</p>
+            <% } else { %>
     
        
-     <td><a class="btn btn-danger" href="/cancelOrder/<%=orderDetails.order[i].unique%>">Cancel</td></a> 
+     <a class="btn btn-danger" href="/cancelOrder/<%=orderDetails.order[i].unique%>">Cancel
      
         <% } %>
+    </td></a> 
+    <% } %>
 
 </tbody></table>

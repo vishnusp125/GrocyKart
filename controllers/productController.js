@@ -40,8 +40,8 @@ module.exports.addproduct_post = async (req, res) => {
         let image2 = req.files.image2;
         let image3 = req.files.image3;
         image.mv('./public/image/' + product._id + ".jpeg")
-        image2.mv('./public/image/' + product._id + "2.jpeg")
-        image3.mv('./public/image/' + product._id + "3.jpeg")
+        // image2.mv('./public/image/' + product._id + "2.jpeg")
+        // image3.mv('./public/image/' + product._id + "3.jpeg")
         res.redirect('/adminproduct')
 
     } catch (err) {
@@ -109,9 +109,9 @@ module.exports.editproduct_post = async (req, res) => {
     const prodId = req.params.id
     // console.log(prodId);
 
-    const userid = await User.findById({ _id: userr })
+    // const userid = await User.findById({ _id: userr })
 
-    const checks = userid.wishlist;
+    // const checks = userid.wishlist;
 
 
     try {
