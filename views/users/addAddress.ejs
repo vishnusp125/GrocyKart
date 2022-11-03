@@ -3,40 +3,40 @@
 <div class="container">
     <div class="row">
       <div class="col-xs-12">
-        <form action="/userProfileEdit/:id"  method="post" class="form-horizontal" role="form">
+        <form action="/addAddress/:id"  method="post" class="form-horizontal" role="form">
   <div style="margin:50px; margin-left: 500px;">
-    <h1>Edit Profile</h1>
+    <h1>Add address </h1>
 
   </div>
          
-  
+<!--   
           <div class="form-group">
             <label for="inputFullName" class="col-sm-2 control-label">Full Name</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputFullName" name="username" placeholder="Full Name" value="<%=profile.username%>">
+              <input type="text" class="form-control" id="inputFullName" name="username" placeholder="Full Name" required>
             </div>
-          </div>
+          </div> -->
 
           
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="inputFullName" class="col-sm-2 control-label">Email</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputFullName" name="email" placeholder="Email" value="<%=profile.email%>">
+              <input type="text" class="form-control" id="inputFullName" name="email" placeholder="Email" required>
             </div>
-          </div>
-<!-- 
-          
+          </div> -->
+
+<!--           
           <div class="form-group">
             <label for="inputFullName" class="col-sm-2 control-label">Mobile Number</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputFullName" name="phoneNo" placeholder="Mobile Number" value="<%=profile.phoneNo%>">
+              <input type="text" class="form-control" id="inputFullName" name="phoneNo" placeholder="Mobile Number" required>
             </div>
           </div> -->
   
           <div class="form-group">
             <label for="inputAddressLine1" class="col-sm-2 control-label"> Address </label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputAddressLine1" name="address" placeholder="Address Line" value="<%=profile.address[0].address%>">
+              <input type="text" class="form-control" id="inputAddressLine1" name="address" placeholder="Address Line" required>
             </div>
           </div>
 
@@ -45,14 +45,14 @@
           <div class="form-group">
             <label for="inputCityTown" class="col-sm-2 control-label">City</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputCityTown" name="city" placeholder="City / Town" value="<%=profile.address[0].city%>">
+              <input type="text" class="form-control" id="inputCityTown" name="city" placeholder="City / Town" required>
             </div>
           </div>
   
           <div class="form-group">
             <label for="inputStateProvinceRegion" class="col-sm-2 control-label">State</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="State" name="state" placeholder="State" value="<%=profile.address[0].state%>">
+              <input type="text" class="form-control" id="State" name="state" placeholder="State" required>
             </div>
           </div>
 
@@ -62,19 +62,19 @@
           <div class="form-group">
             <label for="inputZipPostalCode" class="col-sm-2 control-label">Country</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="country" name="country" placeholder="Country" value="<%=profile.address[0].country%>">
+              <input type="text" class="form-control" id="country" name="country" placeholder="Country" required>
             </div>
           </div>
   
           <div class="form-group">
             <label for="inputZipPostalCode" class="col-sm-2 control-label">Zip / Postal Code</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputZipPostalCode" name="zip" placeholder="Zip / Postal Code" value="<%=profile.address[0].zip%>">
+              <input type="text" class="form-control" id="inputZipPostalCode" name="zip" placeholder="Zip / Postal Code" required>
             </div>
           </div>
 
 
-        <button class="btn btn-success mx-5" style="margin-bottom: 100px; margin-left: 200px; margin-top: 50px;"><span>Edit Profile</span>
+        <button class="btn btn-success mx-5" style="margin-bottom: 100px; margin-left: 200px; margin-top: 50px;"><span>Add address</span>
 
           </form></a>
       </div>

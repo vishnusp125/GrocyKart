@@ -18,8 +18,8 @@
 				<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
 					<ul class="nav navbar-nav nav_1">
 						<li><a href="/cooking">Cooking</a></li>
-						<li><a href="/dryfruits">Dry Fruits</a></li>
-						<li><a href="/beverages">Beverages</a></li>
+						<li><a href="/cooking">Dry Fruits</a></li>
+						<li><a href="/cooking">Beverages</a></li>
 
 						<% if(locals.user) { %>
 							<li><a href="/wishlist">My wishlist</a></li>
@@ -36,17 +36,18 @@
 				<div class="flexslider">
 					<ul class="slides">
 						<li>
-							<div class="w3l_banner_nav_right_banner">
-								<h3>Make your <span>food</span> with Spicy.</h3>
+							<div class="w3l_banner_nav_right_banner1">
+								<h3 style="color:black;">New <span style="color:#fa1818;">Imported</span> Dry Fruits.</h3>
 								<div class="more">
 									<a href="/cooking" class="button--saqui button--round-l button--text-thick"
 										data-text="Shop now">Shop now</a>
 								</div>
 							</div>
+							
 						</li>
 						<li>
-							<div class="w3l_banner_nav_right_banner1">
-								<h3 style="color: yellow">New <span>Imported</span> Dry Fruits.</h3>
+						<div class="w3l_banner_nav_right_banner">
+								<h3 style="color:white;">Make your <span style="color:yellow">food</span> more Spicy.</h3>
 								<div class="more">
 									<a href="/cooking" class="button--saqui button--round-l button--text-thick"
 										data-text="Shop now">Shop now</a>
@@ -55,7 +56,7 @@
 						</li>
 						<li>
 							<div class="w3l_banner_nav_right_banner2">
-								<h3>upto <i>50%</i> off.</h3>
+								<h3 style="color: black;">upto <i>50%</i> off.</h3>
 								<div class="more">
 									<a href="/cooking" class="button--saqui button--round-l button--text-thick"
 										data-text="Shop now">Shop now</a>
@@ -91,7 +92,7 @@
 				<div class="wthree_banner_bottom_left_grid">
 					<img src="images/4.jpg" alt=" " class="img-responsive" />
 					<div class="wthree_banner_bottom_left_grid_pos">
-						<h4>Discount Offer <span>25%</span></h4>
+						<h4 style="color:rgb(219, 255, 119); font-weight:800">Discount Offer <span>25%</span></h4>
 					</div>
 				</div>
 			</div>
@@ -107,7 +108,7 @@
 				<div class="wthree_banner_bottom_left_grid">
 					<img src="images/6.jpg" alt=" " class="img-responsive" />
 					<div class="wthree_banner_btm_pos1">
-						<h3>Save <span>Upto</span> $10</h3>
+						<h3>Save <span>Upto</span> Rs.100</h3>
 					</div>
 				</div>
 			</div>
@@ -129,7 +130,7 @@
 								<figure>
 									<div class="snipcart-item block">
 										<div class="snipcart-thumb">
-											<a href="single.html"><img title=" " alt=" " src="./image/<%=product._id %>.jpeg" height="180px" width="140px"/></a>
+											<a href="/singleProduct?id=<%=product._id%>"><img title=" " alt=" " src="./image/<%=product._id %>.jpeg" height="180px" width="140px"/></a>
 											<p><%=product.name %></p>
 											<h4 >Rs. <%=product.price %><span>Rs.<%=product.bprice %></span>
 											</div></h4>

@@ -43,6 +43,10 @@ router.get('/singleProduct',authController.singleProduct)
 router.get('/userProfile',authController.userProfile)
 router.get('/userProfileEdit',authController.userProfileEdit)
 router.post('/userProfileEdit/:id',authController.userProfilePost)
+router.get('/addAddress',authController.addAddress)
+router.post('/addAddress/:id',authController.addAddresspost)
+
+
 
 //checkout
 router.get('/checkout',authController.checkoutGet)

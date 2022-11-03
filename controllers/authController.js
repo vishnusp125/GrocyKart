@@ -408,14 +408,14 @@ module.exports.singleProduct = async (req, res) =>{
 
 
 
-module.exports.userProfile = (req, res) =>{
+module.exports.userProfile = async (req, res) =>{
 
     let user = req.user.id
 //     console.log(user);
 //    let user1 = user.username
 //    console.log(user1);
 
-    User.findOne({user}).then((profile) => {
+    await User.findById({_id:user}).then((profile) => {
         res.render('./users/profile', {profile,layout:'./layout/layout.ejs'})
     })
 }
@@ -463,6 +463,45 @@ module.exports.userProfilePost = async (req, res) => {
     }
 
 }
+
+module.exports.addAddress = async (req, res) => {
+
+    const user = req.user.id;
+    const profile = await User.findById({ _id:user })
+
+    res.render('./users/addAddress', {profile,layout:'./layout/layout.ejs'})
+
+
+}
+
+module.exports.addAddresspost = async (req, res) => {
+
+try {
+    const user = req.user.id;
+    const checks = req.body;
+
+    const userid = await User.findById({ _id: user })
+
+        await User.updateOne({ _id: user },
+             { $push: {address:{
+                address:checks.address,
+                city:checks.city,
+                country:checks.country,
+                state:checks.state,
+                zip : checks.zip,
+            }
+
+               }
+            })
+        res.redirect('back')
+
+} catch (err) {
+    console.log(err);
+
+}
+}
+
+
 
 module.exports.checkoutGet = async (req, res) => {
 
