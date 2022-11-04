@@ -18,11 +18,6 @@ const createToken = (id) => {
     });
 }
 
-router.get('/admindash',(req,res)=>{
-    console.log('in login page');
-    res.render('admin/admin-index',{layout:'./layout/admin-layout.ejs',admin:true})
-})
-
 
 //admin sigup get and post
 router.get('/adminsignup',adminauthController.adminsignup_get)
@@ -30,6 +25,7 @@ router.get('/adminsignin',adminAuthmiddleware.requireAuth,adminauthController.ad
 router.post('/adminsignup',adminauthController.adminsignup_post)
 router.post('/adminsignin',adminauthController.adminsignin_post)
 router.get('/adminLogout',adminauthController.adminLogout_get)
+router.get('/admindash',adminauthController.adminHome)
 
 //productmgt
 router.get('/adminproduct',productController.addproductform_get)
@@ -50,8 +46,14 @@ router.get('/blockuser/:id',userController.blockuser)
 router.get('/unblockuser/:id',userController.unblockuser)
 
 //orderdetails
-router.get('/adminOrder',userController.orderDetails) 
+router.get('/adminOrder',userController.orderDetails)
 router.get('/adminCancelorder/:id',userController.adminCancelorder)
+
+//coupon
+router.get('/adminCoupon',userController.couponGet)
+router.post('/couponAdd/:id',userController.addCoupon)
+router.post('/couponDelete',userController.deleteCoupon)
+
 
 
 

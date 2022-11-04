@@ -1,5 +1,6 @@
 const Users = require('../models/user')
 const Product = require("../models/product")
+const Coupon = require('../models/coupon')
 
 module.exports.usermgt_get = async (req, res) => {
 
@@ -111,6 +112,56 @@ module.exports.adminCancelorder =  (req, res) => {
 
     }
 }
+
+module.exports.couponGet =  (req, res) => {
+
+    Coupon.find()
+    .then((coupon)=>{
+
+    res.render('admin/coupon', {coupon, layout: './layout/admin-layout', admin: true })
+
+})
+
+
+}
+
+module.exports.addCoupon =  (req, res) => {
+
+    Coupon.findOne({ couponCode:req.body.coupencode})
+    .then(()=>{
+        let coupon = new Coupon({
+            couponCode:req.body.couponcode,
+            couponValue:req.body.couponvalue,
+            minBill:req.body.minbill,
+            couponExpiry:req.body.expirydate 
+        })
+        coupon.save()
+        .then(()=>{
+            res.redirect('back')
+        })
+    })
+}
+
+module.exports.deleteCoupon =  (req, res) => {
+
+const coupon = req.query.id
+console.log(coupon);
+Coupon.deleteOne({ couponCode:coupon })
+.then(()=>{
+    res.redirect('/adminCoupon')
+})
+
+}
+
+
+
+
+
+
+
+
+
+
 
 
 

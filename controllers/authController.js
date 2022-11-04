@@ -228,7 +228,9 @@ module.exports.cart_get = async (req, res) => {
                 return parseInt(a)+(parseInt(b[p1])*parseInt(b[p2]))
             },0)
         }
+       
         const total = sum(users.cart,'price','count')
+        console.log(total);
 
         res.render('./users/cart', { user: users.cart,totals:total,cartUser:cart, layout: './layout/layout.ejs' })
 
@@ -706,7 +708,7 @@ module.exports.cancelOrder =  (req, res) => {
                     for (let order of orders) {
                     order = order.toJSON();
                     if (order.unique === uniqueid) {
-                        Promise.all([(User.updateOne({ "_id":user, "order.unique": uniqueid }, { $set: { "order.$.orderStatus": "Order cancelled" } })), (Product.updateOne({ "_id": order._id }, { $inc: { "stock": order.count } }))])
+                        Promise.all([(User.updateOne({ "_id":user, "order.unique": uniqueid }, { $set: { "order.$.orderStatus": "Order cancelled" } })), (Product.updateOne({ "_id": order._id }, { $inc: { "stock": order.count, 'sales':(order.count*-1) } }))])
                             .then((result) => {
                                 res.redirect('/orderDetails')
                             })

@@ -1,9 +1,12 @@
 const Admin = require('../models/admin')
+const User = require('../models/user')
+const Product = require('../models/product')
 const jwt = require('jsonwebtoken')
 
 
 const { adminhandleErrors } = require('../middleware/admin-errorhandling')
 const { loginhandleErrors } = require('../middleware/admin-errorhandling')
+const { find } = require('../models/admin')
 
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
@@ -75,8 +78,90 @@ module.exports.adminsignin_post = async (req, res) => {
 
 }
 
-module.exports.adminLogout_get = (req,res)=>{
-    res.cookie('jwt2','',{maxAge:1})
+module.exports.adminLogout_get = (req, res) => {
+    res.cookie('jwt2', '', { maxAge: 1 })
     res.redirect('/adminsignin');
 }
+
+module.exports.adminHome = async (req, res) => {
+
+    const user = await User.count()
+    const productCount = await Product.count()
+    // const product = await Product.find()
+
+
+    let Sales = await Product.aggregate([{ $group: { _id: null, sum_val: { $sum: "$sales" } } }])
+    let totalSales = (Sales[0].sum_val);
+    //  console.log(totalSales);
+
+    const sales = [];
+    const timeOfSale = [];
+    let k = 0;
+    let l = 0;
+    let m = [];
+    let n;
+
+    await User.find({})
+        .then((results) => {
+            // console.log(result)
+            let sums;
+            n = results.length;
+            console.log(`n:${n}`);
+
+            for (result of results) {
+                k++;
+                console.log(`k:${k}`);
+                const orders = result.order
+                m.push(orders.length);
+                console.log(`m:${m}`);
+
+                console.log(`sums:${sums}`)
+
+                for (let order of orders) {
+                 l++;
+                 console.log(`l:${l}`);
+                 sums = m.reduce((partialSum, a) => partialSum + a, 0);
+                 order = order.toJSON();
+
+                if (order.orderStatus !== "Order cancelled") {
+                console.log(order.count);
+                console.log(order.price);
+                sales.push(order.count * order.price);
+                console.log(sales);
+                timeOfSale.push(order.createdAt.toISOString().substring(0, 10));
+                console.log(timeOfSale);
+                     }
+                }
+                if (l === sums && k === n) {
+
+                        console.log(sales);
+                        console.log(typeof (sales[0]));
+
+                        console.log(timeOfSale);
+                        console.log(typeof (timeOfSale[0]));
+                        Product.find({})
+                            .then((result) => {
+                                const sum = function (items, prop1, prop2) {
+                                    return items.reduce(function (a, b) {
+                                        return parseInt(a) + (parseInt(b[prop1]) * parseInt(b[prop2]));
+                                    }, 0);
+                                };
+                            
+                                const total = sum(result, 'price', 'sales');
+                                console.log(total);
+                              
+                                res.render('admin/admin-index', {productCount,result, total: total, sales, timeOfSale, totalSales, user, layout: './layout/admin-layout.ejs', admin: true })
+                            }).catch((err) => {
+                                console.log(err)
+                            })
+                }
+
+            }
+
+            })
+
+
+    // res.render('admin/admin-index', { totalSales, user, layout: './layout/admin-layout.ejs', admin: true })
+}
+
 
