@@ -4,34 +4,34 @@ const Category = require('../models/category')
 const fs = require('fs')
 const { builtinModules } = require('module')
 
-
+let validation = {
+    category: false
+}
 
 
 
 module.exports.addproductform_get = (req, res) => {
 
     Category.find().then((category) => {
-        res.render('admin/admin-addproduct.ejs', {result:' ',category,layout: 'layout/admin-layout.ejs', admin: true })
-      
-        })
-   
-   
+        res.render('admin/admin-addproduct.ejs', { result: ' ', category, layout: 'layout/admin-layout.ejs', admin: true })
+
+    })
+
+
 }
 
 
-
-
 module.exports.addproduct_post = async (req, res) => {
-    
+
     console.log(req.body);
-    const name = req.body.name; 
+    const name = req.body.name;
     const category = req.body.category;
     const price = req.body.price;
     const bprice = req.body.bprice;
     const description = req.body.description;
     const stock = req.body.stock;
 
-    const product = await Product.create({name,category,price,bprice,description,stock})
+    const product = await Product.create({ name, category, price, bprice, description, stock })
     console.log(product);
     try {
 
@@ -47,9 +47,6 @@ module.exports.addproduct_post = async (req, res) => {
     } catch (err) {
         console.log(err);
     }
-
-
-
 }
 
 
@@ -107,12 +104,6 @@ module.exports.editproduct_get = async (req, res) => {
 
 module.exports.editproduct_post = async (req, res) => {
     const prodId = req.params.id
-    // console.log(prodId);
-
-    // const userid = await User.findById({ _id: userr })
-
-    // const checks = userid.wishlist;
-
 
     try {
         await Product.updateOne({ _id: prodId }, {
@@ -136,41 +127,53 @@ module.exports.editproduct_post = async (req, res) => {
 
 //category mgt
 
-module.exports.categoryMgt = (req,res)=>{
+module.exports.categoryMgt = (req, res) => {
     Category.find()
-    .then((result)=>{
-    res.render('admin/category',{result, layout: 'layout/admin-layout', admin: true })
-    }).catch((err)=>console.log(err))
+        .then((result) => {
+            res.render('admin/category', { result, validation, layout: 'layout/admin-layout', admin: true })
+            validation.category = false
+        }).catch((err) => console.log(err))
 
 }
-module.exports.categoryMgtpost = async (req,res)=> {
+module.exports.categoryMgtpost = async (req, res) => {
 
-    try{
-        let category = req.body.category
+    newcat = req.body.category
+    Category.findOne({ category: newcat })
+        .then((result) => {
+            if (result) {
+                validation.category = true
+                res.redirect('/categoryMgt')
+            } else {
+                let category = new Category({
+                    category: newcat
+                })
+                category.save()
+                    .then(() => {
+                        res.redirect('/categoryMgt')
+                    }).catch((err) => {
+                        console.log(err)
+                    })
 
-        const cat = await Category.create({category})
-        res.redirect('/categoryMgt')
+            }
+        })
 
-    } catch (err){
-        console.log(err);
-    }
 }
 
-    module.exports.categoryDelete = (req,res) => {
+module.exports.categoryDelete = (req, res) => {
 
-    
-      
-        newcat = req.query.id
-        // console.log(newcat)
-        Category.deleteOne({_id:newcat})
-        .then((result)=>{
+
+
+    newcat = req.query.id
+    // console.log(newcat)
+    Category.deleteOne({ _id: newcat })
+        .then((result) => {
             // console.log(result)
             res.redirect('/categoryMgt')
-        }).catch((err)=>{
+        }).catch((err) => {
             console.log(err)
         })
-    }
-    
+}
+
 
 
 

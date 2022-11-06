@@ -1,4 +1,4 @@
-<!-- login -->
+<!-- sign up -->
 <div class="w3_login">
   <h3>Sign Up</h3>
   <div class="w3_login_module">
@@ -17,64 +17,26 @@
           <div class="emailError" style="color: red;"></div>
           <input type="text" name="phoneNo" placeholder="Phone Number" id="phoneNo">
           <div class="phoneError" style="color: red;"></div>
-          <button id="subbtn" class="btn btn-primary mb-4" style="margin-left: 100px;padding:15px 20px;">Sign Up</button>
-
-          <!-- <input type="submit"> -->
+          <button id="subbtn" class="btn btn-primary mb-4" style="margin-left: 100px;padding:15px 20px;">Sign
+            Up</button>
         </form>
       </div>
-      <!-- <div class="form">
-            <h2>Create an account</h2>
-            <form action="#" method="post">
-              <input type="text" name="Username" placeholder="Username" required=" ">
-              <input type="password" name="Password" placeholder="Password" required=" ">
-              <input type="email" name="Email" placeholder="Email Address" required=" ">
-              <input type="text" name="Phone" placeholder="Phone Number" required=" ">
-              <input type="submit" value="Register">
-            </form>
-          </div> -->
     </div>
-    
-  <!-- otp -->
 
-    <form id="otp" style="display:none;" class="col-md-6 px-5">
+    <!-- otp -->
+
+    <form id="otp" style="display:none;margin-left:330px;" class="col-md-6 px-5">
       <div class="form-group">
-    
         <input type="text" class="form-control" id="otpinp" placeholder="" name="otpvalue">
         <label class="mb-2 mt-2">Enter the OTP</label>
-    
       </div>
-    
       <div class="text-center" style="margin-left: 100px;">
         <a href="#myModal" class="btn btn-danger" data-toggle="modal" id="otpbtn">Verify</a>
       </div>
     </form>
   </div>
-  <!-- <script>
-        $('.toggle').click(function(){
-          // Switches the Icon
-          $(this).children('i').toggleClass('fa-pencil');
-          // Switches the forms  
-          $('.form').animate({
-            height: "toggle",
-            'padding-top': 'toggle',
-            'padding-bottom': 'toggle',
-            opacity: "toggle"
-          }, "slow");
-        });
-    </script> -->
-
-
-
-
-
-
-
-
 </div>
-<!-- //login -->
-
-
-
+<!-- sign up -->
 
 
 
@@ -95,10 +57,9 @@
         <button class="btn btn-success btn-block" data-dismiss="modal">OK</button>
       </div>
     </div>
-
   </div>
-
 </div>
+
 
 <script>
 
@@ -111,16 +72,12 @@
     e.preventDefault()
 
 
-
-
     const usernameError = document.querySelector('.usernameError');
     const passwordError = document.querySelector('.passwordError');
     const emailError = document.querySelector('.emailError');
     const phoneError = document.querySelector('.phoneError');
 
-    // form.addEventListener('submit', async (e) => {
-    //   e.preventDefault();
-    //   console.log('form submitted');
+
 
     // reset errors
     console.log('at reset');
@@ -142,7 +99,7 @@
       const res = await fetch('/usersignup', {
         method: 'POST',
         body: JSON.stringify({ username, password, email, phoneNo }),
-        headers : {'Content-Type':'application/json'}
+        headers: { 'Content-Type': 'application/json' }
 
       });
 
@@ -162,7 +119,7 @@
 
         const response = await fetch('/sendnotification', {
           method: 'POST',
-          body: JSON.stringify({phoneNo}),
+          body: JSON.stringify({ phoneNo }),
           headers: { 'Content-Type': 'application/json' }
 
         }).catch(e => console.log(e))
@@ -178,7 +135,7 @@
 
           const otpData = {
             phoneNo: data.user.phoneNo,
-            username:data.user.username,
+            username: data.user.username,
             otp: otpInpValue
           };
           try {
@@ -189,13 +146,13 @@
             })
             console.log('hii');
             const check = await response.json()
-            console.log(check+'hai');
+            console.log(check + 'hai');
 
-            responsetext.textContent=check;
+            responsetext.textContent = check;
             console.log(check);
             console.log('after assigning check');
             otpform.style.display = 'none';
-        
+
 
             setTimeout(() => {
               location.assign('/userlogin')

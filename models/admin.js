@@ -2,12 +2,12 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 
 
-mongoose.connect('mongodb://0.0.0.0:27017/store', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+// mongoose.connect('mongodb://0.0.0.0:27017/store', {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
 
 
-})
+// })
 
 const adminSchema = mongoose.Schema({
     adminname: {

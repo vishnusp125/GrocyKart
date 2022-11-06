@@ -143,12 +143,14 @@ module.exports.adminHome = async (req, res) => {
                             .then((result) => {
                                 const sum = function (items, prop1, prop2) {
                                     return items.reduce(function (a, b) {
+                                        console.log(b);
                                         return parseInt(a) + (parseInt(b[prop1]) * parseInt(b[prop2]));
                                     }, 0);
                                 };
                             
                                 const total = sum(result, 'price', 'sales');
                                 console.log(total);
+                                console.log(typeof total);
                               
                                 res.render('admin/admin-index', {productCount,result, total: total, sales, timeOfSale, totalSales, user, layout: './layout/admin-layout.ejs', admin: true })
                             }).catch((err) => {

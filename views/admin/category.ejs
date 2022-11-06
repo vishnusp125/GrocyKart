@@ -1,61 +1,64 @@
+<div class="container">
+  <section class="">
+
+    <div class="col-lg-6 mb-5 p-5 mb-lg-0 mx-auto">
+      <div class="card">
+        <div class="card-body py-5 px-md-5" style="background-color:black;">
+          <form action="/categoryMgtpost" method="post">
+            <!-- 2 column grid layout with text inputs for the first and last names -->
+            <div class="row">
+              <div class="col-md-12 mb-4">
+                <div class="form-outline">
+                  <input type="text" name="category" id="form3Example1" class="form-control" placeholder="Category"
+                    required />
+                </div>
+                <% if(validation.category){ %>
+                  <b>
+                    <p class="mt-2 fw-bold" style="color: red;">Already Added Category</p>
+                  </b>
+                  <% } %>
+              </div>
+
+              <!-- Submit button -->
+              <button type="submit" class="btn btn-success btn-block mb-4">
+                Add Category
+              </button>
+
+          </form>
+  </section>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">No.</th>
+        <th scope="col">Categories</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for(let i=0;i<result.length;i++) { %>
 
 
-<div class="container"> 
-    <section class=""> 
+        <th scope="">
+          <tr>
 
-        <div class="col-lg-6 mb-5 p-5 mb-lg-0 mx-auto"> 
-          <div class="card"> 
-            <div class="card-body py-5 px-md-5" style="background-color:black;"> 
-              <form action="/categoryMgtpost" method="post"> 
-                <!-- 2 column grid layout with text inputs for the first and last names --> 
-                <div class="row"> 
-                  <div class="col-md-12 mb-4"> 
-                    <div class="form-outline"> 
-                      <input type="text" name="category" class="form-control" placeholder="Category" required/> 
-                    </div> 
-                  
-                      <!-- <b><p class="mt-2 fw-bold" style="color: red;">Already Added</p></b> -->
-             
-                  </div> 
- 
-                <!-- Submit button --> 
-                <button type="submit" class="btn btn-success btn-block mb-4"> 
-                  Add Category 
-                </button> 
- 
-              </form>    
-</section> 
-    <table class="table table-hover"> 
-        <thead> 
-            <tr> 
-              <th scope="col">No.</th> 
-              <th scope="col">Categories</th> 
-              <th scope="col">Delete</th> 
-            </tr> 
-          </thead> 
-          <tbody> 
-            <% for(let i=0;i<result.length;i++) { %> 
-           
-  
-              <th scope=""> 
-                <tr>
-
-                <th scope="row"><%= i+1  %> </th>
-                <td><span style="font-weight: 700;" class="col-md-5 d-flex"><%= result[i].category %></span></td>
-                <td><form action="/categoryDelete?id=<%= result[i]._id %>" method="post">
-                  <button  type="submit" class="btn btn-danger" onclick="return confirm('Are you want to delete <%= result[i].category %>')" >
+            <th scope="row">
+              <%= i+1 %>
+            </th>
+            <td><span style="font-weight: 700;" class="col-md-5 d-flex">
+                <%= result[i].category %>
+              </span></td>
+            <td>
+              <form action="/categoryDelete?id=<%= result[i]._id %>" method="post">
+                <button type="submit" class="btn btn-danger"
+                  onclick="return confirm('Are you want to delete <%= result[i].category %>')">
                   Delete
                 </button>
               </form>
-               </td>
-                <!-- <hr> --> 
-              </tr>
-              <!-- </th> --> 
-         
-
-              <% } %>   
-            </tbody> 
-      </table> 
-  </div> 
-
-
+            </td>
+            <!-- <hr> -->
+          </tr>
+          <!-- </th> -->
+          <% } %>
+    </tbody>
+  </table>
+</div>
