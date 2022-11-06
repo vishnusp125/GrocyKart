@@ -47,6 +47,70 @@
         <div class="w3ls_w3l_banner_nav_right_grid">
             <h3 class="mt-5"><br> <br> More Products <br> </h3>
             <div class="w3ls_w3l_banner_nav_right_grid1">
+                <h6>Beverages</h6>
+                <% products.forEach(function(product) { %>
+                    <% if(product.category === 'Beverages') { %>
+                        <div class="col-md-3 w3ls_w3l_banner_left">
+                            <div class="hover14 column">
+                                <div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid">
+                                    <div class="agile_top_brand_left_grid_pos">
+                                        <img src="images/offer.png" alt=" " class="img-responsive" />
+                                    </div>
+                                    <div class="agile_top_brand_left_grid1">
+                                        <figure>
+                                            <div class="snipcart-item block">
+                                                <div class="snipcart-thumb">
+                                                    <a href="/singleProduct?id=<%=product._id%>"><img
+                                                            src="./image/<%=product._id %>.jpeg"  style="height: 150px; width: 100px;" height="120px"
+                                                            width="120px" alt=" " class="img-responsive" /></a>
+                                                    <p>
+                                                        <%=product.name %>
+                                                    </p>
+                                                    <h4 class="mx-5">Rs. <%=product.price %><span>Rs.
+                                                                <%=product.bprice %></span></h4>
+                                                </div>
+                                                <div class="snipcart-details">
+                                                    <form action="/cooking" method="post">
+                                                        <fieldset>
+                                                            <input type="hidden" name="id"
+                                                                value="<%=product._id %>"> 
+                                                            <!-- <input type="hidden" name="add" value="1" />
+                                            <input type="hidden" name="business" value=" " />
+                                            <input type="hidden" name="item_name" value="knorr instant soup" />
+                                            <input type="hidden" name="amount" value="3.00" />
+                                            <input type="hidden" name="discount_amount" value="1.00" />
+                                            <input type="hidden" name="currency_code" value="USD" />
+                                            <input type="hidden" name="return" value=" " />
+                                            <input type="hidden" name="cancel_return" value=" " /> -->
+                                                            <input type="submit" name="submit" value="Add to cart"
+                                                                class="button">
+                                                            <!-- <button type="submit" class="button ">Add to Cart</button> -->
+                                                        </fieldset>
+                                                        <!-- <form action="/wishlist/<%=product._id %>" method="post">
+                                        <input type="hidden" name="pid" value="<%=product._id %>" >
+                                         <button type="submit" name="pid" class="btn btn-danger">Add to Wishlist</button> -->
+                                                        <a class="btn btn-white btn-sm" style="color:red"
+                                                            href="/wishlist/<%=product._id %>">
+                                                            ADD TO WISHLIST <span
+                                                                class="glyphicon glyphicon-heart"></span> </a>
+
+                                                        <!-- <input type="submit" name="submit" value="Add to Wishlist" class="btn"> -->
+
+                                                        <!-- </form> -->
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </figure>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <%}%>
+                           
+                            <% }) %>
+                <div class="clearfix"> </div>
+            </div>
+            <div class="w3ls_w3l_banner_nav_right_grid1">
                 <h6>Cooking</h6>
                 <% products.forEach(function(product) { %>
                     <% if(product.category === 'Cooking ') { %>
@@ -174,6 +238,7 @@
                             <% }) %>
                 <div class="clearfix"> </div>
             </div>
+           
         </div>
     </div>
     <div class="clearfix"></div>

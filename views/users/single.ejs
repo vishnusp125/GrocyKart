@@ -21,14 +21,14 @@
 	   <!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
 			<ul class="nav navbar-nav nav_1">
-				<li><a href="/cooking">Cooking</a></li>
-			<li><a href="/cooking">Dry Fruits</a></li>
-			<li><a href="/cooking">Beverages</a></li>
+				<li><a style="text-decoration: none;" href="/cooking">Cooking</a></li>
+			<li><a style="text-decoration: none;" href="/cooking">Dry Fruits</a></li>
+			<li><a style="text-decoration: none;" href="/cooking">Beverages</a></li>
 
 			<% if(locals.user) { %>
-				<li><a href="/wishlist">My wishlist</a></li>
-				<li><a href="/checkout">My Cart</a></li>
-				<li><a href="/userProfile">My Profile</a></li>
+				<li><a style="text-decoration: none;" href="/wishlist">My wishlist</a></li>
+				<li><a style="text-decoration: none;" href="/checkout">My Cart</a></li>
+				<li><a style="text-decoration: none;" href="/userProfile">My Profile</a></li>
 				<% } %>
 
 			</ul>
@@ -48,11 +48,11 @@
 						<ul id="thumbnail">
 							<li><img onclick="changeImage(this)" src="/image/<%=product._id %>.jpeg"
 									 width="60"></li>
-							<li><img onclick="changeImage(this)" src="/images/4.jpg"
+							<li><img onclick="changeImage(this)" src="/image/<%=product._id %>2.jpeg"
+									 width="60"></li>
+							<li><img onclick="changeImage(this)" src="/image/<%=product._id %>3.jpeg"
 									 width="60"></li>
 							<!-- <li><img onclick="changeImage(this)" src=""
-									 width="60"></li>
-							<li><img onclick="changeImage(this)" src=""
 									 width="60"></li> -->
 						</ul>
 					</div>
@@ -63,7 +63,7 @@
 					<div class="d-flex justify-content-between align-items-center">
 						<h3>
 							<%=product.name%>
-						</h3> <span class="heart"><i class='bx bx-heart'></i></span>
+						</h3> 
 					</div>
 					<div class="description mt-2">
 						<h5>Description</h5>
@@ -569,3 +569,10 @@ main_prodcut_image.src = element.src;
   });
 })(jQuery);
 </script>
+
+<style>
+    #bs-megadropdown-tabs{
+        list-style: none;
+
+    }
+</style>

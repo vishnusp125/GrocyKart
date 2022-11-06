@@ -121,7 +121,8 @@
 		<div class="container">
 			<h3>Hot Offers</h3>
 			<div class="agile_top_brands_grids">
-				<% product.slice(0,4).forEach(function(product) { %>
+				<% product.forEach(function(product) { %>
+					<% if(product.category === 'Beverages') { %>
 				<div class="col-md-3 top_brand_left">
 					<div class="hover14 column">
 						<div class="agile_top_brand_left_grid">
@@ -130,7 +131,7 @@
 								<figure>
 									<div class="snipcart-item block">
 										<div class="snipcart-thumb">
-											<a href="/singleProduct?id=<%=product._id%>"><img title=" " alt=" " src="./image/<%=product._id %>.jpeg" height="180px" width="140px"/></a>
+											<a href="/singleProduct?id=<%=product._id%>"><img title=" " alt=" " src="./image/<%=product._id %>.jpeg" style="height: 150px; width: 100px; height="180px" width="140px"/></a>
 											<p><%=product.name %></p>
 											<h4 >Rs. <%=product.price %><span>Rs.<%=product.bprice %></span>
 											</div></h4>
@@ -161,6 +162,7 @@
 						</div>
 					</div>
 				</div>
+				<%}%>
 				<% }) %>
 
 				<!-- <div class="col-md-3 top_brand_left">

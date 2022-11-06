@@ -45,9 +45,9 @@ module.exports.usersignup_get = (req, res) => {
     res.render('./users/user-signup.ejs')
 }
 
-module.exports.userlogin_get = (req, res) => {
-    res.render('./users/user-signin.ejs')
-}
+// module.exports.userlogin_get = (req, res) => {
+//     res.render('./users/user-signin.ejs')
+// }
 
 module.exports.usersignup_post = async (req, res) => {
     console.log('test in signup');

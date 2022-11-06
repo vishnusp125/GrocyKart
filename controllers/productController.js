@@ -23,7 +23,7 @@ module.exports.addproductform_get = (req, res) => {
 
 module.exports.addproduct_post = async (req, res) => {
 
-    console.log(req.body);
+    console.log(req.body);    
     const name = req.body.name;
     const category = req.body.category;
     const price = req.body.price;
@@ -39,9 +39,10 @@ module.exports.addproduct_post = async (req, res) => {
         let image = req.files.image;
         let image2 = req.files.image2;
         let image3 = req.files.image3;
+        console.log('after let');
         image.mv('./public/image/' + product._id + ".jpeg")
-        // image2.mv('./public/image/' + product._id + "2.jpeg")
-        // image3.mv('./public/image/' + product._id + "3.jpeg")
+        image2.mv('./public/image/' + product._id + "2.jpeg")
+        image3.mv('./public/image/' + product._id + "3.jpeg")
         res.redirect('/adminproduct')
 
     } catch (err) {

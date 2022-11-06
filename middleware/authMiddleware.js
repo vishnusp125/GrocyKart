@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/user')
 
 const requireAuth = (req, res, next) => {
-    console.log('checking reqauth');
+
     const token = req.cookies.jwt
 
     //check jwt exists and verified
@@ -11,13 +11,13 @@ const requireAuth = (req, res, next) => {
         jwt.verify(token, 'secretforhashing', (err, decodedToken) => {
             if (err) {
                 console.log(err.message);
-                // res.redirect('/userlogin')
-                next()
+                res.redirect('/userlogin')
+                // next()
             } else {
                 // console.log(decodedToken);
                 // console.log('decoded token');
-                res.redirect('/')
-                // next()
+                // res.redirect('/')
+                next()
 
             }
 
@@ -25,8 +25,9 @@ const requireAuth = (req, res, next) => {
 
     } else {
         console.log('no token');
+        res.render('./users/user-signin.ejs',{layout: './layout/layout.ejs' })
         // res.redirect('/userlogin')
-        next()
+        // next()
 
     }
 }
