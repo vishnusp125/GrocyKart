@@ -25,9 +25,9 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
                 <ul class="nav navbar-nav nav_1">
-                    <li><a href="/cooking">Cooking</a></li>
-                    <li><a href="/cooking">Dry Fruits</a></li>
-                    <li><a href="/cooking">Beverages</a></li>
+                    <li><a href="/products">Cooking</a></li>
+                    <li><a href="/products">Dry Fruits</a></li>
+                    <li><a href="/products">Beverages</a></li>
 
                     <% if(locals.user) { %>
                         <li><a href="/wishlist">My wishlist</a></li>
@@ -70,7 +70,7 @@
                                                                 <%=product.bprice %></span></h4>
                                                 </div>
                                                 <div class="snipcart-details">
-                                                    <form action="/cooking" method="post">
+                                                    <form action="/products" method="post">
                                                         <fieldset>
                                                             <input type="hidden" name="id"
                                                                 value="<%=product._id %>"> 
@@ -113,7 +113,7 @@
             <div class="w3ls_w3l_banner_nav_right_grid1">
                 <h6>Cooking</h6>
                 <% products.forEach(function(product) { %>
-                    <% if(product.category === 'Cooking ') { %>
+                    <% if(product.category === 'Cooking') { %>
                         <div class="col-md-3 w3ls_w3l_banner_left">
                             <div class="hover14 column">
                                 <div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid">
@@ -125,7 +125,7 @@
                                             <div class="snipcart-item block">
                                                 <div class="snipcart-thumb">
                                                     <a href="/singleProduct?id=<%=product._id%>"><img
-                                                            src="./image/<%=product._id %>.jpeg" height="120px"
+                                                            src="./image/<%=product._id %>.jpeg" height="110px"
                                                             width="120px" alt=" " class="img-responsive" /></a>
                                                     <p>
                                                         <%=product.name %>
@@ -134,7 +134,7 @@
                                                                 <%=product.bprice %></span></h4>
                                                 </div>
                                                 <div class="snipcart-details">
-                                                    <form action="/cooking" method="post">
+                                                    <form action="/products" method="post">
                                                         <fieldset>
                                                             <input type="hidden" name="id"
                                                                 value="<%=product._id %>">
@@ -177,7 +177,7 @@
             <div class="w3ls_w3l_banner_nav_right_grid1">
                 <h6>Dry Fruits</h6>
                 <% products.forEach(function(product) { %>
-                    <% if(product.category === 'Dry Fruits ') { %>
+                    <% if(product.category === 'Dry Fruits') { %>
                         <div class="col-md-3 w3ls_w3l_banner_left">
                             <div class="hover14 column">
                                 <div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid">
@@ -198,7 +198,7 @@
                                                                 <%=product.bprice %></span></h4>
                                                 </div>
                                                 <div class="snipcart-details">
-                                                    <form action="/cooking" method="post">
+                                                    <form action="/products" method="post">
                                                         <fieldset>
                                                             <input type="hidden" name="id"
                                                                 value="<%=product._id %>"> 

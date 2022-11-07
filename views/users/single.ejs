@@ -21,9 +21,9 @@
 	   <!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
 			<ul class="nav navbar-nav nav_1">
-				<li><a style="text-decoration: none;" href="/cooking">Cooking</a></li>
-			<li><a style="text-decoration: none;" href="/cooking">Dry Fruits</a></li>
-			<li><a style="text-decoration: none;" href="/cooking">Beverages</a></li>
+				<li><a style="text-decoration: none;" href="/products">Cooking</a></li>
+			<li><a style="text-decoration: none;" href="/products">Dry Fruits</a></li>
+			<li><a style="text-decoration: none;" href="/products">Beverages</a></li>
 
 			<% if(locals.user) { %>
 				<li><a style="text-decoration: none;" href="/wishlist">My wishlist</a></li>
@@ -91,7 +91,7 @@
 						</div>
 					</div> -->
 					<div class="buttons d-flex flex-row mt-5 gap-3">
-						<form action="/cooking" method="post">
+						<form action="/products" method="post">
 							<input type="hidden" name="id" value="<%=product._id%>">
 							<a class="btn btn-white btn-sm" style="color:red" href="/wishlist/<%=product._id %>">
 								ADD TO WISHLIST <span class="glyphicon glyphicon-heart"></span>  </a>

@@ -16,8 +16,8 @@ router.post('/verify-otp',authController.otpVerification)
 
 router.get('/cart',requireAuth.requireAuth, authController.cart_get)
 router.get('/payment',requireAuth.requireAuth,authController.payment_get)
-router.get('/cooking',authController.cooking_get)
-router.post('/cooking',authController.cooking_post)
+router.get('/products',authController.cooking_get)
+router.post('/products',authController.cooking_post)
 router.get('/dryfruits',authController.dryfruits_get)
 router.get('/beverages',authController.beverages_get)
 

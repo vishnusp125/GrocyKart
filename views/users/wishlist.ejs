@@ -27,9 +27,9 @@
 				   <!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
 						<ul class="nav navbar-nav nav_1">
-							<li><a href="/cooking">Cooking</a></li>
-							<li><a href="/cooking">Dry Fruits</a></li>
-							<li><a href="/cooking">Beverages</a></li>
+							<li><a href="/products">Cooking</a></li>
+							<li><a href="/products">Dry Fruits</a></li>
+							<li><a href="/products">Beverages</a></li>
 	
 							<% if(locals.user) { %>
 								<li><a href="/wishlist">My wishlist</a></li>
@@ -63,9 +63,9 @@
 							</tr>
 						</thead>
 						<tbody>
-							<% user.forEach(function(user) { %>
+							<% user.forEach(function(user,index) { %>
 						<tr class="rem1">
-							<td class="invert">1</td>
+							<td class="invert"><%=index+1 %>%></td>
 							<td class="invert-image"><a href="/singleProduct?id=<%=user._id%>"><img src="./image/<%=user._id %>.jpeg" width="200px" height="100px"  alt=" " ></a></td>
 			
 							<td class="invert"><%=user.name %></td>

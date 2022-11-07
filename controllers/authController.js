@@ -170,7 +170,7 @@ module.exports.cooking_get = async (req, res) => {
         // const dry = await Product.find({$match:{$category}})
         const products = await Product.find({})
         
-        res.render('./users/cooking', { products: products, layout: './layout/layout.ejs' })
+        res.render('./users/products', { products: products, layout: './layout/layout.ejs' })
 
     } catch (err) {
         console.log(err);
