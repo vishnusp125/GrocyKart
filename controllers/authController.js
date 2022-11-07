@@ -532,6 +532,9 @@ module.exports.checkoutGet = async (req, res) => {
 
 let payment;
 let address;
+let zip;
+let country;
+let state;
 module.exports.checkoutPost = async (req, res) => {
     console.log(1111);
    
@@ -543,13 +546,16 @@ module.exports.checkoutPost = async (req, res) => {
         const cartItems = result.cart
         console.log(cartItems);
         
-        address = req.body.address
+        address = req.body.address||req.body.addressopt
         payment = req.body.payment
+        zip = req.body.zip
+        country = req.body.country
+        state = req.body.state
         let amount = req.body.amount
         let currency = req.body.currency
-        console.log(payment);
-        // console.log(amount);
-        // console.log(currency);
+        console.log(address);
+        console.log(amount);
+        console.log(currency);
 
         if(payment == 'Razorpay'){
 
@@ -637,7 +643,10 @@ module.exports.saveOrder = async (req, res) => {
 
           for (let cartItem of cartItems){
                 cartItem = cartItem.toJSON()
-                cartItem.address = address  
+                cartItem.address = address 
+                cartItem.zip = zip  
+                cartItem.country = country  
+                cartItem.state = state   
                 cartItem.paymentOption =  payment
                 cartItem.unique = uuidv4() 
                 cartItem.orderStatus = 'Order is under process'

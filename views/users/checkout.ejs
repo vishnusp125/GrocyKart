@@ -48,17 +48,6 @@
 				</li>
 			</ul>
 
-			<div class="form-check">
-				<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-				<label class="form-check-label" for="exampleRadios1">
-					<%=profile.address[0].address%>,
-					<%=profile.address[0].country%>,
-					<%=profile.address[0].state%>,
-					<%=profile.address[0].zip%>
-					
-				</label>
-			  </div>
-
 			<form class="card p-2">
 				<div class="input-group">
 					<input type="text" class="form-control" placeholder="Promo code">
@@ -122,7 +111,20 @@
 				
 
 				<div class="mb-3">
-					<label for="address">Address</label>
+				
+
+					<% if(profile.address.length > 0) { %>	
+						<div class="mb-3">
+							<label for="address">Address Select</label>
+							<select class="form-select" name="addressOption" aria-label="Default select example">
+							<% for(let i=0;i<profile.address.length ;i++){ %>
+								<option value="<%=profile.address[i].address %>"><%= profile.address[i].address %></option> 
+								<% } %> 
+						  </select>
+						  </div> 
+						  <% } %>
+
+						  <label for="address">Add 	New Address</label>
 					<input type="text" class="form-control" name="address" value=""
 						placeholder="1234 Main St">
 					<div class="invalid-feedback">
@@ -151,10 +153,7 @@
 					</div>
 					<div class="col-md-4 mb-3">
 						<label for="state">State</label>
-						<!-- <select class="custom-select d-block w-100" id="state" required>
-				<option value="">Choose...</option>
-				<option>Kerala</option>
-			  </select> -->
+						
 						<input type="text" class="form-control" name="state" value=""
 							placeholder="" required>
 						<div class="invalid-feedback">
@@ -258,8 +257,13 @@
 		const name = form.name.value
 		const email = form.email.value
 		const phoneNo = form.phoneNo.value
-		const address = form.address.value
+		const address = form.address.value	
+		const addressOption = function(addressOption=""){
+			return addressOption = form.addressOption.value;		
+		}
+		const addressopt =addressOption();
 		const country = form.country.value
+		const state = form.state.value
 		const zip = form.zip.value
 		const payment = form.payment.value
 		const currency = form.currency.value
@@ -270,13 +274,14 @@
 		console.log(currency);
 		console.log(amount);
 		console.log(payment);
+		console.log(addressopt);
 
 
 
 		try {
 			let order = await fetch('/checkout', {
 				method: 'post',
-				body: JSON.stringify({ name, email, phoneNo, address, country, zip, payment, currency, amount }),
+				body: JSON.stringify({ name, email, phoneNo, address,addressopt,state, country, zip, payment, currency, amount }),
 				headers: { 'Content-Type': 'application/json' }
 
 			})

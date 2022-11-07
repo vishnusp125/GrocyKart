@@ -52,6 +52,9 @@ const orderSchema = new mongoose.Schema({
     offer:{type:String},
     paymentOption:{type:String},
     address:{type:String},
+    zip:{type:Number},
+    state:{type:String},
+    country:{type:String},
     unique:{type:String},
     orderStatus:{type:String, default:'Under Process'}
 },{timestamps:true})
