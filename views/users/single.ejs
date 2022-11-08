@@ -71,8 +71,10 @@
 							<%=product.description%>
 						</p>
 					</div>
-					<h3>Rs. <%=product.price%>
+					<h3>Rs. <%=product.discountedPrice %>
 					</h3>
+                    <span style="text-decoration: line-through;">Rs.
+                        <%=product.price%></span> <h5 style="color: #84c639 ; text-decoration: none;"><%=product.offer%> %off</h5></h4>
 					<div class="ratings d-flex flex-row align-items-center">
 						<div class="d-flex flex-row"> <i class='bx bxs-star'></i> <i class='bx bxs-star'></i> <i
 								class='bx bxs-star'></i> <i class='bx bxs-star'></i> <i class='bx bx-star'></i> </div>

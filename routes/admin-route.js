@@ -48,6 +48,7 @@ router.get('/unblockuser/:id',userController.unblockuser)
 //orderdetails
 router.get('/adminOrder',userController.orderDetails)
 router.get('/adminCancelorder/:id',userController.adminCancelorder)
+router.post('/adminStatus/:id',userController.adminStatus)
 
 //coupon
 router.get('/adminCoupon',userController.couponGet)

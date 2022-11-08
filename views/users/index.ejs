@@ -92,7 +92,7 @@
 				<div class="wthree_banner_bottom_left_grid">
 					<img src="images/4.jpg" alt=" " class="img-responsive" />
 					<div class="wthree_banner_bottom_left_grid_pos">
-						<h4 style="color:rgb(219, 255, 119); font-weight:800">Discount Offer <span>25%</span></h4>
+						<h4 style="color:rgb(219, 255, 119); font-weight:800">Discount Offer <span>10%</span></h4>
 					</div>
 				</div>
 			</div>
@@ -132,8 +132,8 @@
 									<div class="snipcart-item block">
 										<div class="snipcart-thumb">
 											<a href="/singleProduct?id=<%=product._id%>"><img title=" " alt=" " src="./image/<%=product._id %>.jpeg" style="height: 150px; width: 100px; height="180px" width="140px"/></a>
-											<p><%=product.name %></p>
-											<h4 >Rs. <%=product.price %><span>Rs.<%=product.bprice %></span>
+											<h4 class="mx-5">Rs. <%=product.discountedPrice%><span>Rs.
+												<%=product.price%></span> <h5 style="color: #84c639 ; text-decoration: none;"><%=product.offer%> %off</h5></h4>
 											</div></h4>
 										<!-- <button <a href="/checkout" ></a>class=" mx-5">More Products</button> -->
 										<div class="snipcart-details top_brand_home_details">
@@ -299,8 +299,8 @@
 									<div class="snipcart-item block">
 										<div class="snipcart-thumb">
 											<a href="/singleProduct?id=<%=product._id%>"><img title=" " alt=" " src="./image/<%=product._id %>.jpeg" style="height: 140px; width: 100px; height="180px" width="140px"/></a>
-											<p><%=product.name %></p>
-											<h4 >Rs. <%=product.price %><span>Rs.<%=product.bprice %></span>
+											<h4 class="mx-2">Rs. <%=product.discountedPrice %><span>Rs.
+												<%=product.price%></span> <h5 style="color: #84c639 ; text-decoration: none;"><%=product.offer%>%off</h5></h4>
 											</div></h4>
 										<!-- <button <a href="/checkout" ></a>class=" mx-5">More Products</button> -->
 										<div class="snipcart-details top_brand_home_details">

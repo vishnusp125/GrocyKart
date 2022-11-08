@@ -6,7 +6,6 @@
 
 		<h1 class="mx-5 my-5" style="color:orangered;">Checkout</h1>
 	</div>
-
 	<div class="row">
 		<div class="col-md-4 order-md-2 mb-4">
 			<h4 class="d-flex justify-content-between align-items-center mb-3">
@@ -48,11 +47,15 @@
 				</li>
 			</ul>
 
-			<form class="card p-2">
+			<form class="card p-2" id="couponForm">
 				<div class="input-group">
-					<input type="text" class="form-control" placeholder="Promo code">
+							<select class="form-select" name="coupon" aria-label="Default select example">
+								<%coupon.forEach(function(coupon){%>
+								<option value="<%=coupon.couponCode%>"><%=coupon.couponCode%></option> 
+								<%})%>
+						  </select>
 					<div class="input-group-append">
-						<button type="submit" class="btn btn-secondary">Redeem</button>
+						<button type="" class="btn btn-success">Redeem</button>
 					</div>
 				</div>
 			</form>
@@ -192,52 +195,6 @@
 					<option value="Razorpay">Razorpay</option>
 					<option value="Paypal">PayPal</option>
 				</select>
-				<!-- <div class="custom-control custom-radio">
-			  <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
-			  <label class="custom-control-label" for="credit">Cash On Delivery</label>
-			</div>
-			<div class="custom-control custom-radio">
-			  <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
-			  <label class="custom-control-label" for="credit">Razorpay</label>
-			</div>
-			<div class="custom-control custom-radio">
-			  <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
-			  <label class="custom-control-label" for="paypal">PayPal</label>
-			</div> -->
-				<!-- </div> -->
-				<!-- <div class="row">
-			<div class="col-md-6 mb-3">
-			  <label for="cc-name">Name on card</label>
-			  <input type="text" class="form-control" id="cc-name" placeholder="" required>
-			  <small class="text-muted">Full name as displayed on card</small>
-			  <div class="invalid-feedback">
-				Name on card is required
-			  </div>
-			</div>
-			<div class="col-md-6 mb-3">
-			  <label for="cc-number">Credit card number</label>
-			  <input type="text" class="form-control" id="cc-number" placeholder="" required>
-			  <div class="invalid-feedback">
-				Credit card number is required
-			  </div> 
-			</div>
-		  </div>
-		  <div class="row">
-			<div class="col-md-3 mb-3">
-			  <label for="cc-expiration">Expiration</label>
-			  <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
-			  <div class="invalid-feedback">
-				Expiration date required
-			  </div>
-			</div>
-			<div class="col-md-3 mb-3">
-			  <label for="cc-cvv">CVV</label>
-			  <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
-			  <div class="invalid-feedback">
-				Security code required
-			  </div>
-			</div>
-		  </div> -->
 				<hr class="mb-4">
 				<button class="btn btn-success btn-lg btn-block" type="submit">Continue</button>
 			</form>
@@ -247,7 +204,29 @@
 </div>
 <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
 <script>
+	// const couponForm = document.querySelector('#couponForm')
+   
+
+	// 	const coupon = couponForm.coupon.value
+	// 	console.log(coupon);
+
+	// 	try {
+	// 		let order =  fetch('/checkout', {
+	// 			method: 'post',
+	// 			body: JSON.stringify({ coupon }),
+	// 			headers: { 'Content-Type': 'application/json' }
+
+	// 		})
+	// 	} catch (err) {
+	// 	console.log(err);
+	// }
+
+
+
+
+
 
 	const form = document.querySelector('#form')
 

@@ -23,15 +23,19 @@ module.exports.addproductform_get = (req, res) => {
 
 module.exports.addproduct_post = async (req, res) => {
 
-    console.log(req.body);    
+    console.log(req.body);  
+    const offr = req.body.price/100*req.body.offer  
+
     const name = req.body.name;
     const category = req.body.category;
     const price = req.body.price;
-    const bprice = req.body.bprice;
+    // const bprice = req.body.bprice;
+    const discountedPrice = req.body.price - offr;
     const description = req.body.description;
     const stock = req.body.stock;
+    const offer = req.body.offer
 
-    const product = await Product.create({ name, category, price, bprice, description, stock })
+    const product = await Product.create({ name, category, price,offer,discountedPrice, description, stock })
     console.log(product);
     try {
 
@@ -105,6 +109,8 @@ module.exports.editproduct_get = async (req, res) => {
 
 module.exports.editproduct_post = async (req, res) => {
     const prodId = req.params.id
+    
+    const offr = req.body.price/100*req.body.offer 
 
     try {
         await Product.updateOne({ _id: prodId }, {
@@ -112,9 +118,11 @@ module.exports.editproduct_post = async (req, res) => {
                 name: req.body.name,
                 category: req.body.category,
                 price: req.body.price,
+                discountedPrice: req.body.price - offr,
                 description: req.body.description,
                 stock: req.body.stock,
-                image: req.body.image
+                image: req.body.image,
+                offer: req.body.offer
             }
 
         })

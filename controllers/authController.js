@@ -1,6 +1,7 @@
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 const Product = require('../models/product')
+const Coupon = require('../models/coupon')
 const Cart = require('../models/cart')
 require('dotenv').config()
 const client = require('twilio')(process.env.accountSid, process.env.authToken)
@@ -512,6 +513,8 @@ module.exports.checkoutGet = async (req, res) => {
         const user = req.user.id;
         console.log(user);
         const Curuser = await User.findById({_id:user})
+        const coupon = await Coupon.find()
+        console.log(coupon);
 
         const sum = function(items,p1,p2){
             return items.reduce(function(a,b){
@@ -522,7 +525,7 @@ module.exports.checkoutGet = async (req, res) => {
         const total = sum(Curuser.cart,'price','count')
             const thisuser = Curuser;
         
-        res.render('./users/checkout', {user:Curuser.cart, totals: total, profile:thisuser, layout:'./layout/layout.ejs'})
+        res.render('./users/checkout', {coupon,user:Curuser.cart, totals: total, profile:thisuser, layout:'./layout/layout.ejs'})
 
     }catch (err){  
         console.log(err);
@@ -537,6 +540,8 @@ let country;
 let state;
 module.exports.checkoutPost = async (req, res) => {
     console.log(1111);
+    let coupon = req.body.coupon
+    console.log(coupon);
    
     
     

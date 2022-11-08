@@ -31,72 +31,72 @@ module.exports.orderDetails = async (req, res) => {
 
     // adminSession = req.session;
     // if (adminSession.adminId) {
-        const result = await Users.find({})
-        let username = result[0].username
+    const result = await Users.find({})
+    let username = result[0].username
 
-        // console.log(result)
-        let orders = []
-        for (item of result) {
-            orders = orders.concat(item.order)
-        }
-        // console.log(orders);
-        // result = result.order.reverse()
-        orders.sort((a, b) => {
-            return b.createdAt - a.createdAt;
-        });
-        // console.log(result)
-        console.log(orders);   
-        
-     
-
-        let name = username
-        // console.log(name);
+    // console.log(result)
+    let orders = []
+    for (item of result) {
+        orders = orders.concat(item.order)
+    }
+    // console.log(orders);
+    // result = result.order.reverse()
+    orders.sort((a, b) => {
+        return b.createdAt - a.createdAt;
+    });
+    // console.log(result)
+    console.log(orders);
 
 
-    
-        // const limit = 10
-        // const pages = Math.ceil(orders.length / limit)
-        // console.log(orders.length)
-        // console.log(orders.length / limit)
-        // console.log(pages)
-        // const page = {}
-        // page.page = req.params.page
-        // if (page.page > 1) {
-        //     page.previous = parseInt(page.page) - 1
-        // } else {
-        //     page.previous = false
-        // }
-        // if (page.page < pages) {
-        //     page.next = parseInt(page.page) + 1
-        // }
-    
 
-    res.render('admin/orderDetails', {orders, layout: './layout/admin-layout', admin: true })
+    let name = username
+    // console.log(name);
+
+
+
+    // const limit = 10
+    // const pages = Math.ceil(orders.length / limit)
+    // console.log(orders.length)
+    // console.log(orders.length / limit)
+    // console.log(pages)
+    // const page = {}
+    // page.page = req.params.page
+    // if (page.page > 1) {
+    //     page.previous = parseInt(page.page) - 1
+    // } else {
+    //     page.previous = false
+    // }
+    // if (page.page < pages) {
+    //     page.next = parseInt(page.page) + 1
+    // }
+
+
+    res.render('admin/orderDetails', { orders, layout: './layout/admin-layout', admin: true })
 
 }
 
 
-module.exports.adminCancelorder =  (req, res) => {
+module.exports.adminCancelorder = (req, res) => {
 
     const user = req.user.id
     // console.log(user);
-  
+
 
     uniqueid = req.params.id
     // console.log(uniqueid);
     if (user) {
-        Users.findOne({user:uniqueid})
-        .then((result) =>{
-            // console.log(result);
+        Users.findOne({ user: uniqueid })
+            .then((result) => {
+                // console.log(result);
 
-            const orders = result.order
+                const orders = result.order
 
-            // console.log(orders);  
+                // console.log(orders);  
 
-                    for (let order of orders) {
+                for (let order of orders) {
                     order = order.toJSON();
                     if (order.unique === uniqueid) {
-                        Promise.all([(Users.updateOne({ "_id":user, "order.unique": uniqueid }, { $set: { "order.$.orderStatus": "Order cancelled" } })), (Product.updateOne({ "_id": order._id }, { $inc: { "stock": order.count } }))])
+                        Promise.all([(Users.updateOne({ "_id": user, "order.unique": uniqueid }, { $set: { "order.$.orderStatus": "Order cancelled" } })), (Product.updateOne({ "_id": order._id }, { $inc: { "stock": order.count } }))])
                             .then((result) => {
                                 res.redirect('/adminOrder')
                             })
@@ -106,50 +106,131 @@ module.exports.adminCancelorder =  (req, res) => {
                     }
                 }
 
-        })
+            })
 
-    }else{
+    } else {
 
     }
 }
 
-module.exports.couponGet =  (req, res) => {
+module.exports.adminStatus = (req, res) => {
+    // const user = req.user.id
+    // console.log(user);
+    console.log(req.body);
+
+    uniqueid = req.params.id
+    console.log(uniqueid);
+    // if (user) {
+
+
+    Users.findOne({ user: uniqueid })
+        .then((result) => {
+            const user = result._id
+            // console.log(result);
+
+
+            const orders = result.order
+            console.log(orders);
+
+
+            // console.log(orders); 
+            if (req.body.status == 'Delivered') {
+
+
+                for (let order of orders) {
+
+                    order = order.toJSON();
+
+                    if (order.unique === uniqueid) {
+
+                        Promise.all([(Users.updateOne({ "_id": user, "order.unique": uniqueid }, { $set: { "order.$.orderStatus": "Delivered" } }))])
+                            .then((result) => {
+
+                                res.redirect('/adminOrder')
+                            })
+                            .catch((err) => {
+                                console.log(err)
+                            })
+                    }
+                }
+            } else if (req.body.status == 'Dispatched') {
+
+                for (let order of orders) {
+
+                    order = order.toJSON();
+                    if (order.unique === uniqueid) {
+
+                        Promise.all([(Users.updateOne({ "_id": user, "order.unique": uniqueid }, { $set: { "order.$.orderStatus": "Dispatched" } }))])
+                            .then((result) => {
+                                res.redirect('/adminOrder')
+                            })
+                            .catch((err) => {
+                                console.log(err)
+                            })
+                    }
+                }
+
+
+            } else if (req.body.status == 'Cancelled') {
+
+                for (let order of orders) {
+                    order = order.toJSON();
+                    if (order.unique === uniqueid) {
+                        Promise.all([(Users.updateOne({ "_id": user, "order.unique": uniqueid }, { $set: { "order.$.orderStatus": "Order cancelled" } })), (Product.updateOne({ "_id": order._id }, { $inc: { "stock": order.count, "sales": (order.count * -1) } }))])
+                            .then((result) => {
+                                res.redirect('/adminOrder')
+                            })
+                            .catch((err) => {
+                                console.log(err)
+                            })
+                    }
+                }
+
+            }
+
+        })
+
+    // }
+
+}
+
+module.exports.couponGet = (req, res) => {
 
     Coupon.find()
-    .then((coupon)=>{
+        .then((coupon) => {
 
-    res.render('admin/coupon', {coupon, layout: './layout/admin-layout', admin: true })
+            res.render('admin/coupon', { coupon, layout: './layout/admin-layout', admin: true })
 
-})
+        })
 
 
 }
 
-module.exports.addCoupon =  (req, res) => {
+module.exports.addCoupon = (req, res) => {
 
-    Coupon.findOne({ couponCode:req.body.coupencode})
-    .then(()=>{
-        let coupon = new Coupon({
-            couponCode:req.body.couponcode,
-            couponValue:req.body.couponvalue,
-            minBill:req.body.minbill,
-            couponExpiry:req.body.expirydate 
+    Coupon.findOne({ couponCode: req.body.coupencode })
+        .then(() => {
+            let coupon = new Coupon({
+                couponCode: req.body.couponcode,
+                couponValue: req.body.couponvalue,
+                minBill: req.body.minbill,
+                couponExpiry: req.body.expirydate
+            })
+            coupon.save()
+                .then(() => {
+                    res.redirect('back')
+                })
         })
-        coupon.save()
-        .then(()=>{
-            res.redirect('back')
-        })
-    })
 }
 
-module.exports.deleteCoupon =  (req, res) => {
+module.exports.deleteCoupon = (req, res) => {
 
-const coupon = req.query.id
-console.log(coupon);
-Coupon.deleteOne({ couponCode:coupon })
-.then(()=>{
-    res.redirect('/adminCoupon')
-})
+    const coupon = req.query.id
+    console.log(coupon);
+    Coupon.deleteOne({ couponCode: coupon })
+        .then(() => {
+            res.redirect('/adminCoupon')
+        })
 
 }
 
