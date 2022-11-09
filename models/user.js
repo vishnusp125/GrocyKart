@@ -44,6 +44,7 @@ const addressSchema = new mongoose.Schema({
 const orderSchema = new mongoose.Schema({
     name: {type: String},
     price: {type: String},
+    discountedPrice:{type:String},
     description: {type: String},
     category: {type: String},
     image: {type: String},

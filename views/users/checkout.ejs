@@ -49,11 +49,13 @@
 
 			<form class="card p-2" id="couponForm">
 				<div class="input-group">
-							<select class="form-select" name="coupon" aria-label="Default select example">
-								<%coupon.forEach(function(coupon){%>
-								<option value="<%=coupon.couponCode%>"><%=coupon.couponCode%></option> 
-								<%})%>
-						  </select>
+					<select class="form-select" name="coupon" aria-label="Default select example">
+						<%coupon.forEach(function(coupon){%>
+							<option value="<%=coupon.couponCode%>">
+								<%=coupon.couponCode%>
+							</option>
+							<%})%>
+					</select>
 					<div class="input-group-append">
 						<button type="" class="btn btn-success">Redeem</button>
 					</div>
@@ -111,28 +113,30 @@
 						Please enter a valid phone number for shipping updates.
 					</div>
 				</div>
-				
+
 
 				<div class="mb-3">
-				
 
-					<% if(profile.address.length > 0) { %>	
+
 						<div class="mb-3">
 							<label for="address">Address Select</label>
 							<select class="form-select" name="addressOption" aria-label="Default select example">
-							<% for(let i=0;i<profile.address.length ;i++){ %>
-								<option value="<%=profile.address[i].address %>"><%= profile.address[i].address %></option> 
-								<% } %> 
-						  </select>
-						  </div> 
-						  <% } %>
+								<option value="" selected>Select an address</option>
+								<% for(let i=0;i<profile.address.length ;i++){ %>
 
-						  <label for="address">Add 	New Address</label>
-					<input type="text" class="form-control" name="address" value=""
-						placeholder="1234 Main St">
-					<div class="invalid-feedback">
-						Please enter your shipping address.
-					</div>
+									<option value="<%=profile.address[i].address %>">
+										<%= profile.address[i].address %>
+									</option>
+									<% } %>
+							</select>
+						</div>
+	
+
+							<label for="address">Add New Address</label>
+							<input type="text" class="form-control" name="address" value="" placeholder="1234 Main St">
+							<div class="invalid-feedback">
+								Please enter your shipping address.
+							</div>
 				</div>
 
 				<!-- <div class="mb-3">
@@ -143,8 +147,7 @@
 				<div class="row">
 					<div class="col-md-5 mb-3">
 						<label for="country">Country</label>
-						<input type="text" class="form-control" name="country" value=""
-							placeholder="" required>
+						<input type="text" class="form-control" name="country" value="" placeholder="" required>
 
 						<!-- <select class="custom-select d-block w-100" id="country" required>  
 				<option value="">Choose...</option>
@@ -156,23 +159,21 @@
 					</div>
 					<div class="col-md-4 mb-3">
 						<label for="state">State</label>
-						
-						<input type="text" class="form-control" name="state" value=""
-							placeholder="" required>
+
+						<input type="text" class="form-control" name="state" value="" placeholder="" required>
 						<div class="invalid-feedback">
 							Please provide a valid state.
 						</div>
 					</div>
 					<div class="col-md-3 mb-3">
 						<label for="zip">Zip</label>
-						<input type="text" class="form-control" name="zip" value=""
-							placeholder="" required>
+						<input type="text" class="form-control" name="zip" value="" placeholder="" required>
 						<div class="invalid-feedback">
 							Zip code required.
 						</div>
 					</div>
 
-				
+
 					<input type="hidden" class="form-control" name="currency" value="INR">
 					<input type="hidden" class="form-control" name="amount" value="<%= totals%>">
 				</div>
@@ -207,7 +208,7 @@
 
 <script>
 	// const couponForm = document.querySelector('#couponForm')
-   
+
 
 	// 	const coupon = couponForm.coupon.value
 	// 	console.log(coupon);
@@ -236,11 +237,13 @@
 		const name = form.name.value
 		const email = form.email.value
 		const phoneNo = form.phoneNo.value
-		const address = form.address.value	
-		const addressOption = function(addressOption=""){
-			return addressOption = form.addressOption.value;		
-		}
-		const addressopt =addressOption();
+		const address = form.address.value
+		// addressOption function (addressopt = "") {
+		// 	return addressopt= form.addressOption.value;		
+		// }
+		// const addressopt = addressOption();
+		const addressopt = form.addressOption.value;
+		console.log(addressopt)
 		const country = form.country.value
 		const state = form.state.value
 		const zip = form.zip.value
@@ -260,7 +263,7 @@
 		try {
 			let order = await fetch('/checkout', {
 				method: 'post',
-				body: JSON.stringify({ name, email, phoneNo, address,addressopt,state, country, zip, payment, currency, amount }),
+				body: JSON.stringify({ name, email, phoneNo, address, addressopt, state, country, zip, payment, currency, amount }),
 				headers: { 'Content-Type': 'application/json' }
 
 			})
@@ -335,77 +338,77 @@
 
 			}
 
-		 else if (order.id) {
-			console.log(order);
+			else if (order.id) {
+				console.log(order);
 
-			const options = {
-				"key": "rzp_test_BBlNJOeGGPkzYf",
-				"amount": order.amount,
-				"currency": "INR",
-				"name": "Grocy Kart",
-				"description": "Test",
-				"order_id": order.id, //sample orderid
-				"handler": async function (response) {
-					console.log(response)
-					const res = await fetch('/verifyPaymentRazorPay', {
-						method: 'POST',
-						headers: {
-							'Content-Type': 'application/json',
-						},
-						body: JSON.stringify(response),
-
-					})
-					console.log(11111111);
-					console.log(res + "res");
-
-					if (res) {
-
-						const saveRes = await fetch('/saveorder', {
-							method: 'GET',
+				const options = {
+					"key": "rzp_test_BBlNJOeGGPkzYf",
+					"amount": order.amount,
+					"currency": "INR",
+					"name": "Grocy Kart",
+					"description": "Test",
+					"order_id": order.id, //sample orderid
+					"handler": async function (response) {
+						console.log(response)
+						const res = await fetch('/verifyPaymentRazorPay', {
+							method: 'POST',
 							headers: {
-								'Content-Type': 'application/json'
+								'Content-Type': 'application/json',
 							},
+							body: JSON.stringify(response),
+
 						})
-						console.log(2222222222);
+						console.log(11111111);
+						console.log(res + "res");
 
-						console.log(saveRes + "saveRes");
-						if (saveRes) {
-							console.log('completed');
-							location.assign('/ordersuccess')
+						if (res) {
+
+							const saveRes = await fetch('/saveorder', {
+								method: 'GET',
+								headers: {
+									'Content-Type': 'application/json'
+								},
+							})
+							console.log(2222222222);
+
+							console.log(saveRes + "saveRes");
+							if (saveRes) {
+								console.log('completed');
+								location.assign('/ordersuccess')
+							}
 						}
+					},
+					"prefill": {
+						"name": "Gaurav Kumar",
+						"email": "gaurav.kumar@example.com",
+						"contact": "9999999999"
+					},
+					"notes": {
+						"address": "Razorpay Corporate Office"
+					},
+					"theme": {
+						"color": "#3399cc"
 					}
-				},
-				"prefill": {
-					"name": "Gaurav Kumar",
-					"email": "gaurav.kumar@example.com",
-					"contact": "9999999999"
-				},
-				"notes": {
-					"address": "Razorpay Corporate Office"
-				},
-				"theme": {
-					"color": "#3399cc"
 				}
+				var rzp1 = new Razorpay(options);
+				rzp1.on('payment.failed', function (response) {
+					alert(response.error.code);
+					alert(response.error.description);
+					alert(response.error.source);
+					alert(response.error.step);
+					alert(response.error.reason);
+					alert(response.error.metadata.order_id);
+					alert(response.error.metadata.payment_id);
+				});
+				rzp1.open()
 			}
-			var rzp1 = new Razorpay(options);
-			rzp1.on('payment.failed', function (response) {
-				alert(response.error.code);
-				alert(response.error.description);
-				alert(response.error.source);
-				alert(response.error.step);
-				alert(response.error.reason);
-				alert(response.error.metadata.order_id);
-				alert(response.error.metadata.payment_id);
-			});
-			rzp1.open()
+
+
+
+
+		} catch (err) {
+			console.log(err);
 		}
-
-
-
-
-	} catch (err) {
-		console.log(err);
-	}
 
 	})
 

@@ -2,6 +2,7 @@ const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 const Product = require('../models/product')
 const Coupon = require('../models/coupon')
+const Banner = require('../models/banner')
 require('dotenv').config()
 const client = require('twilio')(process.env.accountSid, process.env.authToken)
 const {v4 : uuidv4} = require('uuid')
@@ -33,8 +34,9 @@ const createToken = (id) => {
 
 module.exports.homepage_get = async (req, res) => {
     try {
+        const banners = await Banner.find()
         const products = await Product.find({})
-        res.render('./users/index', { product: products, layout: './layout/layout.ejs' })
+        res.render('./users/index', { banner:banners,product: products, layout: './layout/layout.ejs' })
     } catch (err) {
         console.log(err);
     }
@@ -510,10 +512,10 @@ module.exports.checkoutGet = async (req, res) => {
     try{
 
         const user = req.user.id;
-        console.log(user);
+        // console.log(user);
         const Curuser = await User.findById({_id:user})
         const coupon = await Coupon.find()
-        console.log(coupon);
+        // console.log(coupon);
 
         const sum = function(items,p1,p2){
             return items.reduce(function(a,b){
@@ -538,9 +540,9 @@ let zip;
 let country;
 let state;
 module.exports.checkoutPost = async (req, res) => {
-    console.log(1111);
+    // console.log(1111);
     let coupon = req.body.coupon
-    console.log(coupon);
+    // console.log(coupon);
    
     
     
@@ -548,7 +550,7 @@ module.exports.checkoutPost = async (req, res) => {
       
         const result = await User.findOne({_id:user})
         const cartItems = result.cart
-        console.log(cartItems);
+        //console.log(cartItems);
         
         address = req.body.address||req.body.addressopt
         payment = req.body.payment
@@ -557,6 +559,8 @@ module.exports.checkoutPost = async (req, res) => {
         state = req.body.state
         let amount = req.body.amount
         let currency = req.body.currency
+        console.log(req.body.address);
+        console.log(req.body.addressopt);
         console.log(address);
         console.log(amount);
         console.log(currency);
@@ -703,25 +707,29 @@ module.exports.orderDetails = async (req, res) => {
 
 module.exports.cancelOrder =  (req, res) => {
 
-    const user = req.user.id
-    // console.log(user);
+    const users = req.user.id
+    // console.log(users);
   
 
     uniqueid = req.params.id
-    // console.log(uniqueid);
-    if (user) {
-        User.findOne({user:uniqueid})
+    console.log(uniqueid);
+    if (users) {
+        console.log(users);
+        User.findOne({_id:users})
         .then((result) =>{
             // console.log(result);
 
             const orders = result.order
 
             // console.log(orders);  
+            
 
                     for (let order of orders) {
                     order = order.toJSON();
+                 
                     if (order.unique === uniqueid) {
-                        Promise.all([(User.updateOne({ "_id":user, "order.unique": uniqueid }, { $set: { "order.$.orderStatus": "Order cancelled" } })), (Product.updateOne({ "_id": order._id }, { $inc: { "stock": order.count, 'sales':(order.count*-1) } }))])
+                     
+                        Promise.all([(User.updateOne({ "_id":users, "order.unique": uniqueid }, { $set: { "order.$.orderStatus": "Order cancelled" } })), (Product.updateOne({ "_id": order._id }, { $inc: { "stock": order.count, 'sales':(order.count*-1) } }))])
                             .then((result) => {
                                 res.redirect('/orderDetails')
                             })

@@ -1,108 +1,120 @@
-
-
 <section class="h-100 h-custom" style="background-color: #ffff;">
-    <div class="container py-5 width-100 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-12">
-          <div class="card card-registration card-registration-2" style="border-radius: 15px; border: 1px solid black;">
-            <div class="card-body p-0">
-              <div class="row g-0">
-                <div class="col-lg-12">
-                  <div class="p-5">
-                    <div class="d-flex justify-content-between align-items-center mb-5">
-                      <h1 class="fw-bold mb-0 text-dark text-center" style="margin-left: 330px;">Coupon Management</h1>
-                      <!-- <h6 class="mb-0 text-muted"> Coupon Codes </h6> -->
-                    </div>
-                    <hr class="my-4">                  
-                    <div class="row mb-4 d-flex justify-content-between align-items-center">
-                        <table id="example" class="table table-striped" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Sl No</th>
-                                    <th>Coupon Code</th>
-                                    <th>Coupon Value</th>
-                                    <th>Min Bill</th>
-                                    <th>Coupon Expiry</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+  <div class="container py-5 width-100 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12">
+        <div class="card card-registration card-registration-2" style="border-radius: 15px; border: 1px solid black;">
+          <div class="card-body p-0">
+            <div class="row g-0">
+              <div class="col-lg-12">
+                <div class="p-5">
+                  <div class="d-flex justify-content-between align-items-center mb-5">
+                    <h1 class="fw-bold mb-0 text-dark text-center" style="margin-left: 330px;">Coupon Management</h1>
+                    <!-- <h6 class="mb-0 text-muted"> Coupon Codes </h6> -->
+                  </div>
+                  <hr class="my-4">
+                  <div class="row mb-4 d-flex justify-content-between align-items-center">
+                    <table id="example" class="table table-striped" style="width:100%">
+                      <thead>
+                        <tr>
+                          <th>Sl No</th>
+                          <th>Coupon Code</th>
+                          <th>Coupon Value</th>
+                          <th>Min Bill</th>
+                          <th>Coupon Expiry</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
 
-                              <% for(i=0 ; i<coupon.length ; i++) { %> 
-                                    <tr>
-                                        <th scope="row"><%=i+1  %></th>
-                                        <td><%= coupon[i].couponCode%></td>
-                                        <td><%= coupon[i].couponValue %></td>
-                                        <td><%= coupon[i].minBill %></td>
-                                        <td><%= coupon[i]. couponExpiry.toLocaleDateString() %></td>
-                                        <td><%= coupon[i].status %></td>
-                                        
-                                        <td>
-                                            
-                                            <form action="/couponDelete?id=<%= coupon[i].couponCode %>" method="post">
-                                            <button type="submit" class="btn btn-danger">Delete</td></button>
-                                            </form>
-                                            </div>
-                                    </tr>
-                                    <% } %> 
-                            </tbody>
-                        </table>
-                    </div>
-  
-                    <hr class="my-4">
-                    
-                  </div>
-                  </div>
-                </div>
-                </div>
-                </div>
-                </div>
-              
-                <div class="col-lg-4 bg-grey">
-                  <div class="p-5">
-                    <!-- <h3 class="fw-bold text-success mb-5 mt-2 pt-1">Add Coupon</h3> -->
-               
-  
-                    
-              
-                    <h3 class="text-success mb-5">Add New Coupon</h5>
-                  <form action="/couponAdd/:id" method="post">  
-                    <div class="form-group mt-3"> 
-                        <input required placeholder="Coupon Name" type="description" name="couponcode" class="form-control" id="description"> 
-                    </div>
-                    <!-- <% //if(validation.existingCoupon) {%>
-                      <p style="color: red;">Already added Coupen</p>
-                      <% //} %>   -->
-                    <div class="form-group mt-3"> 
-                        <input required placeholder="Coupon Value" type="number" name="couponvalue" class="form-control"> 
-                    </div>
-                    <div class="form-group mt-3"> 
-                        <input type="number" name="minbill" class="form-control" placeholder="Minimum Bill"> 
-                    </div>
-                    <div class="form-group mt-3"> 
-                        <input type="date" name="expirydate" class="form-control"> 
-                    </div>
-                    <button type="submit" class="btn btn-primary mt-3">Add Coupon</button> 
-                    
-                </form>
-                  </div>
+                        <% for(i=0 ; i<coupon.length ; i++) { %>
+                          <tr>
+                            <th scope="row">
+                              <%=i+1 %>
+                            </th>
+                            <td>
+                              <%= coupon[i].couponCode%>
+                            </td>
+                            <td>
+                              <%= coupon[i].couponValue %>
+                            </td>
+                            <td>
+                              <%= coupon[i].minBill %>
+                            </td>
+                            <td>
+                              <%= coupon[i]. couponExpiry.toLocaleDateString() %>
+                            </td>
+                            <td>
+                              <%= coupon[i].status %>
+                            </td>
 
+                            <td>
+
+                              <form action="/couponDelete?id=<%= coupon[i].couponCode %>" method="post">
+                                <button type="submit" class="btn btn-danger">Delete
+                            </td></button>
+                            </form>
+                  </div>
+                  </tr>
+                  <% } %>
+                    </tbody>
+                    </table>
                 </div>
+
+                <hr class="my-4">
+
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
+
+    <div class="col-lg-4 bg-grey">
+      <div class="p-5">
+        <!-- <h3 class="fw-bold text-success mb-5 mt-2 pt-1">Add Coupon</h3> -->
 
 
-  <script>
-    	$(document).ready(function () {
-    		$('#example').DataTable({
-      		  "pageLength": 5
-    		});
-			});
-  </script>
-  </script>
+
+
+        <h3 class="text-success mb-5">Add New Coupon</h5>
+          <form action="/couponAdd/:id" method="post">
+            <div class="form-group mt-3">
+              <input required placeholder="Coupon Name" type="description" name="couponcode" class="form-control"
+                id="description">
+            </div>
+            <!-- <% //if(validation.existingCoupon) {%>
+                      <p style="color: red;">Already added Coupen</p>
+                      <% //} %>   -->
+            <div class="form-group mt-3">
+              <input required placeholder="Coupon Value" type="number" name="couponvalue" class="form-control">
+            </div>
+            <div class="form-group mt-3">
+              <input type="number" name="minbill" class="form-control" placeholder="Minimum Bill">
+            </div>
+            <div class="form-group mt-3">
+              <input type="date" name="expirydate" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Add Coupon</button>
+
+          </form>
+      </div>
+
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+</section>
+
+
+<script>
+  $(document).ready(function () {
+    $('#example').DataTable({
+      "pageLength": 5
+    });
+  });
+</script>
+</script>

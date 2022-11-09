@@ -1,12 +1,16 @@
 const { json } = require('express')
 const Product = require('../models/product')
 const User = require('../models/user')
+const Banner = require('../models/banner')
 const Category = require('../models/category')
 const fs = require('fs')
 const { builtinModules } = require('module')
 
 let validation = {
     category: false
+}
+let bannerValidation = {
+    name: false
 }
 
 
@@ -24,8 +28,8 @@ module.exports.addproductform_get = (req, res) => {
 
 module.exports.addproduct_post = async (req, res) => {
 
-    console.log(req.body);  
-    const offr = req.body.price/100*req.body.offer  
+    console.log(req.body);
+    const offr = req.body.price / 100 * req.body.offer
 
     const name = req.body.name;
     const category = req.body.category;
@@ -36,7 +40,7 @@ module.exports.addproduct_post = async (req, res) => {
     const stock = req.body.stock;
     const offer = req.body.offer
 
-    const product = await Product.create({ name, category, price,offer,discountedPrice, description, stock })
+    const product = await Product.create({ name, category, price, offer, discountedPrice, description, stock })
     console.log(product);
     try {
 
@@ -110,8 +114,8 @@ module.exports.editproduct_get = async (req, res) => {
 
 module.exports.editproduct_post = async (req, res) => {
     const prodId = req.params.id
-    
-    const offr = req.body.price/100*req.body.offer 
+
+    const offr = req.body.price / 100 * req.body.offer
 
     try {
         await Product.updateOne({ _id: prodId }, {
@@ -135,40 +139,40 @@ module.exports.editproduct_post = async (req, res) => {
     }
 
     //--------------------------------
-try {
-    const results = await User.find({})
-    for (result of results) {
-        carts = result.cart
-        for (let cart of carts) {
-            cartId = "" + cart._id
-            if (cartId === prodId) {
-                result2 = await User.updateOne({ "_id": result._id, "cart._id": prodId }, { $set: { "cart.$.price": req.body.discountedPrice } })
+    try {
+        const results = await User.find({})
+        for (result of results) {
+            carts = result.cart
+            for (let cart of carts) {
+                cartId = "" + cart._id
+                if (cartId === prodId) {
+                    result2 = await User.updateOne({ "_id": result._id, "cart._id": prodId }, { $set: { "cart.$.price": req.body.discountedPrice } })
+                }
             }
         }
     }
-}
-catch (err) {
-    console.log(err)
-}
-//-----------------------------------
+    catch (err) {
+        console.log(err)
+    }
+    //-----------------------------------
 
-//--------------------------------
-try {
-    const results = await User.find({})
-    for (result of results) {
-        wishlists = result.wishlist
-        for (let wishlist of wishlists) {
-            wishlistId = "" + wishlist._id
-            if (wishlistId === prodId) {
-                result2 = await User.updateOne({ "_id": result._id, "wishlist._id": prodId }, { $set: { "wishlist.$.price": req.body.discountedPrice } })
+    //--------------------------------
+    try {
+        const results = await User.find({})
+        for (result of results) {
+            wishlists = result.wishlist
+            for (let wishlist of wishlists) {
+                wishlistId = "" + wishlist._id
+                if (wishlistId === prodId) {
+                    result2 = await User.updateOne({ "_id": result._id, "wishlist._id": prodId }, { $set: { "wishlist.$.price": req.body.discountedPrice } })
+                }
             }
         }
     }
-}
-catch (err) {
-    console.log(err)
-}
-//-----------------------------------
+    catch (err) {
+        console.log(err)
+    }
+    //-----------------------------------
 }
 
 
@@ -210,8 +214,6 @@ module.exports.categoryMgtpost = async (req, res) => {
 
 module.exports.categoryDelete = (req, res) => {
 
-
-
     newcat = req.query.id
     // console.log(newcat)
     Category.deleteOne({ _id: newcat })
@@ -222,6 +224,76 @@ module.exports.categoryDelete = (req, res) => {
             console.log(err)
         })
 }
+
+
+module.exports.bannerGet = (req, res) => {
+
+    Banner.find()
+        .then((result) => {
+            console.log(result);
+            res.render('admin/bannermgt', { result, bannerValidation, layout: 'layout/admin-layout', admin: true })
+            bannerValidation.name = false
+        }).catch((err) => console.log(err))
+}
+
+module.exports.bannerPost = async (req, res) => {
+
+
+    const names = req.body.name;
+    console.log(names);
+
+    await Banner.findOne({ name: names })
+        .then((result) => {
+            if (result) {
+                bannerValidation.name = true
+                res.redirect('/adminBanner')
+            } else {
+                let banner = new Banner({
+                    name: names
+                })
+                banner.save()
+                    .then(() => {
+                        try {
+                            console.log('in try block');
+                            let image = req.files.image;
+
+                            console.log('after let');
+                            image.mv('./public/banner/' + banner._id + ".jpeg")
+
+                        } catch (err) {
+                            console.log(err);
+                        }
+                        res.redirect('/adminBanner')
+                    }).catch((err) => {
+                        console.log(err)
+                    })
+
+            }
+        })
+
+}
+
+
+
+module.exports.bannerDelete = async (req, res) => {
+
+    const banner = req.query.id
+    console.log(banner)
+    await Banner.deleteOne({ _id: banner })
+        .then((result) => {
+            // console.log(result)
+            res.redirect('/adminBanner')
+        }).catch((err) => {
+            console.log(err)
+        })
+
+}
+
+
+
+
+
+
 
 
 

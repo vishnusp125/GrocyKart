@@ -33,7 +33,7 @@
               <!-- <td><%=orders.price%></td> -->
               <td><%=orders.paymentOption%></td>
              
-              <td><%=(orders.price * orders.count)%></td>
+              <td><%=(orders.discountedPrice * orders.count)%></td>
               <td>
                 <form action="/adminStatus/<%=orders.unique%>" method="post">
                 <select class="form-select" name="status" id="status" aria-label="Default select example"> 

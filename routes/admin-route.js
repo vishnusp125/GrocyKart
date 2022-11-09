@@ -55,6 +55,13 @@ router.get('/adminCoupon',userController.couponGet)
 router.post('/couponAdd/:id',userController.addCoupon)
 router.post('/couponDelete',userController.deleteCoupon)
 
+//banner
+router.get('/adminBanner',productController.bannerGet)
+router.post('/adminBanner',productController.bannerPost)
+router.post('/bannerDelete',productController.bannerDelete)
+
+
+
 
 
 
