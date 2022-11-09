@@ -1,5 +1,6 @@
 const { json } = require('express')
 const Product = require('../models/product')
+const User = require('../models/user')
 const Category = require('../models/category')
 const fs = require('fs')
 const { builtinModules } = require('module')
@@ -132,7 +133,46 @@ module.exports.editproduct_post = async (req, res) => {
         console.log(err);
 
     }
+
+    //--------------------------------
+try {
+    const results = await User.find({})
+    for (result of results) {
+        carts = result.cart
+        for (let cart of carts) {
+            cartId = "" + cart._id
+            if (cartId === prodId) {
+                result2 = await User.updateOne({ "_id": result._id, "cart._id": prodId }, { $set: { "cart.$.price": req.body.discountedPrice } })
+            }
+        }
+    }
 }
+catch (err) {
+    console.log(err)
+}
+//-----------------------------------
+
+//--------------------------------
+try {
+    const results = await User.find({})
+    for (result of results) {
+        wishlists = result.wishlist
+        for (let wishlist of wishlists) {
+            wishlistId = "" + wishlist._id
+            if (wishlistId === prodId) {
+                result2 = await User.updateOne({ "_id": result._id, "wishlist._id": prodId }, { $set: { "wishlist.$.price": req.body.discountedPrice } })
+            }
+        }
+    }
+}
+catch (err) {
+    console.log(err)
+}
+//-----------------------------------
+}
+
+
+
 
 //category mgt
 

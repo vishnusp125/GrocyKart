@@ -139,7 +139,7 @@ module.exports.adminHome = async (req, res) => {
 
                         console.log(timeOfSale);
                         console.log(typeof (timeOfSale[0]));
-                        Product.find({})
+                        const Productlist = Product.find({})
                             .then((result) => {
                                 const sum = function (items, prop1, prop2) {
                                     return items.reduce(function (a, b) {

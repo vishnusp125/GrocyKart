@@ -82,7 +82,7 @@
 							</td>
 							<td class="invert"><%=user.name %></td>
 							
-							<td class="invert">&#x20B9; <%= (user.price * user.count) %></td>
+							<td class="invert">&#x20B9; <%= (user.discountedPrice * user.count) %></td>
 									
 							<td class="invert">
 								
@@ -103,7 +103,7 @@
 						<h4>Items in basket</h4>
 						<ul>
 							<% user.forEach(function(user,index) { %>
-							<li>Product <%= index+1 %> <i>-</i> <span> &#x20B9; <%= (user.price * user.count) %></span></li>
+							<li>Product <%= index+1 %> <i>-</i> <span> &#x20B9; <%= (user.discountedPrice * user.count) %></span></li>
 							<!-- <li>Product2 <i>-</i> <span>$25.00 </span></li>
 							<li>Product3 <i>-</i> <span>$29.00 </span></li> 
 							<li>Total Service Charges <i>-</i> <span>$15.00</span></li> -->

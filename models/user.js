@@ -11,7 +11,7 @@ const { isEmail } = require('validator')
 
 const cartSchema = new mongoose.Schema({
     name: {type: String},
-    price: {type: String},
+    discountedPrice: {type: String},
     description: {type: String},
     category: {type: String},
     image: {type: String},
@@ -21,7 +21,7 @@ const cartSchema = new mongoose.Schema({
 
 const wishlistSchema = new mongoose.Schema({
     name: {type: String},
-    price: {type: String},
+    discountedPrice: {type: String},
     description: {type: String},
     category: {type: String},
     image: {type: String},
