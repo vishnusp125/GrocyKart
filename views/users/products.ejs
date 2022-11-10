@@ -48,7 +48,7 @@
             <h3 class="mt-5"><br> <br> More Products <br> </h3>
             <div class="w3ls_w3l_banner_nav_right_grid1">
                 <h6>Beverages</h6>
-                <% products.forEach(function(product) { %>
+                <% products.slice(0,12).forEach(function(product) { %>
                     <% if(product.category === 'Beverages') { %>
                         <div class="col-md-3 w3ls_w3l_banner_left">
                             <div class="hover14 column">
@@ -112,7 +112,7 @@
             </div>
             <div class="w3ls_w3l_banner_nav_right_grid1">
                 <h6>Cooking</h6>
-                <% products.forEach(function(product) { %>
+                <% products.slice(0,12).forEach(function(product) { %>
                     <% if(product.category === 'Cooking') { %>
                         <div class="col-md-3 w3ls_w3l_banner_left">
                             <div class="hover14 column">
@@ -176,7 +176,7 @@
             </div>
             <div class="w3ls_w3l_banner_nav_right_grid1">
                 <h6>Dry Fruits</h6>
-                <% products.forEach(function(product) { %>
+                <% products.slice(0,12).forEach(function(product) { %>
                     <% if(product.category === 'Dry Fruits') { %>
                         <div class="col-md-3 w3ls_w3l_banner_left">
                             <div class="hover14 column">

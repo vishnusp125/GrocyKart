@@ -37,9 +37,6 @@ const productSchema =  mongoose.Schema({
     type: Number,
     required: true
   },
-  offer:{
-    type:String
-  },
   sales:{
     type:Number,
     default:0

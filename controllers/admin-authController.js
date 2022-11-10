@@ -85,9 +85,11 @@ module.exports.adminLogout_get = (req, res) => {
 
 module.exports.adminHome = async (req, res) => {
 
+ 
+
     const user = await User.count()
     const productCount = await Product.count()
-    // const product = await Product.find()
+    const product = await Product.find()
 
 
     let Sales = await Product.aggregate([{ $group: { _id: null, sum_val: { $sum: "$sales" } } }])
@@ -103,42 +105,42 @@ module.exports.adminHome = async (req, res) => {
 
     await User.find({})
         .then((results) => {
-            // console.log(result)
+            console.log(results)
             let sums;
             n = results.length;
-            console.log(`n:${n}`);
+            // console.log(`n:${n}`);
 
             for (result of results) {
                 k++;
-                console.log(`k:${k}`);
+                // console.log(`k:${k}`);
                 const orders = result.order
                 m.push(orders.length);
-                console.log(`m:${m}`);
+                // console.log(`m:${m}`);
 
-                console.log(`sums:${sums}`)
+                // console.log(`sums:${sums}`)
 
                 for (let order of orders) {
                  l++;
-                 console.log(`l:${l}`);
+                //  console.log(`l:${l}`);
                  sums = m.reduce((partialSum, a) => partialSum + a, 0);
                  order = order.toJSON();
 
                 if (order.orderStatus !== "Order cancelled") {
-                console.log(order.count);
-                console.log(order.price);
-                sales.push(order.count * order.price);
-                console.log(sales);
+                // console.log(order.count);
+                // console.log(order.price);
+                sales.push(order.count * order.discountedPrice);
+                // console.log(sales);
                 timeOfSale.push(order.createdAt.toISOString().substring(0, 10));
-                console.log(timeOfSale);
+                // console.log(timeOfSale);
                      }
                 }
                 if (l === sums && k === n) {
 
-                        console.log(sales);
-                        console.log(typeof (sales[0]));
+                        // console.log(sales);
+                        // console.log(typeof (sales[0]));
 
-                        console.log(timeOfSale);
-                        console.log(typeof (timeOfSale[0]));
+                        // console.log(timeOfSale);
+                        // console.log(typeof (timeOfSale[0]));
                         const Productlist = Product.find({})
                             .then((result) => {
                                 const sum = function (items, prop1, prop2) {
@@ -148,11 +150,13 @@ module.exports.adminHome = async (req, res) => {
                                     }, 0);
                                 };
                             
-                                const total = sum(result, 'price', 'sales');
+                                const total = sum(result, 'discountedPrice', 'sales');
                                 console.log(total);
                                 console.log(typeof total);
+                                console.log(sales);
+                                console.log(timeOfSale);
                               
-                                res.render('admin/admin-index', {productCount,result, total: total, sales, timeOfSale, totalSales, user, layout: './layout/admin-layout.ejs', admin: true })
+                                res.render('admin/admin-index', {Productlist,productCount,result, total: total, sales, timeOfSale, totalSales, user, layout: './layout/admin-layout.ejs', admin: true })
                             }).catch((err) => {
                                 console.log(err)
                             })

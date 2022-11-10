@@ -349,11 +349,13 @@
 
 <script src="https://cdn.plot.ly/plotly-2.16.1.min.js"></script>
 <script>
-  var getTest = [<%=sales %>];
+  var getTest = [<%=sales%>];
   var saletime = ['<%=timeOfSale%>']
   console.log(saletime);
-  console.log(typeof saletime);
+  console.log(getTest);
+  
   var xArray = saletime[0].split(',')
+  console.log(xArray);
   var barData = [{
     x: xArray,
     y: getTest,
@@ -363,7 +365,7 @@
   let data = [{
     x: xArray,
     y: getTest,
-    mode: "line",
+    mode: "markers",
     type: "scatter"
   }];
 

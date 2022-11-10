@@ -31,9 +31,8 @@ db.connectToDb((err)=>{
     }
 })
 
-
 app.use(function (req, res, next) {
-    res.status(404).send("<h1>Page not Found...</h1>")
+    res.render('./users/404',{layout:false})
     next()
 })
 

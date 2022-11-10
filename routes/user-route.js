@@ -49,8 +49,10 @@ router.post('/addAddress/:id',requireAuth.requireAuth,authController.addAddressp
 
 //checkout
 router.get('/checkout',requireAuth.requireAuth,authController.checkoutGet)
+router.get('/applyCoupon',authController.applyCoupon)
 router.post('/checkout',authController.checkoutPost)
 router.get('/ordersuccess',authController.successGet)
+
  
 //razorpay
 router.get('/verifyPaymentRazorPay',authController.verifyPaymentRazorPay)
@@ -62,6 +64,9 @@ router.get('/cancelOrder/:id',authController.cancelOrder)
 //paypal
 router.post('/paymentPaypal',authController.paymentPaypal)
 router.post('/verifyPaymentPaypal/:id/capture',authController.verifyPaymentPaypal)
+
+
+
 
 
 

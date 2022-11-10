@@ -405,6 +405,7 @@ module.exports.singleProduct = async (req, res) =>{
 
     } catch (err) {
         console.log(err);
+        res.render('./users/404',{layout:false})
     }
 
 }
@@ -533,6 +534,47 @@ module.exports.checkoutGet = async (req, res) => {
     }
   
 }
+
+module.exports.applyCoupon = async (req, res) => {
+
+    console.log(req.body)
+    const { coupon, total } = req.body
+    console.log(coupon)
+    const coupondata = await Coupon.findOne({ couponCode: coupon })
+    console.log(coupondata)
+    // if (coupondata.users.length !== 0) {
+    //   const isExisting = coupondata.users.findIndex(users => users == req.user.id)
+    //   console.log(isExisting)
+    //   if (total >= coupondata.minBill && isExisting === -1) {
+    //     await Coupon.updateOne({ couponCode: coupon }, {
+    //       $push: { users: req.user.id }
+    //     })
+    //     await Cart.updateOne({ user: req.user.id }, { $inc: { total: coupondata.couponValue * -1 } })
+    //     const tot = parseInt(total) + coupondata.couponValue * -1
+    //     res.json({ tot })
+    //   } else {
+    //     res.json({ error: true, msg: 'Already used this coupon' })
+    //     console.log('Already used this coupon')
+    //   }
+    // } else {
+    //   if (total >= coupondata.minBill) {
+    //     await Coupon.updateOne({ couponCode: coupon }, {
+    //       $push: { users: req.user.id }
+    //     })
+    //     await Cart.updateOne({ user: req.user.id }, { $inc: { total: coupondata.couponValue * -1 } })
+    //     const tot = parseInt(total) + coupondata.couponValue * -1
+    //     res.json({ tot })
+    //   } else {
+    //     res.json({ error: true, msg: 'Purchase amount is not enough' })
+    //     console.log('Purchase amount is not enough')
+    //   }
+    // }
+
+}
+
+
+
+
 
 let payment;
 let address;

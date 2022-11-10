@@ -47,7 +47,7 @@
 				</li>
 			</ul>
 
-			<form class="card p-2" id="couponForm">
+			<form class="card p-2" id="couponForm" >
 				<div class="input-group">
 					<select class="form-select" name="coupon" aria-label="Default select example">
 						<%coupon.forEach(function(coupon){%>
@@ -64,7 +64,7 @@
 		</div>
 		<div class="col-md-8 order-md-1">
 			<h4 class="mb-3">Billing address</h4>
-			<form id="form" class="needs-validation" novalidate>
+			<form id="form" class="needs-validation" name="myForm" onsubmit="return validateForm()">
 				<!-- <div class="row">
 			<div class="col-md-6 mb-3">
 			  <label for="firstName"></label>
@@ -224,7 +224,13 @@
 	// 	console.log(err);
 	// }
 
-
+// 	function validateForm() {
+//   let x = document.forms["myForm"]["zip"].value;
+//   if (x == "") {
+//     alert("Zip must be filled out");
+//     return false;
+//   }
+// }
 
 
 
