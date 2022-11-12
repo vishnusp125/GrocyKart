@@ -42,12 +42,12 @@
 		<div class="row g-0">
 			<div class="col-md-6 border-end">
 				<div class="d-flex flex-column justify-content-center">
-					<div class="main_image"> <img src="/image/<%=product._id %>.jpeg" data-imagezoom="true"
+					<div class="main_image"> <img src="/image/<%=product._id %>.jpeg" style="object-fit: contain;" data-imagezoom="true"
 							id="main_product_image" width="280" height="320"> </div>
 					<div class="thumbnail_images">
 						<ul id="thumbnail">
 							<li><img onclick="changeImage(this)" src="/image/<%=product._id %>.jpeg"
-									 width="60"></li>
+									 width="60" style="object-fit: contain;"></li>
 							<li><img onclick="changeImage(this)" src="/image/<%=product._id %>2.jpeg"
 									 width="60"></li>
 							<li><img onclick="changeImage(this)" src="/image/<%=product._id %>3.jpeg"

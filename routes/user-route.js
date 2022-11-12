@@ -41,17 +41,22 @@ router.get('/singleProduct',authController.singleProduct)
 //user profile
 router.get('/userProfile',requireAuth.requireAuth,authController.userProfile)
 router.get('/userProfileEdit',requireAuth.requireAuth,authController.userProfileEdit)
+router.get('/addressEdit/:id',authController.addressEdit)
+router.post('/addressEdit/:id',authController.addressEditpost)
 router.post('/userProfileEdit/:id',requireAuth.requireAuth,authController.userProfilePost)
 router.get('/addAddress',requireAuth.requireAuth,authController.addAddress)
 router.post('/addAddress/:id',requireAuth.requireAuth,authController.addAddresspost)
 
 
 
+
 //checkout
 router.get('/checkout',requireAuth.requireAuth,authController.checkoutGet)
-router.get('/applyCoupon',authController.applyCoupon)
 router.post('/checkout',authController.checkoutPost)
 router.get('/ordersuccess',authController.successGet)
+
+//coupon
+router.post('/applyCoupon',authController.applyCouponpost)
 
  
 //razorpay

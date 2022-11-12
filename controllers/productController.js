@@ -62,7 +62,7 @@ module.exports.addproduct_post = async (req, res) => {
 
 //get product
 
-module.exports.viewproduct_get = async (req, res) => {
+module.exports.viewproduct_get = async (req, res) => {      
 
     try {
         const products = await Product.find({});
@@ -71,7 +71,7 @@ module.exports.viewproduct_get = async (req, res) => {
 
 
     } catch (err) {
-        console.log(err);
+        console.log(err); 
 
     }
 }

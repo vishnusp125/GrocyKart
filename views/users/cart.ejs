@@ -70,7 +70,7 @@
 							<% user.forEach(function(user,index) { %>
 						<tr class="rem1"> 
 							<td class="invert"><%= index+1 %></td>
-							<td class="invert-image"><a href="/singleProduct?id=<%=user._id%>"><img src="./image/<%=user._id %>.jpeg" width="300px" height="80px"  alt=" " ></a></td>
+							<td class="invert-image"><a href="/singleProduct?id=<%=user._id%>"><img src="./image/<%=user._id %>.jpeg" style="object-fit: contain;" width="300px" height="80px"  alt=" " ></a></td>
 							<td class="invert">
 								 <div class="quantity"> 
 									<div class="quantity-select">                           
@@ -90,7 +90,6 @@
 								onclick="return confirm('Are you sure to remove <%=user.name %>?')">Remove</a>
 							
 							</td>
-
 							
 					<% }) %>
 					

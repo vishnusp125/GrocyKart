@@ -1,6 +1,7 @@
 
 <!-- CSS only -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
   <div class="page-content page-container m-3 p-3" id="page-content">
     <div class="padding p-3 m-3 mt-3">
@@ -32,8 +33,8 @@
                                 <!-- <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6> -->
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <p class="m-b-10 f-w-600">Username</p>
-                                        <h6 class="text f-w-400">
+                                        <p class="m-b-10 " style="color:crimson;font-weight: 700;">Username</p>
+                                        <h6 class="text f-w-300">
                                             <%= profile.username %>
                                         </h6>
                                     </div>
@@ -44,25 +45,27 @@
                                         </h6>
                                     </div> -->
                                     <div class="col-sm-6">
-                                        <p class="m-b-10 f-w-600">Email</p>
+                                        <p class="m-b-10 f-w-600" style="color:crimson;font-weight: 700;">Email</p>
                                         <h6 class="text f-w-400">
                                             <%= profile.email %>
                                         </h6>
                                     </div>
                                     <div class="col-sm-6">
-                                        <p class="m-b-10 f-w-600">Phone</p>
+                                        <p class="m-b-10 f-w-600" style="color:crimson;font-weight: 700;">Phone</p>
                                         <h6 class="text f-w-400">
                                             <%= profile.phoneNo %>
                                         </h6>
                                     </div>
                                     <% for(i=0; i<profile.address.length; i++) { %>
                                         <div class="col-sm-6">
-                                            <p class="m-b-10 f-w-600">Address <%= i+1 %></p>                                  
+                                            <p class="m-b-10 f-w-600" style="color:crimson;font-weight: 700;">Address <%= i+1 %></p>                                  
                                           <h6 class="text f-w-400"><%= profile.address[i].address %></h6>
                                           <h6 class="text f-w-400"><%= profile.address[i].city %></h6>
                                           <h6 class="text f-w-400"><%= profile.address[i].state%></h6>
                                             <h6 class="text f-w-400"><%= profile.address[i].country%></h6>
                                             <h6 class="text f-w-400"><%= profile.address[i].zip%></h6>
+                                            <a href="/addressEdit/<%=profile.address[i]._id%>"><i class="bi bi-pencil-square m-2" style="color: green;"></i></a>
+                                            <a href=""><i class="bi bi-trash" style="color: red;"></i></a>
                                           </div>
                                           <% } %>
                                     <!-- <% if(!profile) { %>

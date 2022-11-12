@@ -16,7 +16,8 @@ const cartSchema = new mongoose.Schema({
     category: {type: String},
     image: {type: String},
     stock: {type: Number},
-    count:{type:Number}
+    count:{type:Number},
+    total:{type:Number}
 },{timestamps:true})
 
 const wishlistSchema = new mongoose.Schema({

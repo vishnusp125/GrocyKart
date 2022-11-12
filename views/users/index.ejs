@@ -102,7 +102,7 @@
 			<% banner.slice(3,7).forEach(function(banner) { %>
 			<div class="col-md-4 wthree_banner_bottom_left">
 				<div class="wthree_banner_bottom_left_grid">
-					<img src="./banner/<%=banner._id%>.jpeg" alt=" " class="img-responsive" />
+					<img src="./banner/<%=banner._id%>.jpeg"style="object-fit: contain;" alt=" " class="img-responsive" />
 					<div class="wthree_banner_bottom_left_grid_pos">
 						<h3 style="color:black;font-weight:700"><span style="color:#fa1818 ;font-weight: 700;">Buy more</span> and <i style="color:#84c639;font-weight: 700">Save more ... </i></h3>
 					</div>
@@ -145,8 +145,8 @@
 											<div class="snipcart-item block">
 												<div class="snipcart-thumb">
 													<a href="/singleProduct?id=<%=product._id%>"><img title=" " alt=" "
-															src="./image/<%=product._id %>.jpeg"
-															style="height: 150px; width: 100px; height=" 180px"
+															src="./image/<%=product._id %>.jpeg"style="object-fit: contain;"
+															style="object-fit: contain;" height=" 180px"
 															width="140px" /></a>
 													<h4 class="mx-5">Rs. <%=product.discountedPrice%><span>Rs.
 																<%=product.price%>
@@ -322,7 +322,7 @@
 												<div class="snipcart-thumb">
 													<a href="/singleProduct?id=<%=product._id%>"><img title=" " alt=" "
 															src="./image/<%=product._id %>.jpeg"
-															style="height: 140px; width: 100px; height=" 180px"
+															style="object-fit: contain;" height=" 180px"
 															width="140px" /></a>
 													<h4 class="mx-2">Rs. <%=product.discountedPrice %><span>Rs.
 																<%=product.price%>

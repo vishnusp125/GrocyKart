@@ -37,19 +37,20 @@
 				<li class="list-group-item d-flex justify-content-between bg-light">
 					<div class="text-success">
 						<h6 class="my-0">Promo code</h6>
-						<small>EXAMPLECODE</small>
+						<!-- <small>EXAMPLECODE</small> -->
 					</div>
-					<span class="text-success">-Rs.0</span>
+					<span id="p2" class="text-success">-Rs.0</span>
 				</li>
 				<li class="list-group-item d-flex justify-content-between">
 					<span>Total (Rs)</span>
-					<strong>Rs. <%= totals%></strong>
+					<strong id="p1">Rs.</strong>
 				</li>
 			</ul>
 
-			<form class="card p-2" id="couponForm" >
+			<form class="card p-2" id="couponform">
 				<div class="input-group">
 					<select class="form-select" name="coupon" aria-label="Default select example">
+						   <option selected disabled>Choose...</option>
 						<%coupon.forEach(function(coupon){%>
 							<option value="<%=coupon.couponCode%>">
 								<%=coupon.couponCode%>
@@ -57,14 +58,19 @@
 							<%})%>
 					</select>
 					<div class="input-group-append">
-						<button type="" class="btn btn-success">Redeem</button>
+						<input type="hidden" class="form-control" name="amount" value="<%=totals %>">
+
+						<button type="submit" class="btn btn-success">Redeem</button>
 					</div>
 				</div>
+
 			</form>
+
+		
 		</div>
 		<div class="col-md-8 order-md-1">
 			<h4 class="mb-3">Billing address</h4>
-			<form id="form" class="needs-validation" name="myForm" onsubmit="return validateForm()">
+			<form id="form" class="needs-validation" name="myForm">
 				<!-- <div class="row">
 			<div class="col-md-6 mb-3">
 			  <label for="firstName"></label>
@@ -118,25 +124,25 @@
 				<div class="mb-3">
 
 
-						<div class="mb-3">
-							<label for="address">Address Select</label>
-							<select class="form-select" name="addressOption" aria-label="Default select example">
-								<option value="" selected>Select an address</option>
-								<% for(let i=0;i<profile.address.length ;i++){ %>
+					<div class="mb-3">
+						<label for="address">Address Select</label>
+						<select class="form-select" name="addressOption" aria-label="Default select example">
+							<option value="" selected>Select an address</option>
+							<% for(let i=0;i<profile.address.length ;i++){ %>
 
-									<option value="<%=profile.address[i].address %>">
-										<%= profile.address[i].address %>
-									</option>
-									<% } %>
-							</select>
-						</div>
-	
+								<option value="<%=profile.address[i].address %>">
+									<%= profile.address[i].address %>
+								</option>
+								<% } %>
+						</select>
+					</div>
 
-							<label for="address">Add New Address</label>
-							<input type="text" class="form-control" name="address" value="" placeholder="1234 Main St">
-							<div class="invalid-feedback">
-								Please enter your shipping address.
-							</div>
+
+					<label for="address">Add New Address</label>
+					<input type="text" class="form-control" name="address" value="" placeholder="1234 Main St">
+					<div class="invalid-feedback">
+						Please enter your shipping address.
+					</div>
 				</div>
 
 				<!-- <div class="mb-3">
@@ -173,9 +179,10 @@
 						</div>
 					</div>
 
-
+					<input type="hidden" id="newTotal" class="form-control" name="discountedTotal" value="0">
+					<input type="hidden" class="form-control" name="amount" value="<%= totals %>">
 					<input type="hidden" class="form-control" name="currency" value="INR">
-					<input type="hidden" class="form-control" name="amount" value="<%= totals%>">
+				
 				</div>
 				<!-- <hr class="mb-4"> -->
 				<!-- <div class="custom-control custom-checkbox">
@@ -195,6 +202,9 @@
 					<option value="COD">Cash On Delivery</option>
 					<option value="Razorpay">Razorpay</option>
 					<option value="Paypal">PayPal</option>
+
+						
+			
 				</select>
 				<hr class="mb-4">
 				<button class="btn btn-success btn-lg btn-block" type="submit">Continue</button>
@@ -207,30 +217,42 @@
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <script>
-	// const couponForm = document.querySelector('#couponForm')
+	const couponform = document.querySelector('#couponform')
 
 
-	// 	const coupon = couponForm.coupon.value
-	// 	console.log(coupon);
+	couponform.addEventListener('submit', async (e) => {
+		e.preventDefault();
 
-	// 	try {
-	// 		let order =  fetch('/checkout', {
-	// 			method: 'post',
-	// 			body: JSON.stringify({ coupon }),
-	// 			headers: { 'Content-Type': 'application/json' }
+		console.log(newTotal);
 
-	// 		})
-	// 	} catch (err) {
-	// 	console.log(err);
-	// }
+		const couponCode = couponform.coupon.value;
+		const total = couponform.amount.value;
 
-// 	function validateForm() {
-//   let x = document.forms["myForm"]["zip"].value;
-//   if (x == "") {
-//     alert("Zip must be filled out");
-//     return false;
-//   }
-// }
+		console.log(couponCode);
+		console.log(total);
+
+		try {
+			let coupon = await fetch('/applyCoupon', {
+				method: 'post',
+				body: JSON.stringify({ couponCode, total }),
+				headers: { 'Content-Type': 'application/json' }
+			});
+			console.log('coupon applied');
+			coupon = await coupon.json();
+			console.log(coupon);
+			oldtotal = coupon.total
+			const newTotal = coupon.discountedTotal
+			const couponVal = coupon.couponValue
+			console.log(newTotal);
+			console.log(couponVal);
+			document.getElementById("p1").innerHTML = "Rs." + newTotal;
+			document.getElementById("p2").innerHTML = "Rs." + couponVal;
+			document.getElementById("newTotal").value = newTotal
+
+		} catch (err) {
+			console.log(err);
+		}
+	})
 
 
 
@@ -256,33 +278,35 @@
 		const payment = form.payment.value
 		const currency = form.currency.value
 		const amount = form.amount.value
+		const discountedTotal = form.discountedTotal.value;
 
-
+		console.log(discountedTotal);
+		console.log(amount);
 		console.log(country);
 		console.log(currency);
-		console.log(amount);
 		console.log(payment);
-		console.log(addressopt);
+		// console.log(addressopt);
 
 
 
 		try {
 			let order = await fetch('/checkout', {
 				method: 'post',
-				body: JSON.stringify({ name, email, phoneNo, address, addressopt, state, country, zip, payment, currency, amount }),
+				body: JSON.stringify({ name, email, phoneNo, address, addressopt, state, country, zip, payment, currency, amount, discountedTotal }),
 				headers: { 'Content-Type': 'application/json' }
 
 			})
 
 
 			order = await order.json()
-			console.log(order);
+			// console.log(order);
 
 			if (order.success) {
 
 				location.assign('/ordersuccess')
 
 			} else if (order.id === 'Paypal') {
+				console.log('in paypalllll');
 
 				paypal.Buttons({
 					// Order is created on the server and the order id is returned
@@ -292,7 +316,7 @@
 							headers: {
 								'Content-Type': 'application/json',
 							},
-							body: JSON.stringify({ amount, currency, address, payment }),
+							body: JSON.stringify({ amount, currency, address, payment,order }),
 							// use the "body" param to optionally pass additional order information
 							// like product ids or amount
 						})
@@ -345,7 +369,7 @@
 			}
 
 			else if (order.id) {
-				console.log(order);
+				// console.log(order);
 
 				const options = {
 					"key": "rzp_test_BBlNJOeGGPkzYf",
