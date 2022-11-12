@@ -43,7 +43,7 @@
 				</li>
 				<li class="list-group-item d-flex justify-content-between">
 					<span>Total (Rs)</span>
-					<strong id="p1">Rs.</strong>
+					<strong id="p1"></strong>
 				</li>
 			</ul>
 
@@ -62,9 +62,15 @@
 
 						<button type="submit" class="btn btn-success">Redeem</button>
 					</div>
+				
 				</div>
+				<h5 class="text-success text-center" id="success"></h5>
 
 			</form>
+
+			
+
+
 
 		
 		</div>
@@ -245,9 +251,22 @@
 			const couponVal = coupon.couponValue
 			console.log(newTotal);
 			console.log(couponVal);
-			document.getElementById("p1").innerHTML = "Rs." + newTotal;
-			document.getElementById("p2").innerHTML = "Rs." + couponVal;
-			document.getElementById("newTotal").value = newTotal
+			// document.getElementById("p1").innerHTML = "Rs." + newTotal;
+			// document.getElementById("p2").innerHTML = "Rs." + couponVal;
+			// document.getElementById("newTotal").value = newTotal
+
+			if(coupon.msg == 'Already used this coupon'){
+				document.getElementById('success').innerHTML = "Already Applied"
+				document.getElementById("p1").innerHTML = total;
+			}else if(coupon.msg =='Purchase amount is not enough'){
+				document.getElementById('success').innerHTML = "Amount is not enough"
+				document.getElementById("p1").innerHTML = total;
+			}else{
+			document.getElementById("p1").innerHTML = "Rs."+ newTotal;
+			document.getElementById("p2").innerHTML = "Rs."+ couponVal;
+			document.getElementById("newTotal").value = newTotal;
+			document.getElementById('success').innerHTML = "Coupon Applied !!!!";
+			}
 
 		} catch (err) {
 			console.log(err);

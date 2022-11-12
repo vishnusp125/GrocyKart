@@ -217,7 +217,7 @@ module.exports.cooking_post = async (req, res) => {
 
 module.exports.cart_get = async (req, res) => {
 
-
+     
     try {
         let Curuser = req.user.id
         // console.log(Curuser);
@@ -438,42 +438,60 @@ module.exports.userProfileEdit = async (req, res) => {
 
 module.exports.addressEdit = async (req, res) => {
     const user = req.user.id;
+    console.log(user);
     const addressid = req.params.id
     console.log(addressid);
-    const profile = await User.find({ _id: addressid })
-    console.log(profile);
+    const profile = await User.findOne({ _id: user })
+    //const profile = await User.updateOne({ _id: user, "address._id":addressid },{$set:{'address.$.zip':req.body.zip}})
+    const checks = profile.address;
+    console.log(checks);
+    let n = 0;
+    let check;
+    for (check of checks) {
+        if (check._id == addressid) {
+            //var currentAddress = await User.findOne({ _id: user,"address._id": addressid})
+            n++;
+            break;
+        }
+    }
+    if(n>0){
+        res.render('./users/editAddress', { check,layout: './layout/layout.ejs' })
+    }else{
+        res.redirect('back')
+    }
 
-    res.render('./users/editAddress', { profile, layout: './layout/layout.ejs' })
-
+    // res.render('./users/editAddress', { checks,layout: './layout/layout.ejs' })
+  
 }
 
 module.exports.addressEditpost = async (req, res) => {
-    const user = req.user.id;
-
-    console.log(user);
-    let userdetails = req.body;
-    console.log(userdetails);
+    
+    console.log(req.body);
+    console.log('user');
+    // let userdetails = req.body;
+    // console.log(userdetails);
+    // const addressid = req.params.id
+    // console.log(req.body);
 
     try {
         const user = req.user.id;
         const checks = req.body;
 
-        const userid = await User.findById({ _id: user })
+        // const userid = await User.findById({ _id: user  })
 
-        await User.updateOne({ _id: user },
+        await User.updateOne({ _id: user,"address._id":req.body.addressid },
             {
                 $set: {
-                    address: {
-                        address: checks.address,
-                        city: checks.city,
-                        country: checks.country,
-                        state: checks.state,
-                        zip: checks.zip,
-                    }
+                    'address.$.address': checks.address,
+                    'address.$.city': checks.city,
+                    'address.$.country': checks.country,
+                    'address.$.state': checks.state,
+                    'address.$.zip': checks.zip
+
 
                 }
             })
-        res.redirect('back')
+        res.redirect('/userProfile')
 
     } catch (err) {
         console.log(err);
@@ -482,8 +500,6 @@ module.exports.addressEditpost = async (req, res) => {
 
 
 }
-
-
 
 
 module.exports.userProfilePost = async (req, res) => {
@@ -608,17 +624,24 @@ module.exports.applyCouponpost = async (req, res) => {
     if (coupondata.users.length !== 0) {
         const isExisting = coupondata.users.findIndex(users => users == req.user.id)
         console.log(isExisting)
-        //   if (total >= coupondata.minBill && isExisting === -1) {
+          if (total >= coupondata.minBill && isExisting === -1) {
+
+            discountedTotal = total - coupondata.couponValue;
+            let couponValue = coupondata.couponValue;
+            console.log(discountedTotal);
+            console.log(couponValue);
+
+            res.json({ discountedTotal, couponValue, total })
         //     await Coupon.updateOne({ couponCode: coupon }, {
         //       $push: { users: req.user.id }
         //     })
         //     await Cart.updateOne({ user: req.user.id }, { $inc: { total: coupondata.couponValue * -1 } })
         //     const tot = parseInt(total) + coupondata.couponValue * -1
         //     res.json({ tot })
-        //   } else {
-        //     res.json({ error: true, msg: 'Already used this coupon' })
-        //     console.log('Already used this coupon')
-        //   }
+          } else {
+            res.json({ error: true, msg: 'Already used this coupon' })
+            console.log('Already used this coupon')
+          }
     } else {
         if (total >= coupondata.minBill) {
             //     await Coupon.updateOne({ couponCode: coupon }, {
@@ -633,17 +656,12 @@ module.exports.applyCouponpost = async (req, res) => {
             //     const tot = parseInt(total) + coupondata.couponValue * -1
             res.json({ discountedTotal, couponValue, total })
         } else {
-            //     res.json({ error: true, msg: 'Purchase amount is not enough' })
-            //     console.log('Purchase amount is not enough')
+                res.json({ error: true, msg: 'Purchase amount is not enough' })
+                console.log('Purchase amount is not enough')
         }
     }
 
 }
-
-
-
-
-
 
 
 let payment;
@@ -687,7 +705,7 @@ module.exports.checkoutPost = async (req, res) => {
         console.log(amount);
 
         if (discountedTotal == 0) {
-            total=amount ;
+            total = amount;
             console.log("amounttttt");
             console.log(amount);
         } else {
@@ -711,9 +729,9 @@ module.exports.checkoutPost = async (req, res) => {
 
     } else if (payment == 'Paypal') {
         console.log('in paypallllllllllllllllllll');
-        if(discountedTotal ==0){
+        if (discountedTotal == 0) {
             paymentPaypalAmount = total
-        }else{
+        } else {
             paymentPaypalAmount = discountedTotal
         }
         // console.log('in paypal');

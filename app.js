@@ -8,6 +8,7 @@ const nocache = require('nocache')
 const { requireAuth, checkUser } = require('./middleware/authMiddleware')
 const fileUpload = require('express-fileupload')
 const db = require('./database/connection')
+const logger = require("morgan")
 
 
 app.set('view engine', 'ejs')
@@ -23,6 +24,7 @@ app.use(fileUpload())
 app.use('*',checkUser)
 app.use('/', userRoutes);
 app.use('/', adminRoutes);
+app.use(logger('dev'))
 db.connectToDb((err)=>{
     if(!err){
         app.listen(PORT,()=>{
