@@ -1,7 +1,7 @@
 
 
 <body>
-    <div >
+    <div style="overflow-x: hidden;">
         <div style="margin-left:350px; margin-top: 50px;">
             <h1 >Order Details</h1>
 
@@ -43,9 +43,19 @@
                 <option value="Cancelled">Cancel</option>
               </td>
               <td>
-                <button type="submit" class="btn btn-success">Update</button>
+                <% if(orders.orderStatus === 'Order cancelled') { %>
+                  <button disabled class="btn btn-secondary">Update</button>
+                  <% }else if(orders.orderStatus === 'Returned'){ %>
+                    <button disabled class="btn btn-secondary">Update</button>
+                    <% }else { %>
+                    <button type="submit" class="btn btn-primary ">Update</button>
+                    <% } %>
               </td>
             </form>
+
+           
+
+
             
             <!-- <tr>
                 <td>giger Nixon</td>

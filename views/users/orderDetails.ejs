@@ -1,66 +1,93 @@
-
-
 <div class="container">
     <div class="align-text-center mx-5 mb-5">
-        <h1  style="margin-left:450px ;padding-top:25px;padding-bottom:25px" >My Orders</h1>
+        <h1 style="margin-left:450px ;padding-top:25px;padding-bottom:25px">My Orders</h1>
     </div>
 
-<table id="example" style="margin-top: 100px; margin-bottom: 400px; margin: auto;" class="timetable_sub">
-    <thead>
-        <tr>
-            <th>SL No.</th>	
-            <th>Product</th>
-            <th>Quantity</th>
-            <th>Order Status</th>
-            <th>Date & time</th> 
-            <th>Cancel</th>
-        </tr>
-    </thead>
-    <tbody>   
-       <% for(i=0; i<orderDetails.order.length; i++) { %>
-   
-        <tr class="rem1"> 
-        <td class="invert"><%= i+1 %></td>
-        <td class="invert"><%=orderDetails.order[i].name%></td>
-        <td class="invert"><%=orderDetails.order[i].count%></td>
-        <td class="invert"><%=orderDetails.order[i].orderStatus%></td>
-        <td class="invert"><%=orderDetails.order[i].createdAt.toLocaleString()%></td>
-        <td>
+    <table id="example" style="margin-top: 100px; margin-bottom: 400px; margin: auto;" class="timetable_sub">
+        <thead>
+            <tr>
+                <th>SL No.</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Order Status</th>
+                <th>Date & time</th>
+                <th>Cancel</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(i=0; i<orderDetails.order.length; i++) { %>
 
-        <% if(orderDetails.order[i].orderStatus == 'Order cancelled') { %>
-            <p class="btn btn-white" style="color: red;">Cancelled</p>
-            <% } else { %>
-    
-       
-     <a class="btn btn-danger" onclick="return confirm('Are you sure you want to cancel the order?')" href="/cancelOrder/<%=orderDetails.order[i].unique%>">Cancel
-     
-        <% } %>
-    </td></a> 
-    <% } %>
+                <tr class="rem1">
+                    <td class="invert">
+                        <%= i+1 %>
+                    </td>
+                    <td class="invert">
+                        <%=orderDetails.order[i].name%>
+                    </td>
+                    <td class="invert">
+                        <%=orderDetails.order[i].count%>
+                    </td>
+                    <td class="invert">
+                        <%=orderDetails.order[i].orderStatus%>
+                    </td>
+                    <td class="invert">
+                        <%=orderDetails.order[i].createdAt.toLocaleString()%>
+                    </td>
+                    <td>
 
-</tbody>
-</table>
+                        <% if(orderDetails.order[i].orderStatus=='Order cancelled' ) { %>
+                            <p class="btn btn-white" style="color: red;">Cancelled</p>
+                            <% } else if(orderDetails.order[i].orderStatus=='Delivered') { %>
+                                <a href="/returnOrder/<%=orderDetails.order[i].unique%>" class="btn" style="background-color: blue; color:white"
+                                    onclick="return confirm('Are you sure you want to return the order?')">Return</a>
+                                <% } else if(orderDetails.order[i].orderStatus=='Order is under process' ) { %>
+                                    <a class="btn btn-danger"
+                                        onclick="return confirm('Are you sure you want to cancel the order?')"
+                                        href="/cancelOrder/<%=orderDetails.order[i].unique%>">Cancel
+                                        <% } else if( orderDetails.order[i].orderStatus=='Returned' ) { %>
+                                            <p class="" style="color :rgb(0, 47, 255)">Returned</p>
+                                            <% }else { %>
+                                                <a href="/returnOrder/<%=orderDetails.order[i].unique%>"
+                                                    class="btn btn-danger"
+                                                    onclick="return confirm('Are you sure you want to cancel the order?')">Cancel
+                                                </a>
+
+                                                <% } %>
+                    </td>
+             <% } %>
+
+        </tbody>
+    </table>
 </div>
+
+
+
+
+
+
+
+
+
 <!-- data table -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
 
-  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-  <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-  <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
-  <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
 
 <script>
-      $(document).ready(function() {
-    $('#example').DataTable( {
-        // dom: 'Bfrtip',
-        // buttons: [
-        //     'copy', 'csv', 'excel', 'pdf', 'print'
-        // ]
-    } );
-} );
+    $(document).ready(function () {
+        $('#example').DataTable({
+            // dom: 'Bfrtip',
+            // buttons: [
+            //     'copy', 'csv', 'excel', 'pdf', 'print'
+            // ]
+        });
+    });
 </script>

@@ -21,7 +21,7 @@ const createToken = (id) => {
 
 //admin sigup get and post
 router.get('/adminsignup',adminauthController.adminsignup_get)
-router.get('/adminsignin',adminAuthmiddleware.requireAuth,adminauthController.adminlogin_get)
+router.get('/admin',adminAuthmiddleware.requireAuth,adminauthController.adminlogin_get)
 router.post('/adminsignup',adminauthController.adminsignup_post)
 router.post('/adminsignin',adminauthController.adminsignin_post)
 router.get('/adminLogout',adminauthController.adminLogout_get)

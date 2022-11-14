@@ -578,6 +578,44 @@ module.exports.addAddresspost = async (req, res) => {
     }
 }
 
+module.exports.addressDelete = async (req, res) => {
+
+    console.log(req.params.id);
+    console.log('addressdelete');
+
+    const addressid = req.params.id
+ 
+
+    try {
+        const user = req.user.id;
+  
+
+        const userid = await User.findById({ _id: user  })
+
+        await User.findOneAndUpdate({ _id: user},{$pull:{address:{_id:addressid }}})
+    //         {
+    //             $set: {
+    //                 'address.$.address': checks.address,
+    //                 'address.$.city': checks.city,
+    //                 'address.$.country': checks.country,
+    //                 'address.$.state': checks.state,
+    //                 'address.$.zip': checks.zip
+
+
+    //             }
+    //         })
+        res.redirect('/userProfile')
+
+    } catch (err) {
+        console.log(err);
+
+    }
+
+}
+
+
+
+
 let total;
 
 module.exports.checkoutGet = async (req, res) => {
@@ -609,12 +647,12 @@ module.exports.checkoutGet = async (req, res) => {
 
 // let discountedTotal;
 // let couponValue = 0;
-// let coupon;
+let coupon;
 // let total;
 
 module.exports.applyCouponpost = async (req, res) => {
 
-    let coupon = req.body.couponCode
+    coupon = req.body.couponCode
     total = req.body.total
     console.log(coupon)
     console.log(total);
@@ -622,7 +660,7 @@ module.exports.applyCouponpost = async (req, res) => {
 
     console.log(coupondata)
     if (coupondata.users.length !== 0) {
-        const isExisting = coupondata.users.findIndex(users => users == req.user.id)
+        const isExisting =  coupondata.users.findIndex(users => users == req.user.id)
         console.log(isExisting)
           if (total >= coupondata.minBill && isExisting === -1) {
 
@@ -820,6 +858,10 @@ module.exports.saveOrder = async (req, res) => {
 
             await Product.updateOne({ "_id": stockId }, { $inc: { "stock": removeCount, "sales": salesCount } })
 
+            await Coupon.updateOne({couponCode:coupon},{
+                $push:{users:req.user.id}
+            })
+
             res.status(200).json({ success: 'true' })
         }
     } catch (err) {
@@ -856,9 +898,7 @@ module.exports.orderDetails = async (req, res) => {
 module.exports.cancelOrder = (req, res) => {
 
     const users = req.user.id
-    // console.log(users);
-
-
+   
     uniqueid = req.params.id
     console.log(uniqueid);
     if (users) {
@@ -894,36 +934,48 @@ module.exports.cancelOrder = (req, res) => {
     }
 }
 
+ module.exports.returnOrder = async (req, res) => {
 
-// const cancelOrderGet = (req, res) => {
-//     session = req.session;
-//     uniqueId = req.params.id;
-//     if (session.userId) {
-//         User.findOne({ _id: session.uid })
-//             .then((result) => {
-//                 // console.log(result)
+    
+    const users = req.user.id
+    console.log(users);
+   
+    uniqueid = req.params.id
+    console.log(uniqueid);
 
-//                 const orders = result.order
+    if (users) {
+        console.log(users);
+        User.findOne({ _id: users })
+            .then((result) => {
+                // console.log(result);
 
-//                 console.log(orders)
+                const orders = result.order
 
-//                 for (let order of orders) {
-//                     order = order.toJSON();
-//                     if (order.unique === uniqueId) {
-//                         Promise.all([(User.updateOne({ "name": session.userId, "order.unique": uniqueId }, { $set: { "order.$.orderStatus": "Order cancelled" } })), (Product.updateOne({ "_id": order._id }, { $inc: { "stock": order.count, "sales": (order.count * -1) } }))])
-//                             .then((result) => {
-//                                 res.redirect('/order')
-//                             })
-//                             .catch((err) => {
-//                                 console.log(err)
-//                             })
-//                     }
-//                 }
-//             })
-//     } else {
-//         res.redirect('/login')
-//     }
-// }
+                // console.log(orders);  
+
+
+                for (let order of orders) {
+                    order = order.toJSON();
+
+                    if (order.unique === uniqueid) {
+
+                        Promise.all([(User.updateOne({ "_id": users, "order.unique": uniqueid }, { $set: { "order.$.orderStatus": "Returned" } })), (Product.updateOne({ "_id": order._id }, { $inc: { "stock": order.count, 'sales': (order.count * -1) } }))])
+                            .then((result) => {
+                                res.redirect('/orderDetails')
+                            })
+                            .catch((err) => {
+                                console.log(err)
+                            })
+                    }
+                }
+
+            })
+
+    } else {
+
+    }
+
+ }
 
 
 

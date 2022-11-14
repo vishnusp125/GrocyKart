@@ -46,8 +46,7 @@ router.post('/addressEdit',authController.addressEditpost)
 router.post('/userProfileEdit/:id',requireAuth.requireAuth,authController.userProfilePost)
 router.get('/addAddress',requireAuth.requireAuth,authController.addAddress)
 router.post('/addAddress/:id',requireAuth.requireAuth,authController.addAddresspost)
-
-
+router.get('/addressDelete/:id',authController.addressDelete)
 
 
 //checkout
@@ -64,6 +63,7 @@ router.get('/verifyPaymentRazorPay',authController.verifyPaymentRazorPay)
 router.get('/saveOrder',authController.saveOrder)
 router.get('/orderDetails',authController.orderDetails)
 router.get('/cancelOrder/:id',authController.cancelOrder)
+router.get('/returnOrder/:id',authController.returnOrder)
 
 
 //paypal

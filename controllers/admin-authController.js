@@ -80,7 +80,7 @@ module.exports.adminsignin_post = async (req, res) => {
 
 module.exports.adminLogout_get = (req, res) => {
     res.cookie('jwt2', '', { maxAge: 1 })
-    res.redirect('/adminsignin');
+    res.redirect('/admin');   
 }
 
 module.exports.adminHome = async (req, res) => {

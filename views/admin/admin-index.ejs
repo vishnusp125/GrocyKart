@@ -103,7 +103,8 @@
     </div>
   </div>
   <div class="row mt-4">
-    <div class="col-lg-7 mb-lg-0 mb-4">
+    <!-- <div class="col-lg-7 mb-lg-0 mb-4"> -->
+      <div class="sm-12">  
       <!-- <div class="card z-index-2 h-100">
         <div class="card-header pb-0 pt-3 bg-transparent">
           <h6 class="text-capitalize">Sales overview</h6>
@@ -115,13 +116,13 @@
       <!-- <div class="card-body p-3">
           <div class="chart"> -->
       <!-- <canvas id="chart-line" class="chart-canvas" height="300"></canvas> -->
-      <div id="tester" style="width:1200px;height:500px;"></div>
+      <div id="tester" ></div>
       <br><br>
-      <div id="tester2" style="width:1200px;height:500px;"></div>
-      <div class="container align-content-center">
-        <h2 style="padding: 20px; padding-left: 300px;">Sales Report Table</h2>
-        <table  data-page-length="15" id="example" style=" padding-left: 250px; margin-top: 100px; margin-bottom: 400px; margin: auto;"
-          class="timetable_sub">
+      <div id="tester2"></div>
+      <div class="container">
+        <div class="row justify-content-center">
+        <h2 class="text-center">Sales Report Table</h2>
+        <table data-page-length="15" id="example" class="timetable_sub">
           <thead>
             <tr>
               <th>SL No.</th>
@@ -168,11 +169,14 @@
               <td></td>
               <td></td>
               <td class="text-bolder">Total</td>
-              <td class="text-bolder" style="color: green;"> Rs.<%=total%></td>
+              <td class="text-bolder" style="color: green;"> Rs.<%=total%>
+              </td>
             </tr>
           </tfoot>
 
         </table>
+        </div>
+        </div>
       </div>
       <!-- </div>
         </div> -->
@@ -349,11 +353,11 @@
 
 <script src="https://cdn.plot.ly/plotly-2.16.1.min.js"></script>
 <script>
-  var getTest = [<%=sales%>];
+  var getTest = [<%=sales %>];
   var saletime = ['<%=timeOfSale%>']
   console.log(saletime);
   console.log(getTest);
-  
+
   var xArray = saletime[0].split(',')
   console.log(xArray);
   var barData = [{
@@ -442,9 +446,9 @@
       buttons: [
         // 'copy', 'csv', 'excel', 'pdf', 'print',
         { extend: 'copyHtml5', footer: true },
-                { extend: 'excelHtml5', footer: true },
-                { extend: 'csvHtml5', footer: true },
-                { extend: 'pdfHtml5', footer: true }
+        { extend: 'excelHtml5', footer: true },
+        { extend: 'csvHtml5', footer: true },
+        { extend: 'pdfHtml5', footer: true }
       ]
     });
   });
