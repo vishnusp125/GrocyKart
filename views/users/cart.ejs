@@ -86,8 +86,11 @@
 									
 							<td class="invert">
 								
-								<a href="/removecart/<%=user._id %>" class="btn btn-danger"
-								onclick="return confirm('Are you sure to remove <%=user.name %>?')">Remove</a>
+							
+							
+								<button class="confirm_del_btn btn btn-danger" value="/<%=user._id %>">Delete</button>
+
+								
 							
 							</td>
 							
@@ -170,6 +173,44 @@
 			<div class="clearfix"></div>
 		</div>
 	<!-- //banner -->
+
+
+
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+	<script>
+		$(document).ready(function () {
+			$('.confirm_del_btn').click(function (e) {
+	
+				var id = $(this).val();
+				swal({
+					title: "Are you sure?",
+					text: "Once deleted, you can add later!",
+					icon: "warning",
+					buttons: true,
+					dangerMode: true,
+				})
+					.then((willDelete) => {
+						if (willDelete) {
+							$.ajax({
+								url: "/removecart"+id,
+								success: function (response) {
+									swal("Product has been deleted from the cart!", {
+										icon: "success",
+									}).then((confirmed) => {
+										window.location.reload();
+									})
+								}
+							})
+						} else {
+							swal("Your product is in the cart!");
+						}
+					});
+			})
+		})
+	</script>
+
 	
 	
 	
@@ -252,10 +293,10 @@
 				$('.dropdown-menu', this).stop( true, true ).slideDown("fast");
 				$(this).toggleClass('open');        
 			},
-			function() {
-				$('.dropdown-menu', this).stop( true, true ).slideUp("fast");
-				$(this).toggleClass('open');       
-			}
+			// function() {
+			// 	$('.dropdown-menu', this).stop( true, true ).slideUp("fast");
+			// 	$(this).toggleClass('open');       
+			// }
 		);
 	});
 	</script>
@@ -277,7 +318,7 @@
 		</script>
 	<!-- //here ends scrolling icon -->
 	<script src="js/minicart.js"></script>
-	<script>
+	<!-- <script>
 			paypal.minicart.render();
 	
 			paypal.minicart.cart.on('checkout', function (evt) {
@@ -297,5 +338,5 @@
 				}
 			});
 	
-		</script>
+		</script> -->
 	</body>

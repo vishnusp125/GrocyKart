@@ -20,9 +20,15 @@
             <td><%=user.email %></td>
             <td><%=user.phoneNo %></td>
             <% if(user.isBlocked ===false) { %>
-            <td><a href="/unblockuser/<%= user._id %>"class="btn btn-danger mr-1"onclick="return confirm('Do you want to block <%=user.username %>')">Block</a></td>
+            <td>
+             
+               <button class="confirm_del_btnn btn btn-danger" value="/<%= user._id %>">Block</button>
+
+            </td>
            <% } else {%>
-           <td><a href="/blockuser/<%= user._id %>"class="btn btn-primary" onclick="return confirm('Do you want to Unblock <%=user.username %>')">Unblock</a></td>
+           <td>
+            <button class="confirm_del_btn btn btn-primary" value="/<%= user._id %>">Unblock</button>
+          </td>
             <% } %>
           </tr>
           <% }) %>
@@ -30,6 +36,76 @@
     </table>
   </div>
 </section>
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        $('.confirm_del_btn').click(function (e) {
+
+            var id = $(this).val();
+            swal({
+                title: "Are you sure?",
+                text: "You can block user later",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            url: "/blockuser"+ id,
+                            success: function (response) {
+                                swal("User is unblocked!", {
+                                    icon: "success",
+                                }).then((confirmed) => {
+                                    window.location.reload();
+                                })
+                            }
+                        })
+                    } else {
+                        swal("User is still there!!");
+                    }
+                });
+        })
+    })
+</script>
+
+<script>
+  $(document).ready(function () {
+      $('.confirm_del_btnn').click(function (e) {
+
+          var id = $(this).val();
+          swal({
+              title: "Are you sure?",
+              text: "Once blocked, you can unblock later!",
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+          })
+              .then((willDelete) => {
+                  if (willDelete) {
+                      $.ajax({
+                          url: "/unblockuser"+ id,
+                          success: function (response) {
+                              swal("User has been blocked!", {
+                                  icon: "success",
+                              }).then((confirmed) => {
+                                  window.location.reload();
+                              })
+                          }
+                      })
+                  } else {
+                      swal("You can block later");
+                  }
+              });
+      })
+  })
+</script>
+
+
 
 <script>
 

@@ -40,8 +40,9 @@
               /></td>
             <td>
               <a href="/admineditproduct/<%=product._id %>" class="btn btn-primary">Edit</a>
-              <a href="/deleteproduct/<%=product._id %>" class="btn btn-danger"
-                onclick="return confirm('Do you want to delete <%=product.name%> ?')">Delete</a>
+          
+
+                <button class="confirm_del_btn btn btn-danger" value="/<%=product._id %>">Delete</button>
             </td>
           </tr>
           <% }) %>
@@ -53,6 +54,45 @@
     </div>
   </div>
 </section>
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        $('.confirm_del_btn').click(function (e) {
+
+            var id = $(this).val();
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover !",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            url: "/deleteproduct"+ id,
+                            success: function (response) {
+                                swal("Product has been deleted!", {
+                                    icon: "success",
+                                }).then((confirmed) => {
+                                    window.location.reload();
+                                })
+                            }
+                        })
+                    } else {
+                        swal("Your file is safe!");
+                    }
+                });
+        })
+    })
+</script>
+
+
+
 
 <script>
 

@@ -65,7 +65,7 @@
                                             <h6 class="text f-w-400"><%= profile.address[i].country%></h6>
                                             <h6 class="text f-w-400"><%= profile.address[i].zip%></h6>
                                             <a href="/addressEdit/<%=profile.address[i]._id%>"><i class="bi bi-pencil-square m-2" style="color: green;"></i></a>
-                                            <a id="href" href="/addressDelete/<%=profile.address[i]._id%>" onclick="confirmation(event)" ><i class="bi bi-trash" style="color: red;"></i></a>
+                                            <button class="confirm_del_btn btn btn-white p-0" value="/<%=profile.address[i]._id%>"><i class="bi bi-trash" style="color: red;"></i></button>
                                           </div>   
                                           <% } %>
                                     <!-- <% if(!profile) { %>
@@ -99,77 +99,35 @@
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-<!-- <script>
-    
-     function confirm() {
-        const d = document.getElementById("delete");
-        d.addEventListener((e) =>{
-            d.preventDefault()
-        })
-   
-swal({
-  title: "Are you sure?",
-  text: "Once deleted, you will not be able to recover this imaginary file!",
-  icon: "warning",
-  buttons: true,
-  dangerMode: true,
-})
-.then((willDelete) => {
-  if (willDelete) {
-    swal("Poof! Your imaginary file has been deleted!", {
-      icon: "success",
-    });
-  } else {
-    swal("Your imaginary file is safe!");
-  }
-});
-     }
-</script> -->
-
-<!-- <asp:LinkButton ID="LinkButton5" runat="server" OnClientClick="return confirm()">Delete</asp:LinkButton> -->
-<script type="text/javascript" src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<!-- <script type="text/javascript">
-    function confirm() {
-        swal({
-            title: "Are you sure?",
-            text: "Once deleted, you will not be able to recover this imaginary file!",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true
-        }).then(function (isConfirm) {
-            if (isConfirm) {
-                swal("Poof! Your imaginary file has been deleted!", {
-                    icon: "success"
-                });
-            } else {
-                swal("Your imaginary file is safe!");
-            }
-        });
- 
-        return false;
-    }
-</script> -->
 
 <script>
-       function confirmation(ev) {
-        ev.preventDefault();
+    $(document).ready(function () {
+        $('.confirm_del_btn').click(function (e) {
 
-        var urlToRedirect = ev.currentTarget.getAttribute('/addressDelete'+id); //use currentTarget because the click may be on the nested i tag and not a tag causing the href to be empty
-        console.log(urlToRedirect); // verify if this is the right URL
-    //     swal({
-    //         title: "Are you sure you want to tag this booking as confirmed",
-    //         text: "You will not be able to revert this!",
-    //         icon: "warning",
-    //         buttons: true,
-    //         dangerMode: true,
-    //     })
-    //     .then((willDelete) => {
-    //         if (willDelete) {
-    //             // redirect with javascript here as per your logic after showing the alert using the urlToRedirect value
-    //             window.location.href = '/userProfile';
-    //         } else {
-    //             swal("You booking hasn't been confirmed.");
-    //         }
-    //     });
-    }
+            var id = $(this).val();
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover !",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            url: "/addressDelete"+ id,
+                            success: function (response) {
+                                swal("Address has been deleted!", {
+                                    icon: "success",
+                                }).then((confirmed) => {
+                                    window.location.reload();
+                                })
+                            }
+                        })
+                    } else {
+                        swal("Your file is safe!");
+                    }
+                });
+        })
+    })
 </script>

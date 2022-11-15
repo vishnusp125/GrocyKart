@@ -84,9 +84,7 @@
 								<!-- <div class="rem">
 									<div class="close1"> </div>
 								</div> -->
-
-								<a href="/wishlistdelete/<%=user._id %>" class="btn btn-danger"
-									onclick="return confirm('Do you want to delete <%=user.name%> ?')">Delete</a>
+									<button class="confirm_del_btn btn btn-danger" value="/<%=user._id %>">Delete</button>
 	
 							</td>
 						
@@ -104,63 +102,50 @@
 		</div>
 	<!-- //banner -->
 
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+	<script>
+		$(document).ready(function () {
+			$('.confirm_del_btn').click(function (e) {
+	
+				var id = $(this).val();
+				swal({
+					title: "Are you sure?",
+					icon: "warning",
+					buttons: true,
+					dangerMode: true,
+				})
+					.then((willDelete) => {
+						if (willDelete) {
+							$.ajax({
+								url: "/wishlistdelete"+ id,
+								success: function (response) {
+									swal("Product has been removed", {
+										icon: "success",
+									}).then((confirmed) => {
+										window.location.reload();
+									})
+								}
+							})
+						} else {
+							swal("Don't worry your product is still there !!!");
+						}
+					});
+			})
+		})
+	</script>
+
+
+
 	
 	<!-- js -->
 	<script src="js/jquery-1.11.1.min.js"></script>
 								 <!--quantity-->
-										<script>
-										$('.value-plus').on('click', function(){
-											var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10)+1;
-											divUpd.text(newVal);
-										});
-	
-										$('.value-minus').on('click', function(){
-											var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10)-1;
-											if(newVal>=1) divUpd.text(newVal);
-										});
-										</script>
-									<!--quantity-->
-								<script>$(document).ready(function(c) {
-									$('.close1').on('click', function(c){
-										$('.rem1').fadeOut('slow', function(c){
-											$('.rem1').remove();
-										});
-										});	  
-									});
-							   </script>
-								<script>$(document).ready(function(c) {
-									$('.close2').on('click', function(c){
-										$('.rem2').fadeOut('slow', function(c){
-											$('.rem2').remove();
-										});
-										});	  
-									});
-							   </script>
-								  <script>$(document).ready(function(c) {
-									$('.close3').on('click', function(c){
-										$('.rem3').fadeOut('slow', function(c){
-											$('.rem3').remove();
-										});
-										});	  
-									});
-							   </script>
-	
+							
 	<!-- //js -->
 	<!-- script-for sticky-nav -->
-		<script>
-		$(document).ready(function() {
-			 var navoffeset=$(".agileits_header").offset().top;
-			 $(window).scroll(function(){
-				var scrollpos=$(window).scrollTop(); 
-				if(scrollpos >=navoffeset){
-					$(".agileits_header").addClass("fixed");
-				}else{
-					$(".agileits_header").removeClass("fixed");
-				}
-			 });
-			 
-		});
-		</script>
+
 	<!-- //script-for sticky-nav -->
 	<!-- start-smoth-scrolling -->
 	<script type="text/javascript" src="js/move-top.js"></script>
@@ -208,25 +193,4 @@
 		</script>
 	<!-- //here ends scrolling icon -->
 	<script src="js/minicart.js"></script>
-	<script>
-			paypal.minicart.render();
-	
-			paypal.minicart.cart.on('checkout', function (evt) {
-				var items = this.items(),
-					len = items.length,
-					total = 0,
-					i;
-	
-				// Count the number of each item in the cart
-				for (i = 0; i < len; i++) {
-					total += items[i].get('quantity');
-				}
-	
-				if (total < 3) {
-					alert('The minimum order quantity is 3. Please add more to your shopping cart before checking out');
-					evt.preventDefault();
-				}
-			});
-	
-		</script>
 	</body>
