@@ -25,6 +25,7 @@ app.use('*',checkUser)
 app.use('/', userRoutes);
 app.use('/', adminRoutes);
 app.use(logger('dev'))
+
 db.connectToDb((err)=>{
     if(!err){
         app.listen(PORT,()=>{

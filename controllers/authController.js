@@ -136,13 +136,9 @@ module.exports.logout_get = (req, res) => {
 
 
 
-module.exports.dryfruits_get = (req, res) => {
-    res.render('./users/dryfruits')
-}
 
-module.exports.beverages_get = (req, res) => {
-    res.render('./users/beverages')
-}
+
+
 
 
 module.exports.add_to_cart_post = (req, res, next) => {
