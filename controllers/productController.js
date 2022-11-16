@@ -21,8 +21,6 @@ module.exports.addproductform_get = (req, res) => {
         res.render('admin/admin-addproduct.ejs', { result: ' ', category, layout: 'layout/admin-layout.ejs', admin: true })
 
     })
-
-
 }
 
 

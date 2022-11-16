@@ -145,12 +145,6 @@ module.exports.beverages_get = (req, res) => {
 }
 
 
-
-// module.exports.checkout_post = (req,res,next)=>{
-//     const addedProduct = Product.findById(req.body.id)
-
-// }
-
 module.exports.add_to_cart_post = (req, res, next) => {
 
     const id = req.body.id;
@@ -311,17 +305,16 @@ module.exports.wishlistDelete = async (req, res) => {
 module.exports.removeFromCart = async (req, res) => {
 
     let prodId = req.params.id
-    // console.log(prodId);
     let product = await Product.findById(prodId)
-    // console.log(product);
+
 
     let userr = req.user.id
-    // console.log(userr);
+  
 
     const userid = await User.findById({ _id: userr })
 
     const checks = userid.cart;
-    // console.log(checks);
+ 
     let n = 0;
     for (const check of checks) {
         if (check._id == prodId && check.count > 1) {
@@ -386,9 +379,6 @@ module.exports.removeCart = async (req, res) => {
     await User.findOneAndUpdate({ _id: userr }, { $pull: { cart: { _id: prodId } } })
     res.redirect('back')
 
-
-
-
 }
 
 
@@ -413,14 +403,10 @@ module.exports.singleProduct = async (req, res) => {
 }
 
 
-
-
 module.exports.userProfile = async (req, res) => {
 
     let user = req.user.id
-    //     console.log(user);
-    //    let user1 = user.username
-    //    console.log(user1);
+
 
     await User.findById({ _id: user }).then((profile) => {
         res.render('./users/profile', { profile, layout: './layout/layout.ejs' })
@@ -442,7 +428,6 @@ module.exports.addressEdit = async (req, res) => {
     const addressid = req.params.id
     console.log(addressid);
     const profile = await User.findOne({ _id: user })
-    //const profile = await User.updateOne({ _id: user, "address._id":addressid },{$set:{'address.$.zip':req.body.zip}})
     const checks = profile.address;
     console.log(checks);
     let n = 0;
@@ -468,10 +453,6 @@ module.exports.addressEditpost = async (req, res) => {
     
     console.log(req.body);
     console.log('user');
-    // let userdetails = req.body;
-    // console.log(userdetails);
-    // const addressid = req.params.id
-    // console.log(req.body);
 
     try {
         const user = req.user.id;
@@ -791,12 +772,7 @@ module.exports.checkoutPost = async (req, res) => {
 }
 
 module.exports.verifyPaymentRazorPay = async (req, res) => {
-    // console.log(111111111);
-    // console.log(req.body) 
-    // console.log(req.body.razorpay_payment_id);
-    // console.log(req.body.razorpay_order_id);
-    // console.log(req.body.razorpay_signature);
-    // console.log('before creating hmac object');
+   
     const crypto = require('crypto')
 
     // Creating hmac object
@@ -867,11 +843,7 @@ module.exports.saveOrder = async (req, res) => {
     } catch (err) {
         console.log(err);
     }
-
-
-
 }
-
 
 
 module.exports.successGet = async (req, res) => {

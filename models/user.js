@@ -3,11 +3,6 @@ const Product = require('./product')
 const bcrypt = require('bcrypt')
 const { isEmail } = require('validator')
 
-// mongoose.connect('mongodb://0.0.0.0:27017/store', {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true
-
-// })
 
 const cartSchema = new mongoose.Schema({
     name: {type: String},
