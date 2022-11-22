@@ -251,8 +251,8 @@ module.exports.wishlistGet = async (req, res) => {
     let n = 0;
     for (const check of checks) {
         if (check._id == prodId) {
-            await User.updateOne({ _id: userr, 'wishlist._id': req.params.id },
-                { $inc: { "wishlist.$.count": 1 } })
+            // await User.updateOne({ _id: userr, 'wishlist._id': req.params.id },
+            //     { $inc: { "wishlist.$.count": 1 } })
             n++
         }
     }

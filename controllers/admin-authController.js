@@ -94,10 +94,12 @@ module.exports.adminHome = async (req, res) => {
 
     let Sales = await Product.aggregate([{ $group: { _id: null, sum_val: { $sum: "$sales" } } }])
     let totalSales = (Sales[0].sum_val);
-    //  console.log(totalSales);
+    console.log(1111111);
+     console.log(Sales);
 
     const sales = [];
     const timeOfSale = [];
+    
     let k = 0;
     let l = 0;
     let m = [];
@@ -136,11 +138,7 @@ module.exports.adminHome = async (req, res) => {
                 }
                 if (l === sums && k === n) {
 
-                        // console.log(sales);
-                        // console.log(typeof (sales[0]));
-
-                        // console.log(timeOfSale);
-                        // console.log(typeof (timeOfSale[0]));
+                     
                         const Productlist = Product.find({})
                             .then((result) => {
                                 const sum = function (items, prop1, prop2) {
@@ -151,10 +149,10 @@ module.exports.adminHome = async (req, res) => {
                                 };
                             
                                 const total = sum(result, 'discountedPrice', 'sales');
-                                console.log(total);
-                                console.log(typeof total);
-                                console.log(sales);
-                                console.log(timeOfSale);
+                                // console.log(total);
+                                // console.log(typeof total);
+                                // console.log(sales);
+                                // console.log(timeOfSale);
                               
                                 res.render('admin/admin-index', {Productlist,productCount,result, total: total, sales, timeOfSale, totalSales, user, layout: './layout/admin-layout.ejs', admin: true })
                             }).catch((err) => {

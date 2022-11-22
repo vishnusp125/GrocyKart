@@ -99,32 +99,34 @@
 		<div class="wthree_banner_bottom_left_grid_sub">
 		</div>
 		<div class="wthree_banner_bottom_left_grid_sub1">
-			<% banner.slice(3,7).forEach(function(banner) { %>
+		
 			<div class="col-md-4 wthree_banner_bottom_left">
 				<div class="wthree_banner_bottom_left_grid">
-					<img src="./banner/<%=banner._id%>.jpeg"style="object-fit: contain;" alt=" " class="img-responsive" />
+					<img src="banner/1.jpeg"style="object-fit: contain;" alt=" " class="img-responsive" />
 					<div class="wthree_banner_bottom_left_grid_pos">
-						<h3 style="color:black;font-weight:700"><span style="color:#fa1818 ;font-weight: 700;">Buy more</span> and <i style="color:#84c639;font-weight: 700">Save more ... </i></h3>
+						<h3 style="color:black;font-weight:700"><span style="color:black ;font-weight:400;">New imported </span> <i style="color:#fa1818 ;font-weight: 400"> Dry Fruits</i></h3>
 					</div>
 				</div>
 			</div>
-			<%})%>
-			<!-- <div class="col-md-4 wthree_banner_bottom_left">
+
+		 <div class="col-md-4 wthree_banner_bottom_left">
 				<div class="wthree_banner_bottom_left_grid">
-					<img src="images/5.jpg" alt=" " class="img-responsive" />
+					<img src="banner/2.jpg" alt=" " class="img-responsive" />
 					<div class="wthree_banner_btm_pos">
 						<h3>introducing <span>best store</span> for <i>groceries</i></h3>
 					</div>
 				</div>
-			</div>
+			</div> 
+
 			<div class="col-md-4 wthree_banner_bottom_left">
 				<div class="wthree_banner_bottom_left_grid">
-					<img src="images/6.jpg" alt=" " class="img-responsive" />
+					<img src="banner/3.jpeg" alt=" " class="img-responsive" />
 					<div class="wthree_banner_btm_pos1">
 						<h3>Save <span>Upto</span> Rs.100</h3>
 					</div>
 				</div>
-			</div> -->
+			</div> 
+
 			<div class="clearfix"> </div>
 		</div>
 		<div class="clearfix"> </div>
@@ -134,7 +136,7 @@
 		<div class="container">
 			<h3>Hot Offers</h3>
 			<div class="agile_top_brands_grids">
-				<% product.slice(0,4).forEach(function(product) { %>
+				<% product.slice(0,6).forEach(function(product) { %>
 					<% if(product.category==='Beverages' ) { %>
 						<div class="col-md-3 top_brand_left">
 							<div class="hover14 column">
