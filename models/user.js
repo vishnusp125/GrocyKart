@@ -5,56 +5,56 @@ const { isEmail } = require('validator')
 
 
 const cartSchema = new mongoose.Schema({
-    name: {type: String},
-    discountedPrice: {type: Number},
-    description: {type: String},
-    category: {type: String},
-    image: {type: String},
-    stock: {type: Number},
-    count:{type:Number},
-    total:{type:Number}
-},{timestamps:true})
+    name: { type: String },
+    discountedPrice: { type: Number },
+    description: { type: String },
+    category: { type: String },
+    image: { type: String },
+    stock: { type: Number },
+    count: { type: Number },
+    total: { type: Number }
+}, { timestamps: true })
 
 const wishlistSchema = new mongoose.Schema({
-    name: {type: String},
-    discountedPrice: {type: Number},
-    description: {type: String},
-    category: {type: String},
-    image: {type: String},
-    stock: {type: Number},
-    count:{type:Number}
-},{timestamps:true})
+    name: { type: String },
+    discountedPrice: { type: Number },
+    description: { type: String },
+    category: { type: String },
+    image: { type: String },
+    stock: { type: Number },
+    count: { type: Number }
+}, { timestamps: true })
 
 const addressSchema = new mongoose.Schema({
-        username : {type:String},
-        email:{type:String},
-        phoneNo : {type:Number},
-        address: {type:String},
-        city : {type:String},
-        state : {type:String},
-        country:{type:String},
-        zip :{type:String}
+    username: { type: String },
+    email: { type: String },
+    phoneNo: { type: Number },
+    address: { type: String },
+    city: { type: String },
+    state: { type: String },
+    country: { type: String },
+    zip: { type: String }
 
-},{timestamps:true})
+}, { timestamps: true })
 
 const orderSchema = new mongoose.Schema({
-    name: {type: String},
-    price: {type: Number},
-    discountedPrice:{type:Number},
-    description: {type: String},
-    category: {type: String},
-    image: {type: String},
-    stock: {type: Number},
-    count:{type:Number},
-    offer:{type:String},
-    paymentOption:{type:String},
-    address:{type:String},
-    zip:{type:Number},
-    state:{type:String},
-    country:{type:String},
-    unique:{type:String},
-    orderStatus:{type:String, default:'Under Process'}
-},{timestamps:true})
+    name: { type: String },
+    price: { type: Number },
+    discountedPrice: { type: Number },
+    description: { type: String },
+    category: { type: String },
+    image: { type: String },
+    stock: { type: Number },
+    count: { type: Number },
+    offer: { type: String },
+    paymentOption: { type: String },
+    address: { type: String },
+    zip: { type: Number },
+    state: { type: String },
+    country: { type: String },
+    unique: { type: String },
+    orderStatus: { type: String, default: 'Under Process' }
+}, { timestamps: true })
 
 const userSchema = new mongoose.Schema({
     username: {
@@ -88,34 +88,34 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    address:{
-        type:[addressSchema],
-        default:[]
-        
+    address: {
+        type: [addressSchema],
+        default: []
+
     },
-    profileImage : {
-        type : String,
-        default : 'null'
+    profileImage: {
+        type: String,
+        default: 'null'
     },
     isVerified: {
         type: Boolean,
-        default:false
+        default: false
     },
-    cart:{
+    cart: {
         type: [cartSchema],
-        default:[]
+        default: []
     },
-    wishlist:{
+    wishlist: {
         type: [wishlistSchema],
-        default:[]
+        default: []
 
     },
-    order:{
+    order: {
         type: [orderSchema],
-        default:[]
+        default: []
 
-    }  
-},{timestamps:true})
+    }
+}, { timestamps: true })
 
 
 // fire a function before doc saved to db
@@ -124,7 +124,7 @@ userSchema.pre('save', async function (next) {
     const salt = await bcrypt.genSalt();
     this.password = await bcrypt.hash(this.password, salt)
     next();
- 
+
 });
 
 
@@ -137,8 +137,8 @@ userSchema.statics.login = async function (username, password) {
     if (user) {
         const auth = await bcrypt.compare(password, user.password)
         if (auth) {
-            if(user.isBlocked == false){
-            return user;
+            if (user.isBlocked == false) {
+                return user;
             }
             throw Error('Your account is blocked')
         }

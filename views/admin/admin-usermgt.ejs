@@ -1,40 +1,48 @@
-
 <section style="margin-top: 200px;background-color:rgb(255, 255, 255); padding: 5rem; height: 100%; margin-top: 2rem;">
-  <div class="container mt-5">
-    <h2 class="text-center">User Management</h2>
-    <table class="table mt-5" id="example">
-      <thead>
-        <tr>
-          <th scope="col">No</th>
-          <th scope="col">Username</th>
-          <th scope="col">Email</th>
-          <th scope="col">Phone No</th>
-          <th scope="col">Block/Unblock</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% user.forEach(function(user,index) { %>
-          <tr>
-            <th scope="row"><%= index+1 %></th>
-            <td><%=user.username %></td>
-            <td><%=user.email %></td>
-            <td><%=user.phoneNo %></td>
-            <% if(user.isBlocked ===false) { %>
-            <td>
-             
-               <button class="confirm_del_btnn btn btn-danger" value="/<%= user._id %>">Block</button>
+    <div class="container mt-5">
+        <h2 class="text-center">User Management</h2>
+        <table class="table mt-5" id="example">
+            <thead>
+                <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone No</th>
+                    <th scope="col">Block/Unblock</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% user.forEach(function(user,index) { %>
+                    <tr>
+                        <th scope="row">
+                            <%= index+1 %>
+                        </th>
+                        <td>
+                            <%=user.username %>
+                        </td>
+                        <td>
+                            <%=user.email %>
+                        </td>
+                        <td>
+                            <%=user.phoneNo %>
+                        </td>
+                        <% if(user.isBlocked===false) { %>
+                            <td>
 
-            </td>
-           <% } else {%>
-           <td>
-            <button class="confirm_del_btn btn btn-primary" value="/<%= user._id %>">Unblock</button>
-          </td>
-            <% } %>
-          </tr>
-          <% }) %>
-      </tbody>
-    </table>
-  </div>
+                                <button class="confirm_del_btnn btn btn-danger" value="/<%= user._id %>">Block</button>
+
+                            </td>
+                            <% } else {%>
+                                <td>
+                                    <button class="confirm_del_btn btn btn-primary"
+                                        value="/<%= user._id %>">Unblock</button>
+                                </td>
+                                <% } %>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+    </div>
 </section>
 
 
@@ -56,7 +64,7 @@
                 .then((willDelete) => {
                     if (willDelete) {
                         $.ajax({
-                            url: "/blockuser"+ id,
+                            url: "/blockuser" + id,
                             success: function (response) {
                                 swal("User is unblocked!", {
                                     icon: "success",
@@ -74,35 +82,35 @@
 </script>
 
 <script>
-  $(document).ready(function () {
-      $('.confirm_del_btnn').click(function (e) {
+    $(document).ready(function () {
+        $('.confirm_del_btnn').click(function (e) {
 
-          var id = $(this).val();
-          swal({
-              title: "Are you sure?",
-              text: "Once blocked, you can unblock later!",
-              icon: "warning",
-              buttons: true,
-              dangerMode: true,
-          })
-              .then((willDelete) => {
-                  if (willDelete) {
-                      $.ajax({
-                          url: "/unblockuser"+ id,
-                          success: function (response) {
-                              swal("User has been blocked!", {
-                                  icon: "success",
-                              }).then((confirmed) => {
-                                  window.location.reload();
-                              })
-                          }
-                      })
-                  } else {
-                      swal("You can block later");
-                  }
-              });
-      })
-  })
+            var id = $(this).val();
+            swal({
+                title: "Are you sure?",
+                text: "Once blocked, you can unblock later!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            url: "/unblockuser" + id,
+                            success: function (response) {
+                                swal("User has been blocked!", {
+                                    icon: "success",
+                                }).then((confirmed) => {
+                                    window.location.reload();
+                                })
+                            }
+                        })
+                    } else {
+                        swal("You can block later");
+                    }
+                });
+        })
+    })
 </script>
 
 
@@ -110,13 +118,9 @@
 <script>
 
 
-  $(document).ready(function() {
-    $('#example').DataTable( {
-        // dom: 'Bfrtip',
-        // buttons: [
-        //     'copy', 'csv', 'excel', 'pdf', 'print'
-        // ]
-    } );
-} );
+    $(document).ready(function () {
+        $('#example').DataTable({
+        });
+    });
 
 </script>

@@ -38,8 +38,6 @@ const loginhandleErrors = (err) => {
     }
 
 
-
-
     //validation Errors
     if (err.message.includes('user validation failed')) {
         Object.values(err.errors).forEach(({ properties }) => {

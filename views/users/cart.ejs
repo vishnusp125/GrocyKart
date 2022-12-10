@@ -1,134 +1,153 @@
-
-
 <body>
 	<!-- products-breadcrumb -->
-		<div class="products-breadcrumb">
-			<div class="container">
-				<ul>
-					<li><i class="fa fa-home" aria-hidden="true"></i><a href="index.html">Home</a><span>|</span></li>
-					<li>Cart</li>
-				</ul>
-			</div>
+	<div class="products-breadcrumb">
+		<div class="container">
+			<ul>
+				<li><i class="fa fa-home" aria-hidden="true"></i><a href="index.html">Home</a><span>|</span></li>
+				<li>Cart</li>
+			</ul>
 		</div>
+	</div>
 	<!-- //products-breadcrumb -->
 	<!-- banner -->
-		<div class="banner">
-			<div class="w3l_banner_nav_left">
-				<nav class="navbar nav_bottom">
-				 <!-- Brand and toggle get grouped for better mobile display -->
-				  <div class="navbar-header nav_2">
-					  <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
+	<div class="banner">
+		<div class="w3l_banner_nav_left">
+			<nav class="navbar nav_bottom">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header nav_2">
+					<button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse"
+						data-target="#bs-megadropdown-tabs">
 						<span class="sr-only">Toggle navigation</span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
-					  </button>
-				   </div> 
-				   <!-- Collect the nav links, forms, and other content for toggling -->
-					<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
-						<ul class="nav navbar-nav nav_1">
-					<li><a href="/products">Cooking</a></li>
-                    <li><a href="/products">Dry Fruits</a></li>
-                    <li><a href="/products">Beverages</a></li>
-					<% if(locals.user) { %>
-						<li><a href="/wishlist">My wishlist</a></li>
-						<li><a href="/cart">My Cart</a></li>
-						<li><a href="/userProfile">My Profile</a></li>
-						<% } %>
-						</ul>
-					 </div><!-- /.navbar-collapse -->
-				</nav>
-			</div>
-			<div class="w3l_banner_nav_right">
-	<!-- about -->	
+					</button>
+				</div>
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+					<ul class="nav navbar-nav nav_1">
+						<li><a href="/products">Cooking</a></li>
+						<li><a href="/products">Dry Fruits</a></li>
+						<li><a href="/products">Beverages</a></li>
+						<% if(locals.user) { %>
+							<li><a href="/wishlist">My wishlist</a></li>
+							<li><a href="/cart">My Cart</a></li>
+							<li><a href="/userProfile">My Profile</a></li>
+							<% } %>
+					</ul>
+				</div><!-- /.navbar-collapse -->
+			</nav>
+		</div>
+		<div class="w3l_banner_nav_right">
+			<!-- about -->
 			<div class="privacy about">
-				<% if (cartUser.cart == 0) { %>
-					
-				<div><h1 style="margin-left: 200px; margin-bottom:200px; margin-top:80px; color: #fa1818 ;">Your cart is Empty ...... !!!!!!</h1></div>
+				<% if (cartUser.cart==0) { %>
+
+					<div>
+						<h1 style="margin-left: 200px; margin-bottom:200px; margin-top:80px; color: #fa1818 ;">Your cart
+							is Empty ...... !!!!!!</h1>
+					</div>
 
 					<% } else { %>
-					
-						
-				<h3>My <span>Cart</span></h3>
-				
-			  <div class="checkout-right">
-						<h4>Your shopping cart contains: <span></span></h4>
-												
-					<table class="timetable_sub">
-						<thead>
-							<tr>
-								<th>SL No.</th>	
-								<th>Product</th>
-								<th>Quantity</th>
-								<th>Product Name</th>
-							
-								<th>Price</th>
-								<th>Remove</th>
-							</tr>
-						</thead>
-						<tbody>
-							<% user.forEach(function(user,index) { %>
-						<tr class="rem1"> 
-							<td class="invert"><%= index+1 %></td>
-							<td class="invert-image"><a href="/singleProduct?id=<%=user._id%>"><img src="./image/<%=user._id %>.jpeg" style="object-fit: contain;" width="300px" height="80px"  alt=" " ></a></td>
-							<td class="invert">
-								 <div class="quantity"> 
-									<div class="quantity-select">                           
-										<a href="/removeFromcart/<%=user._id%>"><div class="entry value-minus">&nbsp;</div></a>
-										<div class="entry value"><span><%=user.count%></span></div>
-										<a href="/addtoCart/<%=user._id%>"><div class="entry value-plus active">&nbsp;</div></a>
-									</div>
-								</div>
-							</td>
-							<td class="invert"><%=user.name %></td>
-							
-							<td class="invert">&#x20B9; <%= (user.discountedPrice * user.count) %></td>
-									
-							<td class="invert">
-								
-							
-							
-								<button class="confirm_del_btn btn btn-danger" value="/<%=user._id %>">Delete</button>
 
-								
-							
-							</td>
-							
-					<% }) %>
-					
-					</tbody></table>
-				</div>
-				
-				
-				<div class="checkout-left">	
-					<div class="col-md-4 checkout-left-basket">
-						<h4>Items in basket</h4>
-						<ul>
-							<% user.forEach(function(user,index) { %>
-							<li>Product <%= index+1 %> <i>-</i> <span> &#x20B9; <%= (user.discountedPrice * user.count) %></span></li>
-						
-							<% }) %>
-							<li>Total <i>-</i> <span>&#x20B9; <%=totals%></span></li>
-						</ul>
-					</div>
-				
-					<div class="col-md-8 address_form_agile">
-					
-										<div class="checkout-right-basket">
-								<a href="/checkout">Checkout <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
-						  </div>
+
+						<h3>My <span>Cart</span></h3>
+
+						<div class="checkout-right">
+							<h4>Your shopping cart contains: <span></span></h4>
+
+							<table class="timetable_sub">
+								<thead>
+									<tr>
+										<th>SL No.</th>
+										<th>Product</th>
+										<th>Quantity</th>
+										<th>Product Name</th>
+
+										<th>Price</th>
+										<th>Remove</th>
+									</tr>
+								</thead>
+								<tbody>
+									<% user.forEach(function(user,index) { %>
+										<tr class="rem1">
+											<td class="invert">
+												<%= index+1 %>
+											</td>
+											<td class="invert-image"><a href="/singleProduct?id=<%=user._id%>"><img
+														src="./image/<%=user._id %>.jpeg" style="object-fit: contain;"
+														width="300px" height="80px" alt=" "></a></td>
+											<td class="invert">
+												<div class="quantity">
+													<div class="quantity-select">
+														<a href="/removeFromcart/<%=user._id%>">
+															<div class="entry value-minus">&nbsp;</div>
+														</a>
+														<div class="entry value"><span>
+																<%=user.count%>
+															</span></div>
+														<a href="/addtoCart/<%=user._id%>">
+															<div class="entry value-plus active">&nbsp;</div>
+														</a>
+													</div>
+												</div>
+											</td>
+											<td class="invert">
+												<%=user.name %>
+											</td>
+
+											<td class="invert">&#x20B9; <%= (user.discountedPrice * user.count) %>
+											</td>
+
+											<td class="invert">
+
+
+
+												<button class="confirm_del_btn btn btn-danger"
+													value="/<%=user._id %>">Delete</button>
+
+
+
+											</td>
+
+											<% }) %>
+
+								</tbody>
+							</table>
 						</div>
-				
-					<div class="clearfix"> </div>
-					
-				</div>
-				<% } %>
-	
+
+
+						<div class="checkout-left">
+							<div class="col-md-4 checkout-left-basket">
+								<h4>Items in basket</h4>
+								<ul>
+									<% user.forEach(function(user,index) { %>
+										<li>Product <%= index+1 %> <i>-</i> <span> &#x20B9; <%= (user.discountedPrice *
+														user.count) %></span></li>
+
+										<% }) %>
+											<li>Total <i>-</i> <span>&#x20B9; <%=totals%></span></li>
+								</ul>
+							</div>
+
+							<div class="col-md-8 address_form_agile">
+
+								<div class="checkout-right-basket">
+									<a href="/checkout">Checkout <span class="glyphicon glyphicon-chevron-right"
+											aria-hidden="true"></span></a>
+								</div>
+							</div>
+
+							<div class="clearfix"> </div>
+
+						</div>
+						<% } %>
+
 			</div>
-	<!-- //about -->
-			</div>
-			<div class="clearfix"></div>
+			<!-- //about -->
 		</div>
+		<div class="clearfix"></div>
+	</div>
 	<!-- //banner -->
 
 
@@ -139,7 +158,7 @@
 	<script>
 		$(document).ready(function () {
 			$('.confirm_del_btn').click(function (e) {
-	
+
 				var id = $(this).val();
 				swal({
 					title: "Are you sure?",
@@ -151,7 +170,7 @@
 					.then((willDelete) => {
 						if (willDelete) {
 							$.ajax({
-								url: "/removecart"+id,
+								url: "/removecart" + id,
 								success: function (response) {
 									swal("Product has been deleted from the cart!", {
 										icon: "success",
@@ -168,75 +187,75 @@
 		})
 	</script>
 
-	
-	
-	
-	
+
+
+
+
 	<!-- js -->
 	<script src="js/jquery-1.11.1.min.js"></script>
-								 <!--quantity-->
-										<script>
-										$('.value-plus').on('click', function(){
-											var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10)+1;
-											divUpd.text(newVal);
-										});
-	
-										$('.value-minus').on('click', function(){
-											var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10)-1;
-											if(newVal>=1) divUpd.text(newVal);
-										});
-										</script>
-									<!--quantity-->
-								<script>$(document).ready(function(c) {
-									$('.close1').on('click', function(c){
-										$('.rem1').fadeOut('slow', function(c){
-											$('.rem1').remove();
-										});
-										});	  
-									});
-							   </script>
-								<script>$(document).ready(function(c) {
-									$('.close2').on('click', function(c){
-										$('.rem2').fadeOut('slow', function(c){
-											$('.rem2').remove();
-										});
-										});	  
-									});
-							   </script>
-								  <script>$(document).ready(function(c) {
-									$('.close3').on('click', function(c){
-										$('.rem3').fadeOut('slow', function(c){
-											$('.rem3').remove();
-										});
-										});	  
-									});
-							   </script>
-	
+	<!--quantity-->
+	<script>
+		$('.value-plus').on('click', function () {
+			var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10) + 1;
+			divUpd.text(newVal);
+		});
+
+		$('.value-minus').on('click', function () {
+			var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10) - 1;
+			if (newVal >= 1) divUpd.text(newVal);
+		});
+	</script>
+	<!--quantity-->
+	<script>$(document).ready(function (c) {
+			$('.close1').on('click', function (c) {
+				$('.rem1').fadeOut('slow', function (c) {
+					$('.rem1').remove();
+				});
+			});
+		});
+	</script>
+	<script>$(document).ready(function (c) {
+			$('.close2').on('click', function (c) {
+				$('.rem2').fadeOut('slow', function (c) {
+					$('.rem2').remove();
+				});
+			});
+		});
+	</script>
+	<script>$(document).ready(function (c) {
+			$('.close3').on('click', function (c) {
+				$('.rem3').fadeOut('slow', function (c) {
+					$('.rem3').remove();
+				});
+			});
+		});
+	</script>
+
 	<!-- //js -->
 	<!-- script-for sticky-nav -->
-		<script>
-		$(document).ready(function() {
-			 var navoffeset=$(".agileits_header").offset().top;
-			 $(window).scroll(function(){
-				var scrollpos=$(window).scrollTop(); 
-				if(scrollpos >=navoffeset){
+	<script>
+		$(document).ready(function () {
+			var navoffeset = $(".agileits_header").offset().top;
+			$(window).scroll(function () {
+				var scrollpos = $(window).scrollTop();
+				if (scrollpos >= navoffeset) {
 					$(".agileits_header").addClass("fixed");
-				}else{
+				} else {
 					$(".agileits_header").removeClass("fixed");
 				}
-			 });
-			 
+			});
+
 		});
-		</script>
+	</script>
 	<!-- //script-for sticky-nav -->
 	<!-- start-smoth-scrolling -->
 	<script type="text/javascript" src="js/move-top.js"></script>
 	<script type="text/javascript" src="js/easing.js"></script>
 	<script type="text/javascript">
-		jQuery(document).ready(function($) {
-			$(".scroll").click(function(event){		
+		jQuery(document).ready(function ($) {
+			$(".scroll").click(function (event) {
 				event.preventDefault();
-				$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+				$('html,body').animate({ scrollTop: $(this.hash).offset().top }, 1000);
 			});
 		});
 	</script>
@@ -244,36 +263,27 @@
 	<!-- Bootstrap Core JavaScript -->
 	<script src="js/bootstrap.min.js"></script>
 	<script>
-	$(document).ready(function(){
-		$(".dropdown").hover(            
-			function() {
-				$('.dropdown-menu', this).stop( true, true ).slideDown("fast");
-				$(this).toggleClass('open');        
-			},
-			// function() {
-			// 	$('.dropdown-menu', this).stop( true, true ).slideUp("fast");
-			// 	$(this).toggleClass('open');       
-			// }
-		);
-	});
+		$(document).ready(function () {
+			$(".dropdown").hover(
+				function () {
+					$('.dropdown-menu', this).stop(true, true).slideDown("fast");
+					$(this).toggleClass('open');
+				},
+				// function() {
+				// 	$('.dropdown-menu', this).stop( true, true ).slideUp("fast");
+				// 	$(this).toggleClass('open');       
+				// }
+			);
+		});
 	</script>
 	<!-- here stars scrolling icon -->
-		<script type="text/javascript">
-			$(document).ready(function() {
-				/*
-					var defaults = {
-					containerID: 'toTop', // fading element id
-					containerHoverID: 'toTopHover', // fading element hover id
-					scrollSpeed: 1200,
-					easingType: 'linear' 
-					};
-				*/
-									
-				$().UItoTop({ easingType: 'easeOutQuart' });
-									
-				});
-		</script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$().UItoTop({ easingType: 'easeOutQuart' });
+
+		});
+	</script>
 	<!-- //here ends scrolling icon -->
 	<script src="js/minicart.js"></script>
-	
-	</body>
+
+</body>

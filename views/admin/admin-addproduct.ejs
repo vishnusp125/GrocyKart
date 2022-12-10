@@ -1,117 +1,109 @@
+<% if(result){ %>
 
-   <% if(result){ %>    
+  <section
+    style="margin-top: 200px;background-color:rgb(255, 255, 255); padding: 5rem; height: 100%; margin-top: 2rem;">
+    <div class="container ">
+      <div class="row justify-content-center align-items-center">
+        <div class="col-md-6">
+          <h2 class="text-center">Add Product</h2>
+          <form action="/adminproduct" method="post" enctype="multipart/form-data">
+            <label for="">Name</label>
+            <input type="text" name="name" class="form-control" required />
 
-<section style="margin-top: 200px;background-color:rgb(255, 255, 255); padding: 5rem; height: 100%; margin-top: 2rem;">
-  <div class="container ">
-    <div class="row justify-content-center align-items-center">
-      <div class="col-md-6">
-        <h2 class="text-center">Add Product</h2>
-        <form
-          action="/adminproduct"   
-          method="post"
-          enctype="multipart/form-data"      
-          
-        >
-          <label for="">Name</label>
-          <input type="text" name="name" class="form-control" required/>
+            <label for="">Category</label>
 
-          <label for="">Category</label>
-
-          <select class="form-select" name="category" aria-label="Default select example"> 
-            <option  selected><%= result.category %> </option>
-            <% for(let i=0;i<category.length ;i++){ %>  
-                <option value="<%=category[i].category%>" ><%= category[i].category %> </option> 
-                <% } %> 
-          </select>
-
-          <!-- <label for="">Before Discount Price</label>
-          <input type="text" name="bprice" class="form-control" required/> -->
-        
-
-          <label for="">Price</label>
-          <input type="text" name="price" class="form-control" required/>
-          
-         
-
-          <label for="">Offer</label>
-          <select class="form-select" name="offer" aria-label="Default select example"> 
-          <option selected></option>
-          <option value="5">5%</option>
-          <option value="8">8%</option>
-          <option value="10">10%</option>
-          <option value="15">15%</option>
-          </select>
+            <select class="form-select" name="category" aria-label="Default select example">
+              <option selected>
+                <%= result.category %>
+              </option>
+              <% for(let i=0;i<category.length ;i++){ %>
+                <option value="<%=category[i].category%>">
+                  <%= category[i].category %>
+                </option>
+                <% } %>
+            </select>
+            <label for="">Price</label>
+            <input type="text" name="price" class="form-control" required />
+            <label for="">Offer</label>
+            <select class="form-select" name="offer" aria-label="Default select example">
+              <option selected></option>
+              <option value="5">5%</option>
+              <option value="8">8%</option>
+              <option value="10">10%</option>
+              <option value="15">15%</option>
+            </select>
 
 
-          <label for="">Description</label>
-          <input type="text" name="description" class="form-control" required/>
+            <label for="">Description</label>
+            <input type="text" name="description" class="form-control" required />
 
-          <label for="">Stock</label>
-          <input type="text" name="stock" class="form-control" required/>
+            <label for="">Stock</label>
+            <input type="text" name="stock" class="form-control" required />
 
-          <label for="">Image1</label>
-          <input type="file" name="image" class="form-control" required/>
+            <label for="">Image1</label>
+            <input type="file" name="image" class="form-control" required />
 
-          <label for="">Image2</label>
-          <input type="file" name="image2" class="form-control" />
+            <label for="">Image2</label>
+            <input type="file" name="image2" class="form-control" />
 
-          <label for="">Image3</label>
-          <input type="file" name="image3" class="form-control" />
+            <label for="">Image3</label>
+            <input type="file" name="image3" class="form-control" />
 
-          <button type="submit" class="btn btn-success mt-4" style="background-color: rgb(0, 186, 28);">Submit</button>
-        </form>
+            <button type="submit" class="btn btn-success mt-4"
+              style="background-color: rgb(0, 186, 28);">Submit</button>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-</section>
-<% }else{ %> 
-  <div class="container ">
-    <div class="row justify-content-center align-items-center">
-      <div class="col-md-6">
-        <h2 class="text-center">Add Product</h2>
-        <form
-          action="/adminproduct"
-          method="post"
-          enctype="multipart/form-data"
-          
-        >
-          <label for="">Name</label>
-          <input type="text" name="name" class="form-control" required/>
+  </section>
+  <% }else{ %>
+    <div class="container ">
+      <div class="row justify-content-center align-items-center">
+        <div class="col-md-6">
+          <h2 class="text-center">Add Product</h2>
+          <form action="/adminproduct" method="post" enctype="multipart/form-data">
+            <label for="">Name</label>
+            <input type="text" name="name" class="form-control" required />
 
-          <label for="">Category</label>
+            <label for="">Category</label>
 
-          <select class="form-select" name="category" aria-label="Default select example"> 
-            <option  selected><%= result.category %> </option>
-            <% for(let i=0;i<category.length ;i++){ %>  
-                <option value="<%= category[i].category  %> " ><%= category[i].category %> </option> 
-                <% } %> 
-          </select>
-        
+            <select class="form-select" name="category" aria-label="Default select example">
+              <option selected>
+                <%= result.category %>
+              </option>
+              <% for(let i=0;i<category.length ;i++){ %>
+                <option value="<%= category[i].category  %> ">
+                  <%= category[i].category %>
+                </option>
+                <% } %>
+            </select>
 
-          <label for="">Price</label>
-          <input type="text" name="price" class="form-control" required/>
-          
-          <label for="">Before Discount Price</label>
-          <input type="text" name="bprice" class="form-control" required/>
 
-          <label for="">Description</label>
-          <input type="text" name="description" class="form-control" required/>
+            <label for="">Price</label>
+            <input type="text" name="price" class="form-control" required />
 
-          <label for="">Stock</label>
-          <input type="text" name="stock" class="form-control" required/>
+            <label for="">Before Discount Price</label>
+            <input type="text" name="bprice" class="form-control" required />
 
-          <label for="">Image</label>
-          <input type="file" name="image" class="form-control" required/>
+            <label for="">Description</label>
+            <input type="text" name="description" class="form-control" required />
 
-          <label for="">Image 2</label>
-          <input type="file" name="image" class="form-control" required/>
+            <label for="">Stock</label>
+            <input type="text" name="stock" class="form-control" required />
 
-          <label for="">Image 3</label>
-          <input type="file" name="image" class="form-control" required/>
+            <label for="">Image</label>
+            <input type="file" name="image" class="form-control" required />
 
-          <button type="submit" class="btn btn-success mt-4" style="background-color: rgb(0, 186, 28);">Submit</button>
-        </form>
+            <label for="">Image 2</label>
+            <input type="file" name="image" class="form-control" required />
+
+            <label for="">Image 3</label>
+            <input type="file" name="image" class="form-control" required />
+
+            <button type="submit" class="btn btn-success mt-4"
+              style="background-color: rgb(0, 186, 28);">Submit</button>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-  <% } %>
+    <% } %>

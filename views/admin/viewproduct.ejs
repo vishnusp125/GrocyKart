@@ -1,56 +1,54 @@
-<section style="background-color: rgb(255, 255, 255); padding:2rem; height: 100%; margin-top: 2rem;  overflow-x: hidden;">
+<section
+  style="background-color: rgb(255, 255, 255); padding:2rem; height: 100%; margin-top: 2rem;  overflow-x: hidden;">
   <div class="container ">
-    <!-- <div class="row mt-2">
-      <h2 class="" style="margin-left:20rem ;">Product List</h2>
-    </div> -->
     <div class="row justify-content-center align-items-center">
       <div class="col-md-12">
         <h2 class="text-center">Product List</h2>
         <div class="row mt-4">
-      <div class="sm-12">
+          <div class="sm-12">
 
- 
-       <table id="example" class="table " style="width:100%"> 
-      <thead>
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Category</th>
-          <th scope="col">Price</th>
-          <th scope="col">Stock</th>
-          <th scope="col">Image</th>
-          <th scope="col">Edit/Delete</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% product.forEach(function(product) { %>
-          <tr>
-            <td>
-              <%=product.name %>
-            </td>
-            <td>
-              <%=product.category %>
-            </td>
-            <td>
-              <%=product.price %>
-            </td>
-            <td>
-              <%=product.stock %>
-            </td>
-            <td><img style="width:50px;height: 50px;object-fit: contain;" src="./image/<%=product._id %>.jpeg"
-              /></td>
-            <td>
-              <a href="/admineditproduct/<%=product._id %>" class="btn btn-primary">Edit</a>
-          
 
-                <button class="confirm_del_btn btn btn-danger" value="/<%=product._id %>">Delete</button>
-            </td>
-          </tr>
-          <% }) %>
-      </tbody>
-    </table>
-    </div>
-    </div>
-  </div>
+            <table id="example" class="table " style="width:100%">
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Stock</th>
+                  <th scope="col">Image</th>
+                  <th scope="col">Edit/Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% product.forEach(function(product) { %>
+                  <tr>
+                    <td>
+                      <%=product.name %>
+                    </td>
+                    <td>
+                      <%=product.category %>
+                    </td>
+                    <td>
+                      <%=product.price %>
+                    </td>
+                    <td>
+                      <%=product.stock %>
+                    </td>
+                    <td><img style="width:50px;height: 50px;object-fit: contain;"
+                        src="./image/<%=product._id %>.jpeg" /></td>
+                    <td>
+                      <a href="/admineditproduct/<%=product._id %>" class="btn btn-primary">Edit</a>
+
+
+                      <button class="confirm_del_btn btn btn-danger" value="/<%=product._id %>">Delete</button>
+                    </td>
+                  </tr>
+                  <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -60,35 +58,35 @@
 
 
 <script>
-    $(document).ready(function () {
-        $('.confirm_del_btn').click(function (e) {
+  $(document).ready(function () {
+    $('.confirm_del_btn').click(function (e) {
 
-            var id = $(this).val();
-            swal({
-                title: "Are you sure?",
-                text: "Once deleted, you will not be able to recover !",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
+      var id = $(this).val();
+      swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover !",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+        .then((willDelete) => {
+          if (willDelete) {
+            $.ajax({
+              url: "/deleteproduct" + id,
+              success: function (response) {
+                swal("Product has been deleted!", {
+                  icon: "success",
+                }).then((confirmed) => {
+                  window.location.reload();
+                })
+              }
             })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        $.ajax({
-                            url: "/deleteproduct"+ id,
-                            success: function (response) {
-                                swal("Product has been deleted!", {
-                                    icon: "success",
-                                }).then((confirmed) => {
-                                    window.location.reload();
-                                })
-                            }
-                        })
-                    } else {
-                        swal("Your file is safe!");
-                    }
-                });
-        })
+          } else {
+            swal("Your file is safe!");
+          }
+        });
     })
+  })
 </script>
 
 
@@ -97,13 +95,9 @@
 <script>
 
 
-  $(document).ready(function() {
-    $('#example').DataTable( {
-        // dom: 'Bfrtip',
-        // buttons: [
-        //     'copy', 'csv', 'excel', 'pdf', 'print'
-        // ]
-    } );
-} );
+  $(document).ready(function () {
+    $('#example').DataTable({
+    });
+  });
 
 </script>

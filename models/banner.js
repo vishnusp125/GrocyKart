@@ -1,12 +1,12 @@
 const mongoose = require('mongoose')
 
 
-const bannerSchema = new mongoose.Schema ({
-    name :{
-        type:String,
-        required : true
+const bannerSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
     }
-},{timestamps:true})
+}, { timestamps: true })
 
 
 const bannerModel = mongoose.model('banner', bannerSchema);

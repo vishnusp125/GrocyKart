@@ -218,21 +218,12 @@
                                                     <form action="/products" method="post">
                                                         <fieldset>
                                                             <input type="hidden" name="id" value="<%=product._id %>">
-                                                            <!-- <input type="hidden" name="add" value="1" />
-                                            <input type="hidden" name="business" value=" " />
-                                            <input type="hidden" name="item_name" value="knorr instant soup" />
-                                            <input type="hidden" name="amount" value="3.00" />
-                                            <input type="hidden" name="discount_amount" value="1.00" />
-                                            <input type="hidden" name="currency_code" value="USD" />
-                                            <input type="hidden" name="return" value=" " />
-                                            <input type="hidden" name="cancel_return" value=" " /> -->
+
                                                             <input type="submit" name="submit" value="Add to cart"
                                                                 class="button">
                                                             <!-- <button type="submit" class="button ">Add to Cart</button> -->
                                                         </fieldset>
-                                                        <!-- <form action="/wishlist/<%=product._id %>" method="post">
-                                        <input type="hidden" name="pid" value="<%=product._id %>" >
-                                         <button type="submit" name="pid" class="btn btn-danger">Add to Wishlist</button> -->
+
                                                         <a class="btn btn-white btn-sm" style="color:red"
                                                             href="/wishlist/<%=product._id %>">
                                                             ADD TO WISHLIST <span

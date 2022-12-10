@@ -11,12 +11,9 @@ const requireAuth = (req, res, next) => {
         jwt.verify(token, 'secretforhashing2', (err, decodedToken) => {
             if (err) {
                 console.log(err.message);
-                // res.redirect('/userlogin')
                 next()
             } else {
                 console.log(decodedToken);
-                // console.log('decoded token');
-                // res.redirect('/admindash')
                 next()
 
             }
@@ -43,7 +40,6 @@ const checkAdmin = (req, res, next) => {
                 res.locals.admin = null;
                 next()
             } else {
-                // console.log(decodedToken);
                 let admin = await Admin.findById(decodedToken.id)
                 res.locals.admin = admin;
                 next()

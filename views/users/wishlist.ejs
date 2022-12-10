@@ -1,105 +1,113 @@
-
-
 <body>
 	<!-- products-breadcrumb -->
-		<div class="products-breadcrumb">
-			<div class="container">
-				<ul>
-					<li><i class="fa fa-home" aria-hidden="true"></i><a href="index.html">Home</a><span>|</span></li>
-					<li>Wishlist</li>
-				</ul>
-			</div>
+	<div class="products-breadcrumb">
+		<div class="container">
+			<ul>
+				<li><i class="fa fa-home" aria-hidden="true"></i><a href="index.html">Home</a><span>|</span></li>
+				<li>Wishlist</li>
+			</ul>
 		</div>
+	</div>
 	<!-- //products-breadcrumb -->
 	<!-- banner -->
-		<div class="banner">
-			<div class="w3l_banner_nav_left">
-				<nav class="navbar nav_bottom">
-				 <!-- Brand and toggle get grouped for better mobile display -->
-				  <div class="navbar-header nav_2">
-					  <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
+	<div class="banner">
+		<div class="w3l_banner_nav_left">
+			<nav class="navbar nav_bottom">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header nav_2">
+					<button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse"
+						data-target="#bs-megadropdown-tabs">
 						<span class="sr-only">Toggle navigation</span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
-					  </button>
-				   </div> 
-				   <!-- Collect the nav links, forms, and other content for toggling -->
-					<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
-						<ul class="nav navbar-nav nav_1">
-							<li><a href="/products">Cooking</a></li>
-							<li><a href="/products">Dry Fruits</a></li>
-							<li><a href="/products">Beverages</a></li>
-	
-							<% if(locals.user) { %>
-								<li><a href="/wishlist">My wishlist</a></li>
-								<li><a href="/checkout">My Cart</a></li>
-								<li><a href="/userProfile">My Profile</a></li>
-								<% } %>
-	
-						</ul>
-					 </div><!-- /.navbar-collapse -->
-				</nav>
-			</div>
-			<div class="w3l_banner_nav_right">
-	<!-- about -->
+					</button>
+				</div>
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+					<ul class="nav navbar-nav nav_1">
+						<li><a href="/products">Cooking</a></li>
+						<li><a href="/products">Dry Fruits</a></li>
+						<li><a href="/products">Beverages</a></li>
+
+						<% if(locals.user) { %>
+							<li><a href="/wishlist">My wishlist</a></li>
+							<li><a href="/checkout">My Cart</a></li>
+							<li><a href="/userProfile">My Profile</a></li>
+							<% } %>
+
+					</ul>
+				</div><!-- /.navbar-collapse -->
+			</nav>
+		</div>
+		<div class="w3l_banner_nav_right">
+			<!-- about -->
 			<div class="privacy about">
 				<h3>My <span>Wishlist</span></h3>
-				
-			  <div class="checkout-right">
-						<h4>Your wishlist contains: <span></span></h4>
+
+				<div class="checkout-right">
+					<h4>Your wishlist contains: <span></span></h4>
 					<table class="timetable_sub">
 						<thead>
 							<tr>
-								<th>SL No.</th>	
+								<th>SL No.</th>
 								<th>Product</th>
 								<!-- <th>Quantity</th> -->
 								<th>Product Name</th>
-							
+
 								<th>Price</th>
 								<th>Move to Cart</th>
 								<th>Remove</th>
-							
+
 							</tr>
 						</thead>
 						<tbody>
 							<% user.forEach(function(user,index) { %>
-						<tr class="rem1">
-							<td class="invert"><%=index+1 %>%></td>
-							<td class="invert-image"><a href="/singleProduct?id=<%=user._id%>"><img src="./image/<%=user._id %>.jpeg"style="object-fit: contain;" width="200px" height="100px"  alt=" " ></a></td>
-			
-							<td class="invert"><%=user.name %></td>
-							
-							<td class="invert">Rs. <%=user.discountedPrice %></td>
+								<tr class="rem1">
+									<td class="invert">
+										<%=index+1 %>%>
+									</td>
+									<td class="invert-image"><a href="/singleProduct?id=<%=user._id%>"><img
+												src="./image/<%=user._id %>.jpeg" style="object-fit: contain;"
+												width="200px" height="100px" alt=" "></a></td>
 
-							<td class="invert">
-								<!-- <div class="rem">
+									<td class="invert">
+										<%=user.name %>
+									</td>
+
+									<td class="invert">Rs. <%=user.discountedPrice %>
+									</td>
+
+									<td class="invert">
+										<!-- <div class="rem">
 									<div class="close1"> </div>
 								</div> -->
 
-								<a href="/addtoCart/<%=user._id %>" class="btn btn-success">Move to Cart</a>
-	
-							</td>
-							<td class="invert">
-								<!-- <div class="rem">
+										<a href="/addtoCart/<%=user._id %>" class="btn btn-success">Move to Cart</a>
+
+									</td>
+									<td class="invert">
+										<!-- <div class="rem">
 									<div class="close1"> </div>
 								</div> -->
-									<button class="confirm_del_btn btn btn-danger" value="/<%=user._id %>">Delete</button>
-	
-							</td>
-						
-						</tr>
+										<button class="confirm_del_btn btn btn-danger"
+											value="/<%=user._id %>">Delete</button>
 
-					<% }) %>
-					</tbody></table>
+									</td>
+
+								</tr>
+
+								<% }) %>
+						</tbody>
+					</table>
 				</div>
-		
-	
+
+
 			</div>
-	<!-- //about -->
-			</div>
-			<div class="clearfix"></div>
+			<!-- //about -->
 		</div>
+		<div class="clearfix"></div>
+	</div>
 	<!-- //banner -->
 
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -108,7 +116,7 @@
 	<script>
 		$(document).ready(function () {
 			$('.confirm_del_btn').click(function (e) {
-	
+
 				var id = $(this).val();
 				swal({
 					title: "Are you sure?",
@@ -119,7 +127,7 @@
 					.then((willDelete) => {
 						if (willDelete) {
 							$.ajax({
-								url: "/wishlistdelete"+ id,
+								url: "/wishlistdelete" + id,
 								success: function (response) {
 									swal("Product has been removed", {
 										icon: "success",
@@ -138,11 +146,11 @@
 
 
 
-	
+
 	<!-- js -->
 	<script src="js/jquery-1.11.1.min.js"></script>
-								 <!--quantity-->
-							
+	<!--quantity-->
+
 	<!-- //js -->
 	<!-- script-for sticky-nav -->
 
@@ -151,10 +159,10 @@
 	<script type="text/javascript" src="js/move-top.js"></script>
 	<script type="text/javascript" src="js/easing.js"></script>
 	<script type="text/javascript">
-		jQuery(document).ready(function($) {
-			$(".scroll").click(function(event){		
+		jQuery(document).ready(function ($) {
+			$(".scroll").click(function (event) {
 				event.preventDefault();
-				$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+				$('html,body').animate({ scrollTop: $(this.hash).offset().top }, 1000);
 			});
 		});
 	</script>
@@ -162,35 +170,27 @@
 	<!-- Bootstrap Core JavaScript -->
 	<script src="js/bootstrap.min.js"></script>
 	<script>
-	$(document).ready(function(){
-		$(".dropdown").hover(            
-			function() {
-				$('.dropdown-menu', this).stop( true, true ).slideDown("fast");
-				$(this).toggleClass('open');        
-			},
-			function() {
-				$('.dropdown-menu', this).stop( true, true ).slideUp("fast");
-				$(this).toggleClass('open');       
-			}
-		);
-	});
+		$(document).ready(function () {
+			$(".dropdown").hover(
+				function () {
+					$('.dropdown-menu', this).stop(true, true).slideDown("fast");
+					$(this).toggleClass('open');
+				},
+				function () {
+					$('.dropdown-menu', this).stop(true, true).slideUp("fast");
+					$(this).toggleClass('open');
+				}
+			);
+		});
 	</script>
 	<!-- here stars scrolling icon -->
-		<script type="text/javascript">
-			$(document).ready(function() {
-				/*
-					var defaults = {
-					containerID: 'toTop', // fading element id
-					containerHoverID: 'toTopHover', // fading element hover id
-					scrollSpeed: 1200,
-					easingType: 'linear' 
-					};
-				*/
-									
-				$().UItoTop({ easingType: 'easeOutQuart' });
-									
-				});
-		</script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+
+			$().UItoTop({ easingType: 'easeOutQuart' });
+
+		});
+	</script>
 	<!-- //here ends scrolling icon -->
 	<script src="js/minicart.js"></script>
-	</body>
+</body>

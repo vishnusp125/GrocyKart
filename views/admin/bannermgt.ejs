@@ -1,79 +1,71 @@
 <div class="container">
-    <h1  style="margin-left: 280px;">Banner Mangement</h1>
+  <h1 style="margin-left: 280px;">Banner Mangement</h1>
 
-    <div class="container " style="margin-top:180px ;">
-        <div class="row justify-content-center align-items-center">
-            <div class="col-md-6">
-                <h2 class="text-center">Add Banners</h2>
-                <form action="/adminBanner" method="post" enctype="multipart/form-data">
+  <div class="container " style="margin-top:180px ;">
+    <div class="row justify-content-center align-items-center">
+      <div class="col-md-6">
+        <h2 class="text-center">Add Banners</h2>
+        <form action="/adminBanner" method="post" enctype="multipart/form-data">
 
-                    <div class="form-group mt-3"> 
-                        <label for="">Banner Name</label>
-                        <input required placeholder="Banner Name" type="description" name="name" class="form-control" id="name"> 
-                    </div>
-                    <% if(bannerValidation.name){ %>
-                        <b>
-                          <p class="mt-2 fw-bold" style="color: red;">Already Added Banner</p>
-                        </b>
-                        <% } %>
+          <div class="form-group mt-3">
+            <label for="">Banner Name</label>
+            <input required placeholder="Banner Name" type="description" name="name" class="form-control" id="name">
+          </div>
+          <% if(bannerValidation.name){ %>
+            <b>
+              <p class="mt-2 fw-bold" style="color: red;">Already Added Banner</p>
+            </b>
+            <% } %>
 
-                    <label for="">Banner Image</label>
-                    <input type="file" name="image" class="form-control" required />
-
-                    <!-- <label for="">Banner 2</label>
-                    <input type="file" name="image" class="form-control" required />   
-
-                    <label for="">Banner 3</label>
-                    <input type="file" name="image" class="form-control" required /> -->
-
-                    <button type="submit" class="btn btn-success mt-4"
-                        style="background-color: rgb(0, 186, 28);">Submit</button>
-                </form>
-            </div>
-        </div>
+              <label for="">Banner Image</label>
+              <input type="file" name="image" class="form-control" required />
+              <button type="submit" class="btn btn-success mt-4"
+                style="background-color: rgb(0, 186, 28);">Submit</button>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
 
 
 <div class="p-5">
-    <div class="d-flex justify-content-between align-items-center mb-5">
-      <h2 class="fw-bold mb-0 text-dark text-center" style="margin-left: 330px;">Banner List</h2>
-      <!-- <h6 class="mb-0 text-muted"> Coupon Codes </h6> -->
-    </div>
-    <hr class="my-4">
-    <div class="row mb-4 d-flex justify-content-between align-items-center">
-      <table id="example" class="table table-striped" style="width:100%">
-        <thead>
-          <tr>
-            <th>Sl No</th>
-            <th>Name</th>
-            <th>Image</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-
-          <% for(i=0 ; i<result.length ; i++) { %>
-            <tr>
-              <th scope="row">
-                <%=i+1 %>
-              </th>
-              <td>
-                <%= result[i].name%>
-              </td>
-              <td>
-                <img src="./banner/<%=result[i]._id%>.jpeg" style= "object-fit: contain;width: 50px;height:50px" alt="">
-              </td>
-              <td>
-
-                <form action="/bannerDelete?id=<%=result[i].id %>" method="post">
-                  <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete <%=result[i].name%> ?')">Delete
-              </td></button>
-              </form>
-    </div>
-    </tr>
-    <% } %>
-      </tbody>
-      </table>
+  <div class="d-flex justify-content-between align-items-center mb-5">
+    <h2 class="fw-bold mb-0 text-dark text-center" style="margin-left: 330px;">Banner List</h2>
   </div>
-  
+  <hr class="my-4">
+  <div class="row mb-4 d-flex justify-content-between align-items-center">
+    <table id="example" class="table table-striped" style="width:100%">
+      <thead>
+        <tr>
+          <th>Sl No</th>
+          <th>Name</th>
+          <th>Image</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <% for(i=0 ; i<result.length ; i++) { %>
+          <tr>
+            <th scope="row">
+              <%=i+1 %>
+            </th>
+            <td>
+              <%= result[i].name%>
+            </td>
+            <td>
+              <img src="./banner/<%=result[i]._id%>.jpeg" style="object-fit: contain;width: 50px;height:50px" alt="">
+            </td>
+            <td>
+
+              <form action="/bannerDelete?id=<%=result[i].id %>" method="post">
+                <button type="submit" class="btn btn-danger"
+                  onclick="return confirm('Are you sure you want to delete <%=result[i].name%> ?')">Delete
+            </td></button>
+            </form>
+  </div>
+  </tr>
+  <% } %>
+    </tbody>
+    </table>
+</div>

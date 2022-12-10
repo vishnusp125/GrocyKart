@@ -27,7 +27,7 @@ module.exports.unblockuser = async (req, res) => {
 }
 
 module.exports.orderDetails = async (req, res) => {
-    
+
 
 
     // adminSession = req.session;
@@ -122,7 +122,6 @@ module.exports.adminStatus = (req, res) => {
     uniqueid = req.params.id
     console.log(uniqueid);
     // if (user) {
-
 
     Users.findOne({ _id: user })
         .then((result) => {

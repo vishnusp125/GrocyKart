@@ -37,23 +37,25 @@
 
                         <% if(orderDetails.order[i].orderStatus=='Order cancelled' ) { %>
                             <p class="btn btn-white" style="color: red;">Cancelled</p>
-                            <% } else if(orderDetails.order[i].orderStatus=='Delivered') { %>
-                                <a href="/returnOrder/<%=orderDetails.order[i].unique%>" class="btn" style="background-color: blue; color:white"
+                            <% } else if(orderDetails.order[i].orderStatus=='Delivered' ) { %>
+                                <a href="/returnOrder/<%=orderDetails.order[i].unique%>" class="btn"
+                                    style="background-color: blue; color:white"
                                     onclick="return confirm('Are you sure you want to return the order?')">Return</a>
                                 <% } else if(orderDetails.order[i].orderStatus=='Order is under process' ) { %>
 
-                                    <button class="confirm_del_btn btn btn-danger" value="/<%=orderDetails.order[i].unique%>">Cancel</button>
-                                        <% } else if( orderDetails.order[i].orderStatus=='Returned' ) { %>
-                                            <p class="" style="color :rgb(0, 47, 255)">Returned</p>
-                                            <% }else { %>
-                                                <a href="/returnOrder/<%=orderDetails.order[i].unique%>"
-                                                    class="btn btn-danger"
-                                                    onclick="return confirm('Are you sure you want to cancel the order?')">Cancel
-                                                </a>
+                                    <button class="confirm_del_btn btn btn-danger"
+                                        value="/<%=orderDetails.order[i].unique%>">Cancel</button>
+                                    <% } else if( orderDetails.order[i].orderStatus=='Returned' ) { %>
+                                        <p class="" style="color :rgb(0, 47, 255)">Returned</p>
+                                        <% }else { %>
+                                            <a href="/returnOrder/<%=orderDetails.order[i].unique%>"
+                                                class="btn btn-danger"
+                                                onclick="return confirm('Are you sure you want to cancel the order?')">Cancel
+                                            </a>
 
-                                                <% } %>
+                                            <% } %>
                     </td>
-             <% } %>
+                    <% } %>
 
         </tbody>
     </table>
@@ -78,7 +80,7 @@
                 .then((willDelete) => {
                     if (willDelete) {
                         $.ajax({
-                            url: "/cancelOrder"+ id,
+                            url: "/cancelOrder" + id,
                             success: function (response) {
                                 swal("Order has been cancelled", {
                                     icon: "success",
@@ -119,10 +121,7 @@
 <script>
     $(document).ready(function () {
         $('#example').DataTable({
-            // dom: 'Bfrtip',
-            // buttons: [
-            //     'copy', 'csv', 'excel', 'pdf', 'print'
-            // ]
+
         });
     });
 </script>

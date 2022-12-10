@@ -1,99 +1,81 @@
-
-
 <body>
-    <div style="overflow-x: hidden;">
-        <div style="margin-left:350px; margin-top: 50px;">
-            <h1 >Order Details</h1>
+  <div style="overflow-x: hidden;">
+    <div style="margin-left:350px; margin-top: 50px;">
+      <h1>Order Details</h1>
 
-        </div>
-      
-      <div class="row" style="margin-top: 150px;">
-        <table id="example" class="display nowrap" style="width:100%">
-          <thead>
+    </div>
+
+    <div class="row" style="margin-top: 150px;">
+      <table id="example" class="display nowrap" style="width:100%">
+        <thead>
+          <tr>
+            <th>Product Name</th>
+            <!-- <th>Quantity</th> -->
+            <th>Order Status</th>
+            <th>Time and Date</th>
+            <!-- <th>Price</th> -->
+            <th>Payment Mode</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Update status</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <% orders.forEach(function(orders) { %>
             <tr>
-              <th>Product Name</th>
-              <!-- <th>Quantity</th> -->
-              <th>Order Status</th>
-              <th>Time and Date</th>
-              <!-- <th>Price</th> -->
-              <th>Payment Mode</th>
-              <th>Total</th>
-              <th>Status</th>
-              <th>Update status</th>
-       
-            </tr>
-          </thead>
-          <tbody>	
-            <% orders.forEach(function(orders) { %>
-            <tr>
-              <td><%=orders.name%></td>
+              <td>
+                <%=orders.name%>
+              </td>
               <!-- <td><%=orders.count%></td> -->
-              <td><%=orders.orderStatus%></td>
-              <td><%=orders.createdAt.toLocaleString()%></td>
+              <td>
+                <%=orders.orderStatus%>
+              </td>
+              <td>
+                <%=orders.createdAt.toLocaleString()%>
+              </td>
               <!-- <td><%=orders.price%></td> -->
-              <td><%=orders.paymentOption%></td>
-             
-              <td><%=(orders.discountedPrice * orders.count)%></td>
+              <td>
+                <%=orders.paymentOption%>
+              </td>
+
+              <td>
+                <%=(orders.discountedPrice * orders.count)%>
+              </td>
               <td>
                 <form action="/adminStatus/<%=orders.unique%>" method="post">
-                <select class="form-select" name="status" id="status" aria-label="Default select example"> 
-                <option selected></option>
-                <option value="Delivered">Delivered</option>
-                <option value="Dispatched">Dispatched</option>
-                <option value="Cancelled">Cancel</option>
+                  <select class="form-select" name="status" id="status" aria-label="Default select example">
+                    <option selected></option>
+                    <option value="Delivered">Delivered</option>
+                    <option value="Dispatched">Dispatched</option>
+                    <option value="Cancelled">Cancel</option>
               </td>
               <td>
-                <% if(orders.orderStatus === 'Order cancelled') { %>
+                <% if(orders.orderStatus==='Order cancelled' ) { %>
                   <button disabled class="btn btn-secondary">Update</button>
-                  <% }else if(orders.orderStatus === 'Returned'){ %>
+                  <% }else if(orders.orderStatus==='Returned' ){ %>
                     <button disabled class="btn btn-secondary">Update</button>
                     <% }else { %>
-                    <button type="submit" class="btn btn-primary ">Update</button>
-                    <% } %>
+                      <button type="submit" class="btn btn-primary ">Update</button>
+                      <% } %>
               </td>
-            </form>
-
-           
-
-
-            
-            <!-- <tr>
-                <td>giger Nixon</td>
-                <td>System Architect</td>
-                <td>Edinburgh</td>
-                <td>63</td>
-                <td>2011-04-25</td>
-                <td>$320,800</td>
-              </tr> -->
+              </form>
               <% }) %>
-          </tbody>
-            <!-- <tfoot>
-                <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-                <th>Age</th>
-                <th>Start date</th>
-                <th>Salary</th>
-                </tr>
-            </tfoot> -->
-        </table>
-      </div>
+        </tbody>
+      </table>
     </div>
-  
-  
-  </body>
-
-  <script>
+  </div>
 
 
-  $(document).ready(function() {
-    $('#example').DataTable( {
-        // dom: 'Bfrtip',
-        // buttons: [
-        //     'copy', 'csv', 'excel', 'pdf', 'print'
-        // ]
-    } );
-} );
+</body>
+
+<script>
+
+
+  $(document).ready(function () {
+    $('#example').DataTable({
+
+    });
+  });
 
 </script>

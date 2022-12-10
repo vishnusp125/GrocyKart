@@ -80,12 +80,12 @@ module.exports.adminsignin_post = async (req, res) => {
 
 module.exports.adminLogout_get = (req, res) => {
     res.cookie('jwt2', '', { maxAge: 1 })
-    res.redirect('/admin');   
+    res.redirect('/admin');
 }
 
 module.exports.adminHome = async (req, res) => {
 
- 
+
 
     const user = await User.count()
     const productCount = await Product.count()
@@ -95,11 +95,11 @@ module.exports.adminHome = async (req, res) => {
     let Sales = await Product.aggregate([{ $group: { _id: null, sum_val: { $sum: "$sales" } } }])
     let totalSales = (Sales[0].sum_val);
     console.log(1111111);
-     console.log(Sales);
+    console.log(Sales);
 
     const sales = [];
     const timeOfSale = [];
-    
+
     let k = 0;
     let l = 0;
     let m = [];
@@ -110,62 +110,47 @@ module.exports.adminHome = async (req, res) => {
             console.log(results)
             let sums;
             n = results.length;
-            // console.log(`n:${n}`);
+
 
             for (result of results) {
                 k++;
-                // console.log(`k:${k}`);
                 const orders = result.order
                 m.push(orders.length);
-                // console.log(`m:${m}`);
-
-                // console.log(`sums:${sums}`)
 
                 for (let order of orders) {
-                 l++;
-                //  console.log(`l:${l}`);
-                 sums = m.reduce((partialSum, a) => partialSum + a, 0);
-                 order = order.toJSON();
+                    l++;
+                    sums = m.reduce((partialSum, a) => partialSum + a, 0);
+                    order = order.toJSON();
 
-                if (order.orderStatus !== "Order cancelled") {
-                // console.log(order.count);
-                // console.log(order.price);
-                sales.push(order.count * order.discountedPrice);
-                // console.log(sales);
-                timeOfSale.push(order.createdAt.toISOString().substring(0, 10));
-                // console.log(timeOfSale);
-                     }
+                    if (order.orderStatus !== "Order cancelled") {
+                        sales.push(order.count * order.discountedPrice);
+                        timeOfSale.push(order.createdAt.toISOString().substring(0, 10));
+                    }
                 }
                 if (l === sums && k === n) {
 
-                     
-                        const Productlist = Product.find({})
-                            .then((result) => {
-                                const sum = function (items, prop1, prop2) {
-                                    return items.reduce(function (a, b) {
-                                        console.log(b);
-                                        return parseInt(a) + (parseInt(b[prop1]) * parseInt(b[prop2]));
-                                    }, 0);
-                                };
-                            
-                                const total = sum(result, 'discountedPrice', 'sales');
-                                // console.log(total);
-                                // console.log(typeof total);
-                                // console.log(sales);
-                                // console.log(timeOfSale);
-                              
-                                res.render('admin/admin-index', {Productlist,productCount,result, total: total, sales, timeOfSale, totalSales, user, layout: './layout/admin-layout.ejs', admin: true })
-                            }).catch((err) => {
-                                console.log(err)
-                            })
+
+                    const Productlist = Product.find({})
+                        .then((result) => {
+                            const sum = function (items, prop1, prop2) {
+                                return items.reduce(function (a, b) {
+                                    console.log(b);
+                                    return parseInt(a) + (parseInt(b[prop1]) * parseInt(b[prop2]));
+                                }, 0);
+                            };
+
+                            const total = sum(result, 'discountedPrice', 'sales');
+
+                            res.render('admin/admin-index', { Productlist, productCount, result, total: total, sales, timeOfSale, totalSales, user, layout: './layout/admin-layout.ejs', admin: true })
+                        }).catch((err) => {
+                            console.log(err)
+                        })
                 }
 
             }
 
-            })
+        })
 
-
-    // res.render('admin/admin-index', { totalSales, user, layout: './layout/admin-layout.ejs', admin: true })
 }
 
 

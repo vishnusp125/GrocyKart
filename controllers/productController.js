@@ -28,11 +28,9 @@ module.exports.addproduct_post = async (req, res) => {
 
     console.log(req.body);
     const offr = req.body.price / 100 * req.body.offer
-
     const name = req.body.name;
     const category = req.body.category;
     const price = req.body.price;
-    // const bprice = req.body.bprice;
     const discountedPrice = req.body.price - offr;
     const description = req.body.description;
     const stock = req.body.stock;
@@ -60,7 +58,7 @@ module.exports.addproduct_post = async (req, res) => {
 
 //get product
 
-module.exports.viewproduct_get = async (req, res) => {      
+module.exports.viewproduct_get = async (req, res) => {
 
     try {
         const products = await Product.find({});
@@ -69,14 +67,11 @@ module.exports.viewproduct_get = async (req, res) => {
 
 
     } catch (err) {
-        console.log(err); 
-
+        console.log(err);
     }
 }
 
-
 //delete
-
 module.exports.productdelete_get = async (req, res) => {
     try {
         const prodId = req.params.id
@@ -89,19 +84,16 @@ module.exports.productdelete_get = async (req, res) => {
     } catch (err) {
         console.log(err);
     }
-
 }
 
 
 //edit product
-
 module.exports.editproduct_get = async (req, res) => {
 
     try {
-        // console.log('in edit product form');
+
         const prodId = req.params.id
         const products = await Product.findById(prodId)
-        // console.log(products);
         res.render('admin/editproduct', { products, layout: 'layout/admin-layout', admin: true })
 
     } catch (err) {
@@ -213,10 +205,8 @@ module.exports.categoryMgtpost = async (req, res) => {
 module.exports.categoryDelete = (req, res) => {
 
     newcat = req.query.id
-    // console.log(newcat)
     Category.deleteOne({ _id: newcat })
         .then((result) => {
-            // console.log(result)
             res.redirect('/categoryMgt')
         }).catch((err) => {
             console.log(err)

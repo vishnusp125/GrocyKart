@@ -14,9 +14,6 @@ const requireAuth = (req, res, next) => {
                 res.redirect('/userlogin')
                 // next()
             } else {
-                // console.log(decodedToken);
-                // console.log('decoded token');
-                // res.redirect('/')
                 next()
 
             }
@@ -25,7 +22,7 @@ const requireAuth = (req, res, next) => {
 
     } else {
         console.log('no token');
-        res.render('./users/user-signin.ejs',{layout: './layout/layout.ejs' })
+        res.render('./users/user-signin.ejs', { layout: './layout/layout.ejs' })
         // res.redirect('/userlogin')
         // next()
 
@@ -49,15 +46,12 @@ const checkUser = (req, res, next) => {
                 res.locals.user = user;
                 req.user = decodedToken;
                 next()
-
             }
-
         })
 
     } else {
         res.locals.user = null;
         next()
-
     }
 }
 

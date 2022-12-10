@@ -25,8 +25,6 @@
                 <li><a href="/products">Cooking</a></li>
                 <li><a href="/products">Beverages</a></li>
                 <li><a href="/products">Dry Fruits</a></li>
-                <!-- <li><a href="products.html">Branded Foods</a></li>
-                <li><a href="household.html">Households</a></li> -->
             </ul>
         </div>
         <div class="col-md-3 w3_footer_grid">
@@ -65,7 +63,7 @@
             <div class="clearfix"> </div>
         </div>
         <div class="wthree_footer_copy">
-            <p>© 2022 Grocy Kart. All rights reserved</p>
+            <p>© 2022 Grocy Kart. Made by Vishnu S Prakash |<a href="https://github.com/vishnusp125">GITHUB LINK</a></p>
         </div>
     </div>
 </div>
@@ -74,33 +72,25 @@
 <!-- Bootstrap Core JavaScript -->
 <script src="js/bootstrap.min.js"></script>
 <script>
-$(document).ready(function(){
-    $(".dropdown").hover(            
-        function() {
-            $('.dropdown-menu', this).stop( true, true ).slideDown("fast");
-            $(this).toggleClass('open');        
-        },
-        function() {
-            $('.dropdown-menu', this).stop( true, true ).slideUp("fast");
-            $(this).toggleClass('open');       
-        }
-    );
-});
+    $(document).ready(function () {
+        $(".dropdown").hover(
+            function () {
+                $('.dropdown-menu', this).stop(true, true).slideDown("fast");
+                $(this).toggleClass('open');
+            },
+            function () {
+                $('.dropdown-menu', this).stop(true, true).slideUp("fast");
+                $(this).toggleClass('open');
+            }
+        );
+    });
 </script>
 <!-- here stars scrolling icon -->
-	<script type="text/javascript">
-		$(document).ready(function() {
-			/*
-				var defaults = {
-				containerID: 'toTop', // fading element id
-				containerHoverID: 'toTopHover', // fading element hover id
-				scrollSpeed: 1200,
-				easingType: 'linear' 
-				};
-			*/
-								
-			$().UItoTop({ easingType: 'easeOutQuart' });
-								
-			});
-	</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $().UItoTop({ easingType: 'easeOutQuart' });
+
+    });
+</script>
 <!-- //here ends scrolling icon -->
