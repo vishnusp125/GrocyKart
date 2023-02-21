@@ -1,8 +1,10 @@
 # GrocyKart
 
-Grocy Kart is an e-commerce website.
-Users are able to enter and take action. Integrated with multiple payment options.
-Orders, users, banners, products, coupons, offers, and sales reports can all be managed by the admin.
+- An e-commerce platform designed for purchasing groceries online.
+
+- User pages include signup and login with OTP (Twilio), productlists, user profiles, wishlists, shopping carts, and coupon redeeming functionality.
+
+- An admin panel with user management, product management, offer and coupon management, and the ability to view sales reports and charts.
 
 
 ![2](https://user-images.githubusercontent.com/103351267/215391967-4449e8dd-0b38-41d8-8e4b-ac744937a717.PNG)
