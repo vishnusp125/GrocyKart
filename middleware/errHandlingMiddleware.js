@@ -1,7 +1,5 @@
 //handle errors
 const handleErrors = (err) => {
-    console.log(err.message, err.code);
-    console.log('error logging');
     let errors = { username: ' ', email: ' ', password: ' ', phoneNo: ' ' }
 
     //duplicate error code
@@ -20,10 +18,7 @@ const handleErrors = (err) => {
 
 
 const loginhandleErrors = (err) => {
-    console.log(err.message);
-    console.log('error logging');
     let errors = { username: ' ', password: ' ' }
-
     //incorrect username
     if (err.message === 'Incorrect username') {
         errors.username = 'Username is incorrect';

@@ -20,7 +20,6 @@ const adminSchema = mongoose.Schema({
 // fire a function before doc saved to db
 
 adminSchema.pre('save', async function (next) {
-    // console.log('user about to be created and saved',this);
     const salt = await bcrypt.genSalt();
     this.password = await bcrypt.hash(this.password, salt)
     next();
@@ -30,7 +29,6 @@ adminSchema.pre('save', async function (next) {
 // static method to login admin
 
 adminSchema.statics.login = async function (adminname, password) {
-    console.log('in admin db');
     const admin = await this.findOne({ adminname });
 
     if (admin) {

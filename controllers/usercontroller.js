@@ -28,72 +28,29 @@ module.exports.unblockuser = async (req, res) => {
 
 module.exports.orderDetails = async (req, res) => {
 
-
-
     // adminSession = req.session;
     // if (adminSession.adminId) {
     const result = await Users.find({})
     let username = result[0].username
-
-    // console.log(result)
     let orders = []
     for (item of result) {
         orders = orders.concat(item.order)
     }
-    // console.log(orders);
-    // result = result.order.reverse()
     orders.sort((a, b) => {
         return b.createdAt - a.createdAt;
     });
-    // console.log(result)
-    console.log(orders);
-
-
-
     let name = username
-    // console.log(name);
-
-
-
-    // const limit = 10
-    // const pages = Math.ceil(orders.length / limit)
-    // console.log(orders.length)
-    // console.log(orders.length / limit)
-    // console.log(pages)
-    // const page = {}
-    // page.page = req.params.page
-    // if (page.page > 1) {
-    //     page.previous = parseInt(page.page) - 1
-    // } else {
-    //     page.previous = false
-    // }
-    // if (page.page < pages) {
-    //     page.next = parseInt(page.page) + 1
-    // }
-
-
     res.render('admin/orderDetails', { orders, layout: './layout/admin-layout', admin: true })
-
 }
 
 
 module.exports.adminCancelorder = (req, res) => {
-
     const user = req.user.id
-    // console.log(user);
-
-
     uniqueid = req.params.id
-    // console.log(uniqueid);
     if (user) {
         Users.findOne({ user: uniqueid })
             .then((result) => {
-                // console.log(result);
-
                 const orders = result.order
-
-                // console.log(orders);  
-
                 for (let order of orders) {
                     order = order.toJSON();
                     if (order.unique === uniqueid) {
@@ -116,27 +73,13 @@ module.exports.adminCancelorder = (req, res) => {
 
 module.exports.adminStatus = (req, res) => {
     const user = req.user.id
-    // console.log(user);
-    console.log(req.body);
-
     uniqueid = req.params.id
-    console.log(uniqueid);
-    // if (user) {
 
     Users.findOne({ _id: user })
         .then((result) => {
             const user = result._id
-            // console.log(result);
-
-
             const orders = result.order
-            console.log(orders);
-
-
-            // console.log(orders); 
             if (req.body.status == 'Delivered') {
-
-
                 for (let order of orders) {
 
                     order = order.toJSON();
@@ -226,12 +169,10 @@ module.exports.addCoupon = (req, res) => {
 module.exports.deleteCoupon = (req, res) => {
 
     const coupon = req.query.id
-    console.log(coupon);
     Coupon.deleteOne({ couponCode: coupon })
         .then(() => {
             res.redirect('/adminCoupon')
         })
-
 }
 
 

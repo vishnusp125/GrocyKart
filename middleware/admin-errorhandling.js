@@ -1,9 +1,6 @@
 //handle errors
 const adminhandleErrors = (err) => {
-    console.log(err.message, err.code);
-    console.log('admin error logging');
     let errors = { adminname: ' ', password: ' ' }
-
     //validation Errors
     if (err.message.includes('user validation failed')) {
         Object.values(err.errors).forEach(({ properties }) => {
@@ -15,10 +12,7 @@ const adminhandleErrors = (err) => {
 
 
 const loginhandleErrors = (err) => {
-    console.log(err.message);
-    console.log('admin error logging');
     let adminerrors = { adminname: ' ', password: ' ' }
-
     //incorrect username
     if (err.message === 'Incorrect username') {
         adminerrors.adminname = 'Username is incorrect';
