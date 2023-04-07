@@ -75,14 +75,10 @@
   const adminnameError = document.querySelector('.adminnameError');
   const passwordError = document.querySelector('.passwordError');
 
-  console.log(11111);
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    console.log('form submitted');
 
     // reset errors
-
-    console.log('at reset');
     adminnameError.textContent = '';
     passwordError.textContent = '';
 
@@ -90,10 +86,6 @@
     //get the values
     const adminname = form.adminname.value;
     const password = form.password.value;
-
-    console.log(222222);
-
-
 
     try {
       const res = await fetch('/adminsignin', {
@@ -104,24 +96,20 @@
         
 
       });
-      console.log(res);
       const data = await res.json();
-      console.log(data);
+
       if (data.errorHandler) {
         adminnameError.textContent = data.errorHandler.adminname;
         passwordError.textContent = data.errorHandler.password;
-        console.log('in try ');
 
 
       }
       if (data.admin) {
-        console.log(3333333);
         location.assign('/admindash')
       }
 
     }
     catch (err) {
-      console.log('in catch');
       console.log(err);
       
     }

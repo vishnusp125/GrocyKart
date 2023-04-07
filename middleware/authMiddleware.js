@@ -15,17 +15,12 @@ const requireAuth = (req, res, next) => {
                 // next()
             } else {
                 next()
-
             }
-
         })
 
     } else {
-        console.log('no token');
-        res.render('./users/user-signin.ejs', { layout: './layout/layout.ejs' })
-        // res.redirect('/userlogin')
-        // next()
 
+        res.render('./users/user-signin.ejs', { layout: './layout/layout.ejs' })
     }
 }
 

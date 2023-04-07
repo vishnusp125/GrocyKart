@@ -50,7 +50,6 @@ module.exports.addproduct_post = async (req, res) => {
     }
 }
 
-
 //get product
 
 module.exports.viewproduct_get = async (req, res) => {

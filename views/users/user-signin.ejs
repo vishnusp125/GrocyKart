@@ -32,22 +32,15 @@
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    console.log('form submitted');
 
     // reset errors
 
-    console.log('at reset');
     usernameError.textContent = '';
     passwordError.textContent = '';
 
     //get the values
     const username = form.username.value;
     const password = form.password.value;
-
-
-    console.log("in signin view");
-
-
 
     try {
       const res = await fetch('/userlogin', {
@@ -56,9 +49,7 @@
         headers: { 'Content-Type': 'application/json' }
 
       });
-      console.log(res);
       const data = await res.json();
-      console.log(data)
       if (data.errorHandler) {
         usernameError.textContent = data.errorHandler.username;
         passwordError.textContent = data.errorHandler.password;

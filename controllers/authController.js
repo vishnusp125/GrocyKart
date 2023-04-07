@@ -36,11 +36,12 @@ module.exports.homepage_get = async (req, res) => {
     try {
         const banners = await Banner.find()
         const products = await Product.find({})
+
+
         res.render('./users/index', { banner: banners, product: products, layout: './layout/layout.ejs' })
     } catch (err) {
         console.log(err);
     }
-
 }
 
 module.exports.usersignup_get = (req, res) => {
@@ -56,7 +57,6 @@ module.exports.usersignup_post = async (req, res) => {
         const token = createToken(user._id);
         res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 })
         res.status(201).json({ user });
-
     }
 
     catch (errors) {
@@ -100,8 +100,9 @@ module.exports.userlogin_post = async (req, res) => {
         const user = await User.login(username, password)
         const token = createToken(user._id);
         res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 })
+        const date = new Date()
+        console.log(date)
         res.status(200).json({ user })
-
     }
     catch (errors) {
         const errorHandler = loginhandleErrors(errors);

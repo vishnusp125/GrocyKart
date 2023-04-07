@@ -164,13 +164,8 @@
 	couponform.addEventListener('submit', async (e) => {
 		e.preventDefault();
 
-		console.log(newTotal);
-
 		const couponCode = couponform.coupon.value;
 		const total = couponform.amount.value;
-
-		console.log(couponCode);
-		console.log(total);
 
 		try {
 			let coupon = await fetch('/applyCoupon', {
@@ -178,14 +173,11 @@
 				body: JSON.stringify({ couponCode, total }),
 				headers: { 'Content-Type': 'application/json' }
 			});
-			console.log('coupon applied');
 			coupon = await coupon.json();
-			console.log(coupon);
 			oldtotal = coupon.total
 			const newTotal = coupon.discountedTotal
 			const couponVal = coupon.couponValue
-			console.log(newTotal);
-			console.log(couponVal);
+
 			if (coupon.msg == 'Already used this coupon') {
 				document.getElementById('success').innerHTML = "Already Applied"
 				document.getElementById("p1").innerHTML = total;
@@ -205,13 +197,10 @@
 	})
 
 
-
-
 	const form = document.querySelector('#form')
 
 	form.addEventListener('submit', async (e) => {
 		e.preventDefault()
-		console.log(11111);
 		const name = form.name.value
 		const email = form.email.value
 		const phoneNo = form.phoneNo.value
@@ -221,7 +210,6 @@
 		// }
 		// const addressopt = addressOption();
 		const addressopt = form.addressOption.value;
-		console.log(addressopt)
 		const country = form.country.value
 		const state = form.state.value
 		const zip = form.zip.value
@@ -229,15 +217,6 @@
 		const currency = form.currency.value
 		const amount = form.amount.value
 		const discountedTotal = form.discountedTotal.value;
-
-		console.log(discountedTotal);
-		console.log(amount);
-		console.log(country);
-		console.log(currency);
-		console.log(payment);
-		// console.log(addressopt);
-
-
 
 		try {
 			let order = await fetch('/checkout', {
@@ -249,14 +228,12 @@
 
 
 			order = await order.json()
-			// console.log(order);
 
 			if (order.success) {
 
 				location.assign('/ordersuccess')
 
 			} else if (order.id === 'Paypal') {
-				console.log('in paypalllll');
 
 				paypal.Buttons({
 					// Order is created on the server and the order id is returned
@@ -273,23 +250,16 @@
 							.then((response) => response.json())
 
 							.then((order) => order.id);
-						console.log(order);
-						console.log(order.id);
-						// console.log('orderid');
 					},
 
 					// Finalize the transaction on the server after payer approval
 					onApprove: (data, actions) => {
-						console.log('on approve and finalise on the server');
-						console.log(data.orderID);
 						return fetch(`/verifyPaymentPaypal/${data.orderID}/capture`, {
 							method: "post",
 						})
 							.then((response) => response.json())
 							.then((orderData) => {
 								// Successful capture! For dev/demo purposes:
-								console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-
 								const transaction = orderData.purchase_units[0].payments.captures[0];
 								alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
 								// When ready to go live, remove the alert and show a success message within this page. For example:
@@ -304,8 +274,6 @@
 												'Content-Type': 'application/json',
 											},
 										})
-
-										console.log(saveRes + "saveRes")
 										if (saveRes) {
 											window.location.href = ("/ordersuccess");
 										}
@@ -319,7 +287,6 @@
 			}
 
 			else if (order.id) {
-				// console.log(order);
 
 				const options = {
 					"key": "rzp_test_BBlNJOeGGPkzYf",
@@ -329,7 +296,7 @@
 					"description": "Test",
 					"order_id": order.id, //sample orderid
 					"handler": async function (response) {
-						console.log(response)
+
 						const res = await fetch('/verifyPaymentRazorPay', {
 							method: 'POST',
 							headers: {
@@ -338,8 +305,6 @@
 							body: JSON.stringify(response),
 
 						})
-						console.log(11111111);
-						console.log(res + "res");
 
 						if (res) {
 
@@ -349,11 +314,8 @@
 									'Content-Type': 'application/json'
 								},
 							})
-							console.log(2222222222);
 
-							console.log(saveRes + "saveRes");
 							if (saveRes) {
-								console.log('completed');
 								location.assign('/ordersuccess')
 							}
 						}
@@ -389,7 +351,6 @@
 		} catch (err) {
 			console.log(err);
 		}
-
 	})
 
 

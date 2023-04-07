@@ -280,11 +280,8 @@
 <script>
   var getTest = [<%=sales %>];
   var saletime = ['<%=timeOfSale%>']
-  console.log(saletime);
-  console.log(getTest);
-
   var xArray = saletime[0].split(',')
-  console.log(xArray);
+
   var barData = [{
     x: xArray,
     y: getTest,
@@ -320,7 +317,7 @@
     },
     title: "Individual orders"
   };
-  console.log(xArray)
+
   TESTER = document.getElementById('tester');
   TESTER2 = document.getElementById('tester2');
   Plotly.newPlot(TESTER, barData, barLayout)
