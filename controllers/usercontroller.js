@@ -3,7 +3,6 @@ const Product = require("../models/product")
 const Coupon = require('../models/coupon')
 
 module.exports.usermgt_get = async (req, res) => {
-
     try {
         const users = await Users.find({})
         res.render('admin/admin-usermgt', { user: users, layout: './layout/admin-layout.ejs', admin: true })
@@ -14,22 +13,17 @@ module.exports.usermgt_get = async (req, res) => {
 
 module.exports.blockuser = async (req, res) => {
     const userId = req.params.id
-    const user = await Users.findByIdAndUpdate({ _id: userId }, { isBlocked: false })
+    await Users.findByIdAndUpdate({ _id: userId }, { isBlocked: false })
     res.redirect('/adminuser')
-
 }
 
 module.exports.unblockuser = async (req, res) => {
     const userId = req.params.id
-    const user = await Users.findByIdAndUpdate({ _id: userId }, { isBlocked: true })
+    await Users.findByIdAndUpdate({ _id: userId }, { isBlocked: true })
     res.redirect('/adminuser')
-
 }
 
 module.exports.orderDetails = async (req, res) => {
-
-    // adminSession = req.session;
-    // if (adminSession.adminId) {
     const result = await Users.find({})
     let username = result[0].username
     let orders = []
@@ -39,7 +33,6 @@ module.exports.orderDetails = async (req, res) => {
     orders.sort((a, b) => {
         return b.createdAt - a.createdAt;
     });
-    let name = username
     res.render('admin/orderDetails', { orders, layout: './layout/admin-layout', admin: true })
 }
 
@@ -65,30 +58,22 @@ module.exports.adminCancelorder = (req, res) => {
                 }
 
             })
-
-    } else {
-
     }
 }
 
 module.exports.adminStatus = (req, res) => {
     const user = req.user.id
     uniqueid = req.params.id
-
     Users.findOne({ _id: user })
         .then((result) => {
             const user = result._id
             const orders = result.order
             if (req.body.status == 'Delivered') {
                 for (let order of orders) {
-
                     order = order.toJSON();
-
                     if (order.unique === uniqueid) {
-
                         Promise.all([(Users.updateOne({ "_id": user, "order.unique": uniqueid }, { $set: { "order.$.orderStatus": "Delivered" } }))])
                             .then((result) => {
-
                                 res.redirect('/adminOrder')
                             })
                             .catch((err) => {
@@ -97,9 +82,7 @@ module.exports.adminStatus = (req, res) => {
                     }
                 }
             } else if (req.body.status == 'Dispatched') {
-
                 for (let order of orders) {
-
                     order = order.toJSON();
                     if (order.unique === uniqueid) {
 
@@ -113,9 +96,7 @@ module.exports.adminStatus = (req, res) => {
                     }
                 }
 
-
             } else if (req.body.status == 'Cancelled') {
-
                 for (let order of orders) {
                     order = order.toJSON();
                     if (order.unique === uniqueid) {
@@ -128,29 +109,18 @@ module.exports.adminStatus = (req, res) => {
                             })
                     }
                 }
-
             }
-
         })
-
-    // }
-
 }
 
 module.exports.couponGet = (req, res) => {
-
     Coupon.find()
         .then((coupon) => {
-
             res.render('admin/coupon', { coupon, layout: './layout/admin-layout', admin: true })
-
         })
-
-
 }
 
 module.exports.addCoupon = (req, res) => {
-
     Coupon.findOne({ couponCode: req.body.coupencode })
         .then(() => {
             let coupon = new Coupon({
@@ -167,7 +137,6 @@ module.exports.addCoupon = (req, res) => {
 }
 
 module.exports.deleteCoupon = (req, res) => {
-
     const coupon = req.query.id
     Coupon.deleteOne({ couponCode: coupon })
         .then(() => {

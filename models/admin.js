@@ -30,7 +30,6 @@ adminSchema.pre('save', async function (next) {
 
 adminSchema.statics.login = async function (adminname, password) {
     const admin = await this.findOne({ adminname });
-
     if (admin) {
         const auth = await bcrypt.compare(password, admin.password)
         if (auth) {

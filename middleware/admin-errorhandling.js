@@ -10,7 +10,6 @@ const adminhandleErrors = (err) => {
     return errors;
 }
 
-
 const loginhandleErrors = (err) => {
     let adminerrors = { adminname: ' ', password: ' ' }
     //incorrect username
@@ -18,17 +17,11 @@ const loginhandleErrors = (err) => {
         adminerrors.adminname = 'Username is incorrect';
         return adminerrors;
     }
-
     //incorrect password
-
     if (err.message === 'Incorrect Password') {
         adminerrors.password = 'Password is incorrect'
         return adminerrors;
     }
-
-
-
-
     //validation Errors
     if (err.message.includes('admin validation failed')) {
         Object.values(err.errors).forEach(({ properties }) => {

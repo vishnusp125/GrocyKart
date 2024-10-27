@@ -1,7 +1,6 @@
 //handle errors
 const handleErrors = (err) => {
     let errors = { username: ' ', email: ' ', password: ' ', phoneNo: ' ' }
-
     //duplicate error code
     if (err.code === 11000) {
         errors.email = 'that email is already registered'
@@ -26,13 +25,10 @@ const loginhandleErrors = (err) => {
     }
 
     //incorrect password
-
     if (err.message === 'Incorrect Password') {
         errors.password = 'Password is incorrect'
         return errors;
     }
-
-
     //validation Errors
     if (err.message.includes('user validation failed')) {
         Object.values(err.errors).forEach(({ properties }) => {

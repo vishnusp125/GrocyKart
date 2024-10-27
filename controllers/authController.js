@@ -12,11 +12,8 @@ const Razorpay = require('razorpay')
 const fetch = require('node-fetch')
 const base = "https://api-m.sandbox.paypal.com";
 
-
-
 const { handleErrors } = require('../middleware/errHandlingMiddleware')
 const { loginhandleErrors } = require('../middleware/errHandlingMiddleware');
-const { checkUser } = require('../middleware/authMiddleware');
 
 var instance = new Razorpay({
     key_id: process.env.KEY_ID,
@@ -53,12 +50,10 @@ module.exports.usersignup_post = async (req, res) => {
 
     try {
         const user = await User.create({ username, email, password, phoneNo: phoneNo })
-
         const token = createToken(user._id);
         res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 })
         res.status(201).json({ user });
     }
-
     catch (errors) {
         const errorHandler = handleErrors(errors);
         res.status(400).json({ errorHandler })
@@ -113,7 +108,6 @@ module.exports.userlogin_post = async (req, res) => {
 module.exports.logout_get = (req, res) => {
     res.cookie('jwt', '', { maxAge: 1 })
     res.redirect('/');
-
 }
 
 
@@ -124,27 +118,24 @@ module.exports.add_to_cart_post = (req, res, next) => {
 }
 
 module.exports.payment_get = (req, res) => {
-
     res.render('./users/payment')
 }
-
-
 
 module.exports.cooking_get = async (req, res) => {
     try {
         const products = await Product.find({})
         res.render('./users/products', { products: products, layout: './layout/layout.ejs' })
-
     } catch (err) {
         console.log(err);
     }
-
 }
 
 module.exports.cooking_post = async (req, res) => {
 
     const id = req.body.id;
     let userr = req.user.id
+
+
     let product = await Product.findOne({ _id: id })
     product = product.toJSON()
     product.count = 1;
@@ -168,6 +159,7 @@ module.exports.cooking_post = async (req, res) => {
 }
 
 module.exports.cart_get = async (req, res) => {
+
 
     try {
         let Curuser = req.user.id
@@ -212,10 +204,8 @@ module.exports.wishlistGet = async (req, res) => {
 module.exports.wishlistView = async (req, res) => {
     try {
         let CurrentUser = req.user.id
-
         const users = await User.findById({ _id: CurrentUser })
         res.render('./users/wishlist', { user: users.wishlist, layout: './layout/layout.ejs' })
-
     } catch (err) {
         console.log(err);
     }
@@ -226,11 +216,9 @@ module.exports.wishlistDelete = async (req, res) => {
     try {
         let user = req.user.id
         const wishlistId = req.params.id
-
         await User.deleteOne({ _id: wishlistId })
         await User.findOneAndUpdate({ _id: user }, { $pull: { wishlist: { _id: wishlistId } } })
         res.redirect('/wishlist')
-
     } catch (err) {
         console.log(err);
     }
@@ -238,22 +226,13 @@ module.exports.wishlistDelete = async (req, res) => {
 
 
 module.exports.removeFromCart = async (req, res) => {
-
     let prodId = req.params.id
-    let product = await Product.findById(prodId)
-
-
-    let userr = req.user.id
-
-
-    const userid = await User.findById({ _id: userr })
-
+    const userid = await User.findById({ _id: req.user.id })
     const checks = userid.cart;
-
     let n = 0;
     for (const check of checks) {
         if (check._id == prodId && check.count > 1) {
-            await User.updateOne({ _id: userr, 'cart._id': req.params.id },
+            await User.updateOne({ _id: req.user.id, 'cart._id': req.params.id },
                 { $inc: { "cart.$.count": -1 } })
             n++
         }
@@ -262,7 +241,7 @@ module.exports.removeFromCart = async (req, res) => {
         res.redirect('back')
     }
     else {
-        await User.findOneAndUpdate({ _id: userr }, { $pull: { cart: { _id: prodId } } })
+        await User.findOneAndUpdate({ _id: req.user.id }, { $pull: { cart: { _id: prodId } } })
         res.redirect('/cart')
 
     }
@@ -272,13 +251,13 @@ module.exports.removeFromCart = async (req, res) => {
 module.exports.addtoCart = async (req, res) => {
     const prodId = req.params.id
     let product = await Product.findById(prodId)
-    const userr = req.user.id
-    const userid = await User.findById({ _id: userr })
+    const userid = await User.findById({ _id: req.user.id })
+
     const checks = userid.cart;
     let n = 0;
     for (const check of checks) {
         if (check._id == prodId) {
-            await User.updateOne({ _id: userr, 'cart._id': req.params.id },
+            await User.updateOne({ _id: req.user.id, 'cart._id': req.params.id },
                 { $inc: { "cart.$.count": 1 } })
             n++
         }
@@ -287,58 +266,41 @@ module.exports.addtoCart = async (req, res) => {
         res.redirect('back')
     }
     else {
-
         product = product.toJSON()
-
         product.count = 1;
         totals = product.count * product.discountedPrice
         const neww = await User.updateOne({ _id: req.user.id }, { $push: { cart: product } })
         res.redirect('back')
     }
-
 }
 
 module.exports.removeCart = async (req, res) => {
     const prodId = req.params.id
-    let product = await Product.findById(prodId)
-    const userr = req.user.id
-    const userid = await User.findById({ _id: userr })
-
-    await User.findOneAndUpdate({ _id: userr }, { $pull: { cart: { _id: prodId } } })
+    await User.findOneAndUpdate({ _id: req.user.id }, { $pull: { cart: { _id: prodId } } })
     res.redirect('back')
 }
 
 
 module.exports.singleProduct = async (req, res) => {
-
     try {
-        let prodId = req.query.id;
-        const product = await Product.findById(prodId)
+        const product = await Product.findById(req.query.id)
         res.render('./users/single', { product, layout: './layout/layout.ejs' })
     } catch (err) {
-        console.log(err);
         res.render('./users/404', { layout: false })
     }
 }
 
 
 module.exports.userProfile = async (req, res) => {
-
-    let user = req.user.id
-
-
-    await User.findById({ _id: user }).then((profile) => {
+    await User.findById({ _id: req.user.id }).then((profile) => {
         res.render('./users/profile', { profile, layout: './layout/layout.ejs' })
     })
 }
 
 module.exports.userProfileEdit = async (req, res) => {
-
     const user = req.user.id;
     const profile = await User.findById({ _id: user })
-
     res.render('./users/edit_profile', { profile, layout: './layout/layout.ejs' })
-
 }
 
 module.exports.addressEdit = async (req, res) => {
@@ -373,25 +335,21 @@ module.exports.addressEditpost = async (req, res) => {
                     'address.$.country': checks.country,
                     'address.$.state': checks.state,
                     'address.$.zip': checks.zip
+
                 }
             })
         res.redirect('/userProfile')
 
     } catch (err) {
         console.log(err);
-
     }
 }
 
 
 module.exports.userProfilePost = async (req, res) => {
-
     try {
         const user = req.user.id;
         const checks = req.body;
-
-        const userid = await User.findById({ _id: user })
-
         await User.updateOne({ _id: user },
             {
                 $set: {
@@ -415,18 +373,14 @@ module.exports.userProfilePost = async (req, res) => {
 }
 
 module.exports.addAddress = async (req, res) => {
-
-    const user = req.user.id;
-    const profile = await User.findById({ _id: user })
+    const profile = await User.findById({ _id: req.user.id })
     res.render('./users/addAddress', { profile, layout: './layout/layout.ejs' })
 }
 
 module.exports.addAddresspost = async (req, res) => {
-
     try {
         const user = req.user.id;
         const checks = req.body;
-        const userid = await User.findById({ _id: user })
         await User.updateOne({ _id: user },
             {
                 $push: {
@@ -441,7 +395,6 @@ module.exports.addAddresspost = async (req, res) => {
                 }
             })
         res.redirect('back')
-
     } catch (err) {
         console.log(err);
     }
@@ -451,7 +404,6 @@ module.exports.addressDelete = async (req, res) => {
     const addressid = req.params.id
     try {
         const user = req.user.id;
-        const userid = await User.findById({ _id: user })
         await User.findOneAndUpdate({ _id: user }, { $pull: { address: { _id: addressid } } })
         res.redirect('/userProfile')
     } catch (err) {
@@ -460,40 +412,30 @@ module.exports.addressDelete = async (req, res) => {
 }
 
 let total;
-
 module.exports.checkoutGet = async (req, res) => {
-
     try {
-
         const user = req.user.id;
         const Curuser = await User.findById({ _id: user })
         const coupon = await Coupon.find()
-
         const sum = function (items, p1, p2) {
             return items.reduce(function (a, b) {
                 return parseInt(a) + parseInt(b[p1] * parseInt(b[p2]))
             }, 0)
-
         }
         total = sum(Curuser.cart, 'discountedPrice', 'count')
         const thisuser = Curuser;
-
         res.render('./users/checkout', { coupon, user: Curuser.cart, totals: total, profile: thisuser, layout: './layout/layout.ejs' })
-
     } catch (err) {
         console.log(err);
     }
 
 }
-
 let coupon;
 module.exports.applyCouponpost = async (req, res) => {
 
     coupon = req.body.couponCode
     total = req.body.total
     const coupondata = await Coupon.findOne({ couponCode: coupon })
-
-
     if (coupondata.users.length !== 0) {
         const isExisting = coupondata.users.findIndex(users => users == req.user.id)
         if (total >= coupondata.minBill && isExisting === -1) {
@@ -512,7 +454,6 @@ module.exports.applyCouponpost = async (req, res) => {
             res.json({ error: true, msg: 'Purchase amount is not enough' })
         }
     }
-
 }
 
 let payment;
@@ -524,7 +465,6 @@ let discountedTotal = 0;
 let paymentPaypalAmount;
 
 module.exports.checkoutPost = async (req, res) => {
-
     const user = req.user.id;
     const result = await User.findOne({ _id: user })
     address = req.body.address || req.body.addressopt
@@ -533,7 +473,6 @@ module.exports.checkoutPost = async (req, res) => {
     country = req.body.country
     state = req.body.state
     discountedTotal = req.body.discountedTotal
-
     if (payment == 'Razorpay') {
         //step 1
         let { amount, currency } = req.body;
@@ -566,7 +505,6 @@ module.exports.checkoutPost = async (req, res) => {
 module.exports.verifyPaymentRazorPay = async (req, res) => {
 
     const crypto = require('crypto')
-
     // Creating hmac object
     let hmac = crypto.createHmac('sha256', process.env.KEY_SECRET)
 
@@ -587,10 +525,8 @@ module.exports.verifyPaymentRazorPay = async (req, res) => {
 module.exports.saveOrder = async (req, res) => {
     const user = req.user.id;
     try {
-
         const result = await User.findOne({ _id: user })
         const cartItems = result.cart
-
         for (let cartItem of cartItems) {
             cartItem = cartItem.toJSON()
             cartItem.address = address
@@ -605,13 +541,10 @@ module.exports.saveOrder = async (req, res) => {
             removeCount = cartItem.count * -1
 
             await User.findOneAndUpdate({ _id: user }, { $push: { order: cartItem } }, { $set: { paymentOption: payment } })
-
-
             //empty cart
             await User.findOneAndUpdate({ _id: user }, { $set: { cart: [] } })
 
             //update stock
-
             await Product.updateOne({ "_id": stockId }, { $inc: { "stock": removeCount, "sales": salesCount } })
 
             await Coupon.updateOne({ couponCode: coupon }, {
@@ -627,13 +560,10 @@ module.exports.saveOrder = async (req, res) => {
 
 
 module.exports.successGet = async (req, res) => {
-
     res.render('./users/orderSuccess', { layout: './layout/layout.ejs' })
-
 }
 
 module.exports.orderDetails = async (req, res) => {
-
     const user = req.user.id;
     try {
         const orderDetails = await User.findById({ _id: user })
@@ -642,24 +572,18 @@ module.exports.orderDetails = async (req, res) => {
     } catch (err) {
         console.log(err);
     }
-
 }
 
 module.exports.cancelOrder = (req, res) => {
-
     const users = req.user.id
     uniqueid = req.params.id
     if (users) {
-
         User.findOne({ _id: users })
             .then((result) => {
                 const orders = result.order
-
                 for (let order of orders) {
                     order = order.toJSON();
-
                     if (order.unique === uniqueid) {
-
                         Promise.all([(User.updateOne({ "_id": users, "order.unique": uniqueid }, { $set: { "order.$.orderStatus": "Order cancelled" } })), (Product.updateOne({ "_id": order._id }, { $inc: { "stock": order.count, 'sales': (order.count * -1) } }))])
                             .then((result) => {
                                 res.redirect('/orderDetails')
@@ -671,10 +595,7 @@ module.exports.cancelOrder = (req, res) => {
                 }
 
             })
-
-    } else {
-
-    }
+    } 
 }
 
 module.exports.returnOrder = async (req, res) => {
@@ -683,7 +604,6 @@ module.exports.returnOrder = async (req, res) => {
     if (users) {
         User.findOne({ _id: users })
             .then((result) => {
-
                 const orders = result.order
                 for (let order of orders) {
                     order = order.toJSON();
@@ -702,20 +622,14 @@ module.exports.returnOrder = async (req, res) => {
 
             })
 
-    } else {
-    }
+    } 
 }
-
-
-
 module.exports.paymentPaypal = async (req, res) => {
-    const { amount, currency } = req.body;
     let orderAmt = paymentPaypalAmount / 80
     let orderAmount = (Math.round(orderAmt * 100) / 100).toFixed(2);
     const order = await createOrder(orderAmount);
     res.json(order);
 }
-
 
 // capture payment & store order information or fullfill order
 module.exports.verifyPaymentPaypal = async (req, res) => {
