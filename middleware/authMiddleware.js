@@ -6,26 +6,23 @@ const requireAuth = (req, res, next) => {
     const token = req.cookies.jwt
 
     //check jwt exists and verified
-
     if (token) {
         jwt.verify(token, 'secretforhashing', (err, decodedToken) => {
             if (err) {
-                console.log(err.message);
                 res.redirect('/userlogin')
-                // next()
             } else {
                 next()
             }
         })
 
     } else {
-
-        res.render('./users/user-signin.ejs', { layout: './layout/layout.ejs' })
+        res.render('./users/user-signin.ejs',{layout: './layout/layout.ejs' })
+        // res.redirect('/userlogin')
+        // next()
     }
 }
 
 //check current user
-
 const checkUser = (req, res, next) => {
     const token = req.cookies.jwt;
 

@@ -13,13 +13,10 @@ let bannerValidation = {
     name: false
 }
 
-
-
 module.exports.addproductform_get = (req, res) => {
 
     Category.find().then((category) => {
         res.render('admin/admin-addproduct.ejs', { result: ' ', category, layout: 'layout/admin-layout.ejs', admin: true })
-
     })
 }
 
@@ -33,13 +30,11 @@ module.exports.addproduct_post = async (req, res) => {
     const description = req.body.description;
     const stock = req.body.stock;
     const offer = req.body.offer
-
     const product = await Product.create({ name, category, price, offer, discountedPrice, description, stock })
     try {
         let image = req.files.image;
         let image2 = req.files.image2;
         let image3 = req.files.image3;
-
         image.mv('./public/image/' + product._id + ".jpeg")
         image2.mv('./public/image/' + product._id + "2.jpeg")
         image3.mv('./public/image/' + product._id + "3.jpeg")
@@ -58,7 +53,7 @@ module.exports.viewproduct_get = async (req, res) => {
         const products = await Product.find({});
         res.render('admin/viewproduct', { product: products, layout: 'layout/admin-layout', admin: true })
     } catch (err) {
-        console.log(err);
+        console.log(err); 
     }
 }
 
@@ -73,20 +68,15 @@ module.exports.productdelete_get = async (req, res) => {
     }
 }
 
-
 //edit product
 module.exports.editproduct_get = async (req, res) => {
-
     try {
-
         const prodId = req.params.id
         const products = await Product.findById(prodId)
         res.render('admin/editproduct', { products, layout: 'layout/admin-layout', admin: true })
-
     } catch (err) {
         console.log(err.message);
     }
-
 }
 
 module.exports.editproduct_post = async (req, res) => {
@@ -131,8 +121,6 @@ module.exports.editproduct_post = async (req, res) => {
     catch (err) {
         console.log(err)
     }
-    //-----------------------------------
-
     //--------------------------------
     try {
         const results = await User.find({})
@@ -160,10 +148,8 @@ module.exports.categoryMgt = (req, res) => {
             res.render('admin/category', { result, validation, layout: 'layout/admin-layout', admin: true })
             validation.category = false
         }).catch((err) => console.log(err))
-
 }
 module.exports.categoryMgtpost = async (req, res) => {
-
     newcat = req.body.category
     Category.findOne({ category: newcat })
         .then((result) => {
@@ -197,7 +183,6 @@ module.exports.categoryDelete = (req, res) => {
 
 
 module.exports.bannerGet = (req, res) => {
-
     Banner.find()
         .then((result) => {
             res.render('admin/bannermgt', { result, bannerValidation, layout: 'layout/admin-layout', admin: true })
@@ -206,6 +191,7 @@ module.exports.bannerGet = (req, res) => {
 }
 
 module.exports.bannerPost = async (req, res) => {
+
     const names = req.body.name;
     await Banner.findOne({ name: names })
         .then((result) => {
@@ -231,7 +217,6 @@ module.exports.bannerPost = async (req, res) => {
             }
         })
 }
-
 
 
 module.exports.bannerDelete = async (req, res) => {

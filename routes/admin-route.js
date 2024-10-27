@@ -1,20 +1,9 @@
 const router = require('express').Router()
-const { Router } = require('express')
 const jwt = require('jsonwebtoken')
-// const requireAuth = require('../middleware/admin-errorhandling')
 const adminauthController = require('../controllers/admin-authController')
 const productController = require('../controllers/productController')
 const userController = require('../controllers/usercontroller')
 const adminAuthmiddleware = require('../middleware/adminAuthmiddleware')
-
-
-const maxAge = 3 * 24 * 60 * 60;
-const createToken = (id) => {
-    return jwt.sign({ id }, 'secretforhashing',
-        {
-            expiresIn: maxAge
-        });
-}
 
 //admin sigup get and post
 router.get('/adminsignup', adminauthController.adminsignup_get)
@@ -53,13 +42,9 @@ router.post('/couponAdd/:id',adminAuthmiddleware.requireAuth, userController.add
 router.post('/couponDelete',adminAuthmiddleware.requireAuth, userController.deleteCoupon)
 
 //banner
-router.get('/adminBanner',adminAuthmiddleware.requireAuth, productController.bannerGet)
-router.post('/adminBanner',adminAuthmiddleware.requireAuth, productController.bannerPost)
-router.post('/bannerDelete',adminAuthmiddleware.requireAuth, productController.bannerDelete)
-
-
-
-
+router.get('/adminBanner',productController.bannerGet)
+router.post('/adminBanner',productController.bannerPost)
+router.post('/bannerDelete',productController.bannerDelete)
 
 
 module.exports = router;

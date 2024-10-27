@@ -3,10 +3,8 @@ const User = require('../models/user')
 const Product = require('../models/product')
 const jwt = require('jsonwebtoken')
 
-
 const { adminhandleErrors } = require('../middleware/admin-errorhandling')
 const { loginhandleErrors } = require('../middleware/admin-errorhandling')
-const { find } = require('../models/admin')
 
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
@@ -64,8 +62,6 @@ module.exports.adminHome = async (req, res) => {
 
     const user = await User.count()
     const productCount = await Product.count()
-    const product = await Product.find()
-
 
     let Sales = await Product.aggregate([{ $group: { _id: null, sum_val: { $sum: "$sales" } } }])
     let totalSales = (Sales[0].sum_val);
@@ -115,7 +111,6 @@ module.exports.adminHome = async (req, res) => {
                             console.log(err)
                         })
                 }
-
             }
 
         })
